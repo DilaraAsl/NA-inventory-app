@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+
+<div class="dashboard-main-wrapper">
+
+    <div th:replace="/fragments/header :: header"></div>
+
+    <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
+
+    <div class="dashboard-wrapper">
+
+        <div class="dashboard-ecommerce">
+
+            <div class="container-fluid dashboard-content">
+
+                <div class="ecommerce-widget">
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-12">
+
+                            <section class="panel panel-transparent">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Add New Device</h2>
+                                </header>
+
+                                <div class="panel-body">
+
+                                    <!-- ------------------------FORM START----------------------------- -->
+                                    <form th:action="@{/devices/add}" method="post" th:object="${device}">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="deviceM" class="col-form-label">Device Make</label>
+                                                    <input id="deviceM" type="text" placeholder="device make" th:field="*{make}" class="form-control">
+<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('deviceMake')}">-->
+<!--                                                        <ul>-->
+<!--                                                            <li th:each="err : ${#fields.errors('deviceMake')}"-->
+<!--                                                                th:text="${err}"></li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="model" class="col-form-label">Device Model</label>
+                                                    <input id="model" type="text" placeholder="device model" th:field="*{model}" class="form-control">
+<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('deviceModel')}">-->
+<!--                                                        <ul>-->
+<!--                                                            <li th:each="err : ${#fields.errors('deviceModel')}"-->
+<!--                                                                th:text="${err}"></li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="serialNo" class="col-form-label">Serial Number</label>
+                                                    <input id="serialNo" type="text" placeholder="serial number" th:field="*{serialNumber}" class="form-control">
+<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('serialnumber')}">-->
+<!--                                                        <ul>-->
+<!--                                                            <li th:each="err : ${#fields.errors('serialnumber')}"-->
+<!--                                                                th:text="${err}"></li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="price" class="col-form-label">Price</label>
+                                                    <input id="price" type="number" placeholder="device price" th:field="*{price}" class="form-control">
+<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('device price')}">-->
+<!--                                                        <ul>-->
+<!--                                                            <li th:each="err : ${#fields.errors('device price')}"-->
+<!--                                                                th:text="${err}"></li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="quantity" class="col-form-label">Quantity</label>
+                                                    <input id="quantity" type="number" placeholder="quantity" th:field="*{quantity}" class="form-control">
+<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('deviceQuantity')}">-->
+<!--                                                        <ul>-->
+<!--                                                            <li th:each="err : ${#fields.errors('deviceQuantity')}"-->
+<!--                                                                th:text="${err}"></li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+                                                </div>
+                                            </div>
+
+<!--                                            <div class="col-sm-6 col-md-6">-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <label for="repassword" class="col-form-label">Confirm Password</label>-->
+<!--                                                    <input id="repassword" type="password" placeholder="confirm your password" th:field="*{confirmPassWord}" class="form-control">-->
+<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassWord')}">-->
+<!--                                                        <ul>-->
+<!--                                                            <li th:each="err : ${#fields.errors('confirmPassWord')}"-->
+<!--                                                                th:text="${err}"></li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+                                        </div>
+
+<!--                                        <div class="row">-->
+<!--                                            <div class="col-sm-6 col-md-6">-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <label>Gender</label><br>-->
+<!--                                                    <label class="custom-control custom-radio custom-control-inline">-->
+<!--                                                        <input type="radio" name="radio-inline" th:value="MALE" th:field="*{gender}" class="custom-control-input"><span class="custom-control-label">Male</span>-->
+<!--                                                    </label>-->
+<!--                                                    <label class="custom-control custom-radio custom-control-inline">-->
+<!--                                                        <input type="radio" name="radio-inline" th:value="FEMALE" th:field="*{gender}" class="custom-control-input"><span class="custom-control-label">Female</span>-->
+<!--                                                    </label>-->
+<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('gender')}">-->
+<!--                                                        <ul>-->
+<!--                                                            <li th:each="err : ${#fields.errors('gender')}"-->
+<!--                                                                th:text="${err}"></li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+
+<!--                                            <div class="col-sm-6 col-md-6">-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <label>Choose a Role</label>-->
+<!--                                                    <select th:field="*{role}" name="role" class="custom-select">-->
+<!--                                                        <option th:value="''" th:text="Select"></option>-->
+<!--                                                        <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.description}"></option>-->
+<!--                                                    </select>-->
+<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('role')}">-->
+<!--                                                        <ul>-->
+<!--                                                            <li th:each="err : ${#fields.errors('role')}"-->
+<!--                                                                th:text="${err}"></li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6 col-lg-12">
+                                                <div class="float-right">
+                                                    <button type="submit" class="btn btn-success">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <!-- ------------------------FORM END----------------------------- -->
+
+                                </div>
+
+                            </section>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ------------------------TABLE START----------------------------- -->
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="col-md-12">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Device List</h2>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Make</th>
+                                                <th scope="col">Model</th>
+                                                <th scope="col">Serial Number</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                            <tr th:each="device: ${devices}">
+                                                <td th:text="${device.make}"></td>
+                                                <td th:text="${device.model}"></td>
+                                                <td th:text="${device.serialNumber}"></td>
+                                                <td th:text="${device.quantity}"></td>
+                                                <td th:text="${device.price}"></td>
+                                                <td class="actions">
+                                                    <a th:href="@{/devices/update/{id}(id=${device.getId()})}" class="btn btn-warning btn-sm">Update</a>
+                                                    <a th:href="@{/devices/delete/{id}(id=${device.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ------------------------TABLE END----------------------------- -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div th:replace="/fragments/footer :: footer"></div>
+
+</div>
+
+<div th:replace="/fragments/javascript :: js"></div>
+
+</body>
+
+</html>
