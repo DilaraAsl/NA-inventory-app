@@ -28,16 +28,17 @@
                                aria-expanded="false"
                                data-target="#submenu-1"
                                aria-controls="submenu-1">
-                                <i class="fa fa-fw fa-user-circle"></i>Administration
+<!--                                <i class="fa fa-fw fa-user-circle"></i>-->
+                                Devices
                                 <span class="badge badge-success">6</span>
                             </a>
                             <div id="submenu-1" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a class="nav-link" th:href="@{/device/add}">Add Device</a>
+                                        <a class="nav-link" th:href="@{/devices/add}">Add Device</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" th:href="@{/record/add}">Add Record</a>
+                                        <a class="nav-link" th:href="@{/devices/list}">Device List</a>
                                     </li>
                                 </ul>
                             </div>
@@ -49,20 +50,27 @@
                                aria-expanded="false"
                                data-target="#submenu-2"
                                aria-controls="submenu-2">
-                                <i class="fas fa-chalkboard-teacher"></i>Manager
+<!--                                <i class="fas fa-chalkboard-teacher">-->
+<!--                                </i>-->
+                                Records
                             </a>
-<!--                            <div id="submenu-2" class="collapse submenu" style="">-->
-<!--                                <ul class="nav flex-column">-->
-<!--                                    <li class="nav-item">-->
-<!--                                        <a class="nav-link" th:href="@{/task/create}">Task Create-->
-<!--                                            <span class="badge badge-secondary">New</span></a>-->
-<!--                                    </li>-->
-<!--                                    <li class="nav-item">-->
-<!--                                        <a class="nav-link" th:href="@{/project/manager/project-status}">Project-->
-<!--                                            Status</a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </div>-->
+                            <div id="submenu-2" class="collapse submenu" style="">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{/records/add}">Add Record
+                                            <span class="badge badge-secondary">New</span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{/records/list}">List Records</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{/records/device-search}">Search Device Records</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{/records/assignee-search}">Search Assignee Records</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
 <!--                        <li class="nav-item">-->
 <!--                            <a class="nav-link"-->

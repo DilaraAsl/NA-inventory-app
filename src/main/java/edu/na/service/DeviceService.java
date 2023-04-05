@@ -13,4 +13,6 @@ public interface DeviceService {
     public DeviceDto delete(Long id);
 
     public DeviceDto update(DeviceDto deviceDto);
+
+    public DeviceDto findDeviceBySerialNo(String serialNo);
 }

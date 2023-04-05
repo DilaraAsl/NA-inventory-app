@@ -21,7 +21,7 @@ public class RecordDto {
 
     private String notes;
 
-    private User user;
+    private UserDto user;
 
-    private Device device;
+    private DeviceDto device;
 }

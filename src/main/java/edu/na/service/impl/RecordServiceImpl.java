@@ -1,6 +1,8 @@
 package edu.na.service.impl;
 
+import edu.na.dto.DeviceDto;
 import edu.na.dto.RecordDto;
+import edu.na.dto.UserDto;
 import edu.na.entity.Device;
 import edu.na.entity.Record;
 import edu.na.repository.RecordRepository;
@@ -53,5 +55,19 @@ private final MapperUtil mapperUtil;
     @Override
     public RecordDto delete(Long id) {
         return null;
+    }
+
+    @Override
+    public List<RecordDto> listAllRecordsOfDevice(String serialNo) {
+        List<Record> records=recordRepository.retrieveDeviceRecords(serialNo);
+        return records.stream().map(record -> mapperUtil.convert(record,new RecordDto())).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecordDto> listAllRecordsOfUser(UserDto userDto) {
+
+        return recordRepository.retrieveUserRecords(userDto.getUser_name()).stream()
+                .map(record->mapperUtil.convert(record,new RecordDto()))
+                .collect(Collectors.toList());
     }
 }

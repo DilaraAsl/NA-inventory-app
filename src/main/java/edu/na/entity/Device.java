@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table (name="devices")
 @Where(clause = "is_deleted=false")
@@ -19,7 +19,7 @@ public class Device extends BaseEntity{
 
     String make;
     String model;
-    Long serialNumber;
+    String serialNumber;
     Long price;
 
     int quantity;

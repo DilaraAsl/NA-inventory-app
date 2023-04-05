@@ -11,15 +11,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeviceDto {
-@JsonIgnore // exclude this field from Json output
     Long id;
     String make;
     String model;
-    Long serialNumber;
+    String serialNumber;
     Long price;
 
     int quantity;
 
     boolean checkMeOut;
 
+    public DeviceDto(String make, String model, String serialNumber) {
+        this.make = make;
+        this.model = model;
+        this.serialNumber = serialNumber;
+    }
 }

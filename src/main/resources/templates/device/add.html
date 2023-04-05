@@ -178,49 +178,49 @@
 
                 <!-- ------------------------TABLE START----------------------------- -->
 
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="col-md-12">
-                            <section class="panel">
-                                <header class="panel-heading">
-                                    <h2 class="panel-title">Device List</h2>
-                                </header>
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Make</th>
-                                                <th scope="col">Model</th>
-                                                <th scope="col">Serial Number</th>
-                                                <th scope="col">Quantity</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                            </thead>
+<!--                <div class="row">-->
+<!--                    <div class="col-lg-12 col-md-12">-->
+<!--                        <div class="col-md-12">-->
+<!--                            <section class="panel">-->
+<!--                                <header class="panel-heading">-->
+<!--                                    <h2 class="panel-title">Device List</h2>-->
+<!--                                </header>-->
+<!--                                <div class="panel-body">-->
+<!--                                    <div class="table-responsive">-->
+<!--                                        <table class="table table-striped">-->
+<!--                                            <thead>-->
+<!--                                            <tr>-->
+<!--                                                <th scope="col">Make</th>-->
+<!--                                                <th scope="col">Model</th>-->
+<!--                                                <th scope="col">Serial Number</th>-->
+<!--                                                <th scope="col">Quantity</th>-->
+<!--                                                <th scope="col">Price</th>-->
+<!--                                                <th scope="col">Action</th>-->
+<!--                                            </tr>-->
+<!--                                            </thead>-->
 
-                                            <tbody>
+<!--                                            <tbody>-->
 
-                                            <tr th:each="device: ${devices}">
-                                                <td th:text="${device.make}"></td>
-                                                <td th:text="${device.model}"></td>
-                                                <td th:text="${device.serialNumber}"></td>
-                                                <td th:text="${device.quantity}"></td>
-                                                <td th:text="${device.price}"></td>
-                                                <td class="actions">
-                                                    <a th:href="@{/devices/update/{id}(id=${device.getId()})}" class="btn btn-warning btn-sm">Update</a>
-                                                    <a th:href="@{/devices/delete/{id}(id=${device.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>
-                                                </td>
-                                            </tr>
+<!--                                            <tr th:each="device: ${devices}">-->
+<!--                                                <td th:text="${device.make}"></td>-->
+<!--                                                <td th:text="${device.model}"></td>-->
+<!--                                                <td th:text="${device.serialNumber}"></td>-->
+<!--                                                <td th:text="${device.quantity}"></td>-->
+<!--                                                <td th:text="${device.price}"></td>-->
+<!--                                                <td class="actions">-->
+<!--                                                    <a th:href="@{/devices/update/{id}(id=${device.getId()})}" class="btn btn-warning btn-sm">Update</a>-->
+<!--                                                    <a th:href="@{/devices/delete/{id}(id=${device.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </section>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <!-- ------------------------TABLE END----------------------------- -->
 

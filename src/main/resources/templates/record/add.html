@@ -2,7 +2,17 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="/fragments/head :: head"></head>
+<head th:replace="/fragments/head :: head">
+    <!-- Tempus Dominus Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css">
+
+    <!-- Moment.js -->
+    <script src="/webjars/momentjs/2.29.1/moment.min.js"></script>
+
+    <!-- Tempus Dominus Bootstrap 4 JavaScript -->
+    <script src="/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
+</head>
+
 
 <body>
 
@@ -27,6 +37,8 @@
                             <section class="panel panel-transparent">
                                 <header class="panel-heading">
                                     <h2 class="panel-title">Add Record</h2>
+                                    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+
                                 </header>
 
                                 <div class="panel-body">
@@ -44,13 +56,7 @@
                                                                 th:value="${trans.getId()}"
                                                                 th:text="${trans.getDescription()}"></option>
                                                     </select>
-<!--                                                    <input id="deviceM" type="text" placeholder="device make" th:field="*{make}" class="form-control">-->
-<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('deviceMake')}">-->
-<!--                                                        <ul>-->
-<!--                                                            <li th:each="err : ${#fields.errors('deviceMake')}"-->
-<!--                                                                th:text="${err}"></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
+
                                                 </div>
                                             </div>
 
@@ -58,137 +64,102 @@
                                                 <div class="form-group">
                                                     <label for="date" class="col-form-label">Date</label>
                                                     <input id="date" type="text" placeholder="Date" readonly th:field="*{date}" class="form-control">
-<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('deviceModel')}">-->
-<!--                                                        <ul>-->
-<!--                                                            <li th:each="err : ${#fields.errors('deviceModel')}"-->
-<!--                                                                th:text="${err}"></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
+
                                                 </div>
                                             </div>
                                         </div>
+                                        <script th:inline="javascript">
+                                            $(document).ready(function() {
+                                                $('#username').on('change', function() {
+                                                    console.log('Username on change function called.')
+                                                    var selectedUserId = $(this).val();
+                                                    var assignees = [[${assignees}]];
+                                                    for(var i = 0; i < assignees.length; i++) {
+                                                        if(assignees[i].id == selectedUserId) {
+                                                            $('#officeNo').val(assignees[i].officeNo);
+                                                            break;
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        </script>
 
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label >Assignee User Name</label>
-<!--                                                    <input id="username" type="text" placeholder="serial number" th:field="*{notes}" class="form-control">-->
+                                                    <label>Assignee User Name</label>
                                                     <select id="username" class="form-control" th:field="*{user}">
-                                                        <option th:if="${assignees.size() > 1}"
-                                                                th:value="''" th:text="'Select'" selected></option>
-                                                        <option th:each= "assignee:${assignees}"
-                                                                th:value="${assignee.getId()}"
-                                                                th:text="${assignee.getUser_name()}"></option>
+                                                        <option th:if="${assignees.size() > 1}" th:value="''" th:text="'Select'" selected></option>
+                                                        <option th:each="assignee : ${assignees}" th:value="${assignee.getId()}" th:text="${assignee.getUser_name()}"></option>
                                                     </select>
-<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('serialnumber')}">-->
-<!--                                                        <ul>-->
-<!--                                                            <li th:each="err : ${#fields.errors('serialnumber')}"-->
-<!--                                                                th:text="${err}"></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
                                                 </div>
                                             </div>
-
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label>Assignee</label>
-<!--                                                    <input id="user" type="text" placeholder="assignee name" th:field="*{user}" class="form-control">-->
-                                                    <select id="users" class="form-control" th:field="*{user}">
-                                                        <option th:if="${assignees.size() > 1}"
-                                                                th:value="''" th:text="'Select'" selected></option>
-                                                        <option th:each= "assignee:${assignees}"
-                                                                th:value="${assignee.getId()}"
-                                                                th:text="${assignee.getFirst_name()+' '+assignee.getLast_name()+' Office No:'+assignee.getOfficeNo()}"></option>
-                                                    </select>
-<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('device price')}">-->
-<!--                                                        <ul>-->
-<!--                                                            <li th:each="err : ${#fields.errors('device price')}"-->
-<!--                                                                th:text="${err}"></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
+                                                    <label>Assignee Office Number</label>
+                                                    <input id="officeNo" type="text" placeholder="office number" th:field="*{user.officeNo}" class="form-control" readonly>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-sm-6 col-md-6">
+                                            <div class="col-sm-6 col-md-4">
                                                 <div class="form-group">
-                                                    <label>Device</label>
-                                                    <select id="devices" class="form-control" th:field="*{device}">
-                                                        <option th:if="${devices.size() > 1}"
-                                                                th:value="''" th:text="'Select'" selected></option>
-                                                        <option th:each= "device:${devices}"
-                                                                th:value="${device.getId()}"
-                                                                th:text="${device.getMake()+' '+device.getModel()+' '+device.getSerialNumber()}"></option>
+                                                    <label>Device Serial No</label>
+                                                    <select id="deviceL" class="form-control" th:field="*{device}">
+                                                        <option th:if="${devices.size()> 1}" th:value="''" th:text="'Select'" selected></option>
+                                                        <option th:each="dev: ${devices}" th:value="${dev.getId()}" th:text="${dev.getSerialNumber()}"></option>
                                                     </select>
-<!--                                                    <input id="quantity" type="number" placeholder="quantity" th:field="*{quantity}" class="form-control">-->
-<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('deviceQuantity')}">-->
-<!--                                                        <ul>-->
-<!--                                                            <li th:each="err : ${#fields.errors('deviceQuantity')}"-->
-<!--                                                                th:text="${err}"></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
                                                 </div>
                                             </div>
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Device Make</label>
+                                                    <input id="deviceMake" type="text" placeholder="device make" class="form-control" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Device Model</label>
+                                                    <input id="deviceModel" type="text" placeholder="device model" class="form-control" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                            <div class="col-sm-6 col-md-6">
+
+                                        <script th:inline="javascript">
+                                            $(document).ready(function() {
+                                                $('#deviceL').on('change', function() {
+                                                    console.log('DeviceL on change function called.')
+                                                    var selectedDeviceId = $(this).val();
+                                                    console.log(selectedDeviceId);
+                                                    var devices = /*[[${devices}]]*/ []; // Get the devices array from the Thymeleaf model
+                                                    for(var i = 0; i < devices.length; i++) {
+                                                        console.log(devices);
+                                                        if(devices[i].id==selectedDeviceId) {
+                                                            console.log('device condition satisfied')
+                                                            $('#deviceMake').val(devices[i].make);
+                                                            $('#deviceModel').val(devices[i].model);
+                                                            break;
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        </script>
+
+
+                                        <div class="row">
+
+
+                                            <div class="col-sm-6 col-md-12">
                                                 <div class="form-group">
                                                     <label for="notes" class="col-form-label">Notes</label>
                                                     <input id="notes" type="text" placeholder="Notes" th:field="*{notes}" class="form-control">
-<!--                                                    <label>Office Number</label>-->
-<!--                                                    <select id="users2" class="form-control" th:field="*{user}">-->
-<!--                                                        <option th:if="${assignees.size() > 1}"-->
-<!--                                                                th:value="''" th:text="'Select'" selected></option>-->
-<!--                                                        <option th:each= "assignee:${assignees}"-->
-<!--                                                                th:value="${assignee.getId()}"-->
-<!--                                                                th:text="${assignee.getOfficeNo()}"></option>-->
-<!--                                                    </select>-->
-<!--                                                    <input id="repassword" type="password" placeholder="confirm your password" th:field="*{confirmPassWord}" class="form-control">-->
-<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassWord')}">-->
-<!--                                                        <ul>-->
-<!--                                                            <li th:each="err : ${#fields.errors('confirmPassWord')}"-->
-<!--                                                                th:text="${err}"></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
+
                                                 </div>
                                             </div>
                                         </div>
 
-<!--                                        <div class="row">-->
-<!--                                            <div class="col-sm-6 col-md-6">-->
-<!--                                                <div class="form-group">-->
-<!--                                                    <label>Gender</label><br>-->
-<!--                                                    <label class="custom-control custom-radio custom-control-inline">-->
-<!--                                                        <input type="radio" name="radio-inline" th:value="MALE" th:field="*{gender}" class="custom-control-input"><span class="custom-control-label">Male</span>-->
-<!--                                                    </label>-->
-<!--                                                    <label class="custom-control custom-radio custom-control-inline">-->
-<!--                                                        <input type="radio" name="radio-inline" th:value="FEMALE" th:field="*{gender}" class="custom-control-input"><span class="custom-control-label">Female</span>-->
-<!--                                                    </label>-->
-<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('gender')}">-->
-<!--                                                        <ul>-->
-<!--                                                            <li th:each="err : ${#fields.errors('gender')}"-->
-<!--                                                                th:text="${err}"></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-
-<!--                                            <div class="col-sm-6 col-md-6">-->
-<!--                                                <div class="form-group">-->
-<!--                                                    <label>Choose a Role</label>-->
-<!--                                                    <select th:field="*{role}" name="role" class="custom-select">-->
-<!--                                                        <option th:value="''" th:text="Select"></option>-->
-<!--                                                        <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.description}"></option>-->
-<!--                                                    </select>-->
-<!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('role')}">-->
-<!--                                                        <ul>-->
-<!--                                                            <li th:each="err : ${#fields.errors('role')}"-->
-<!--                                                                th:text="${err}"></li>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
 
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6 col-lg-12">
@@ -215,59 +186,59 @@
 
                 <!-- ------------------------TABLE START----------------------------- -->
 
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="col-md-12">
-                            <section class="panel">
-                                <header class="panel-heading">
-                                    <h2 class="panel-title">List of Records</h2>
-                                </header>
-                                <div class="panel-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                            <tr>
+<!--                <div class="row">-->
+<!--                    <div class="col-lg-12 col-md-12">-->
+<!--                        <div class="col-md-12">-->
+<!--                            <section class="panel">-->
+<!--                                <header class="panel-heading">-->
+<!--                                    <h2 class="panel-title">List of Records</h2>-->
+<!--                                </header>-->
+<!--                                <div class="panel-body">-->
+<!--                                    <div class="table-responsive">-->
+<!--                                        <table class="table table-striped">-->
+<!--                                            <thead>-->
+<!--                                            <tr>-->
+<!--&lt;!&ndash;                                                <th scope="col">Transaction</th>&ndash;&gt;-->
+<!--                                                <th scope="col">Date</th>-->
+<!--                                                <th scope="col">Assignee Name</th>-->
+<!--                                                <th scope="col">Username</th>-->
+<!--                                                <th scope="col">Office No</th>-->
+<!--                                                <th scope="col">Device Make</th>-->
+<!--                                                <th scope="col">Device Model</th>-->
+<!--                                                <th scope="col">Serial Number</th>-->
+<!--                                                <th scope="col">Note</th>-->
 <!--                                                <th scope="col">Transaction</th>-->
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Assignee Name</th>
-                                                <th scope="col">Username</th>
-                                                <th scope="col">Office No</th>
-                                                <th scope="col">Device Make</th>
-                                                <th scope="col">Device Model</th>
-                                                <th scope="col">Serial Number</th>
-                                                <th scope="col">Note</th>
-                                                <th scope="col">Transaction</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                            </thead>
+<!--                                                <th scope="col">Action</th>-->
+<!--                                            </tr>-->
+<!--                                            </thead>-->
 
-                                            <tbody>
+<!--                                            <tbody>-->
 
-                                            <tr th:each="record: ${records}">
-<!--                                                <td th:text="${record.transaction}"></td>-->
-                                                <td th:text="${record.date}"></td>
-                                                <td th:text="${record.getUser().getFirst_name()+' '+record.getUser().getLast_name()}"></td>
-                                                <td th:text="${record.getUser().getUser_name()}"></td>
-                                                <td th:text="${record.getUser().getOfficeNo()}"></td>
-                                                <td th:text="${record.device.getMake()}"></td>
-                                                <td th:text="${record.device.getModel()}"></td>
-                                                <td th:text="${record.device.getSerialNumber()}"></td>
-                                                <td th:text="${record.notes}"></td>
-                                                <td th:text="${record.transaction.getDescription()}"></td>
-                                                <td class="actions">
-                                                    <a th:href="@{/record/update/{id}(id=${record.getId()})}" class="btn btn-warning btn-sm">Update</a>
-                                                    <a th:href="@{/device/delete/{id}(id=${record.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>
-                                                </td>
-                                            </tr>
+<!--                                            <tr th:each="record: ${records}">-->
+<!--&lt;!&ndash;                                                <td th:text="${record.transaction}"></td>&ndash;&gt;-->
+<!--                                                <td th:text="${record.date}"></td>-->
+<!--                                                <td th:text="${record.getUser().getFirst_name()+' '+record.getUser().getLast_name()}"></td>-->
+<!--                                                <td th:text="${record.getUser().getUser_name()}"></td>-->
+<!--                                                <td th:text="${record.getUser().getOfficeNo()}"></td>-->
+<!--                                                <td th:text="${record.device.getMake()}"></td>-->
+<!--                                                <td th:text="${record.device.getModel()}"></td>-->
+<!--                                                <td th:text="${record.device.getSerialNumber()}"></td>-->
+<!--                                                <td th:text="${record.notes}"></td>-->
+<!--                                                <td th:text="${record.transaction.getDescription()}"></td>-->
+<!--                                                <td class="actions">-->
+<!--                                                    <a th:href="@{/record/update/{id}(id=${record.getId()})}" class="btn btn-warning btn-sm">Update</a>-->
+<!--                                                    <a th:href="@{/device/delete/{id}(id=${record.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </div>
+<!--                                            </tbody>-->
+<!--                                        </table>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </section>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <!-- ------------------------TABLE END----------------------------- -->
 

@@ -60,4 +60,10 @@ public class DeviceServiceImpl implements DeviceService {
         deviceRepository.save(updatedDevice);
         return deviceDto;
     }
+
+    @Override
+    public DeviceDto findDeviceBySerialNo(String serialNo) {
+        Device device=deviceRepository.findDeviceBySerialNo(serialNo);
+        return mapperUtil.convert(device,new DeviceDto());
+    }
 }

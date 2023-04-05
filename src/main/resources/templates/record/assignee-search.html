@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+
+<div class="dashboard-main-wrapper">
+
+  <div th:replace="/fragments/header :: header"></div>
+
+  <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
+
+  <div class="dashboard-wrapper">
+
+    <div class="dashboard-ecommerce">
+
+      <div class="container-fluid dashboard-content">
+
+        <div class="ecommerce-widget">
+
+          <div class="row">
+
+            <div class="col-lg-6 col-md-12">
+
+              <section class="panel panel-transparent">
+                <header class="panel-heading">
+                  <h2 class="panel-title">Search Device Record</h2>
+                </header>
+
+                <div class="panel-body">
+
+                  <!-- ------------------------FORM START----------------------------- -->
+                  <form th:action="@{/records/assignee-search}" method="post" th:object="${user}">
+
+                    <div class="row">
+
+                      <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                          <label for="userName" class="col-form-label">Enter Device Serial No:</label>
+                          <input id="userName" type="text" placeholder="username" th:field="*{user_name}" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div class="row">
+                      <div class="col-sm-6 col-md-6 col-lg-12">
+                        <div class="float-right">
+                          <button type="submit" class="btn btn-success">Search</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </form>
+                  <!-- ------------------------FORM END----------------------------- -->
+
+                </div>
+
+              </section>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div th:replace="/fragments/footer :: footer"></div>
+
+</div>
+
+<div th:replace="/fragments/javascript :: js"></div>
+
+</body>
+
+</html>

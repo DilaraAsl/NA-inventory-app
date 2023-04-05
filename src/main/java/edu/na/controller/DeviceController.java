@@ -27,9 +27,9 @@ public class DeviceController {
     }
 
     @GetMapping("/add")
-    public String listDevices(Model model) {
+    public String addDevice(Model model) {
         model.addAttribute("device", new DeviceDto());
-        model.addAttribute("devices", deviceService.findAll());
+//        model.addAttribute("devices", deviceService.findAll());
         return "/device/add";
     }
 
@@ -41,15 +41,21 @@ public class DeviceController {
 
         deviceRepository.save(newDevice);
 
-        return "redirect:/devices/add";
+        return "redirect:/devices/list";
 
+    }
+    @GetMapping("/list")
+    public String listDevices(Model model) {
+//        model.addAttribute("device", new DeviceDto());
+        model.addAttribute("devices", deviceService.findAll());
+        return "/device/list";
     }
 
     @GetMapping("/update/{id}")
     public String updateDevice(@PathVariable("id") Long id, Model model) {
 
         model.addAttribute("device", deviceService.findDevice(id)); // send the devicedto
-        model.addAttribute("devices", deviceService.findAll());
+//        model.addAttribute("devices", deviceService.findAll());
         return "/device/update";
     }
 
@@ -57,13 +63,13 @@ public class DeviceController {
     public String saveUpdatedDevice(@ModelAttribute("device") DeviceDto deviceDto, Model model) {
         deviceService.update(deviceDto);
 
-        return "redirect:/devices/add";
+        return "redirect:/devices/list";
 
     }
     @GetMapping("/delete/{id}")
     public String deleteDevice(@PathVariable("id")Long id, DeviceDto deviceDto){
         deviceService.delete(id);
-        return "redirect:/devices/add";
+        return "redirect:/devices/list";
     }
 
 //    @GetMapping("/{id}")

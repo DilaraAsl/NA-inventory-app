@@ -1,6 +1,8 @@
 package edu.na.controller;
 
+import edu.na.dto.DeviceDto;
 import edu.na.dto.RecordDto;
+import edu.na.dto.UserDto;
 import edu.na.repository.RecordRepository;
 import edu.na.service.DeviceService;
 import edu.na.service.RecordService;
@@ -8,10 +10,8 @@ import edu.na.service.TransactionService;
 import edu.na.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Controller
@@ -41,19 +41,27 @@ public class RecordController {
         model.addAttribute("records",recordService.findAll());
         model.addAttribute("transactions",transactionService.listAllTransactions());
         model.addAttribute("devices",deviceService.findAll());
-        return "record/add";
+        return "/record/add";
     }
 
     @PostMapping("/add")
     public String createNewRecord(@ModelAttribute("record") RecordDto recordDto){
         recordService.save(recordDto);
-        return "redirect:/records/add";
+        return "redirect:/records/list";
     }
+    @GetMapping("/list")
+    public String ListRecords(Model model){
 
+//        model.addAttribute("assignees",userService.findAll());
+        model.addAttribute("records",recordService.findAll());
+//        model.addAttribute("transactions",transactionService.listAllTransactions());
+//        model.addAttribute("devices",deviceService.findAll());
+        return "/record/list";
+    }
     @GetMapping("/update/{id}")
     public String editRecord(@PathVariable("id") Long id, Model model) {
-
-        model.addAttribute("record", recordService.findById(id));
+          RecordDto recordDto = recordService.findById(id);
+        model.addAttribute("newRecord", recordDto);
         model.addAttribute("assignees",userService.findAll());
         model.addAttribute("records",recordService.findAll());
         model.addAttribute("transactions",transactionService.listAllTransactions());
@@ -64,15 +72,64 @@ public class RecordController {
 
     }
 
-    @PostMapping("/update")
-    public String updateUser( @ModelAttribute("record") RecordDto record, Model model) {
+    @PostMapping("/update/{id}")
+    public String updateRecord( @ModelAttribute("newRecord") RecordDto record, Model model) {
 
 
 
         recordService.update(record);
 
-        return "redirect:/records/update";
+        return "redirect:/records/list";
+
+    }
+    @GetMapping("/device-search")
+    public String searchDeviceRecord(Model model) {
+
+
+//        model.addAttribute("assignees",userService.findAll());
+//        model.addAttribute("records",recordService.findAll());
+//        model.addAttribute("transactions",transactionService.listAllTransactions());
+//        model.addAttribute("devices",deviceService.findAll());
+
+        model.addAttribute("device",new DeviceDto());
+
+
+        return "/record/device-search";
 
     }
 
+    @PostMapping("/device-search")
+    public String updateDeviceSearchResults( @ModelAttribute("device") DeviceDto device,Model model) {
+
+        model.addAttribute("records", recordService.listAllRecordsOfDevice(device.getSerialNumber()));
+
+
+        return "/record/search-results-device";
+
+    }
+    @GetMapping("/assignee-search")
+    public String searchAssigneeRecord(Model model) {
+
+
+//        model.addAttribute("assignees",userService.findAll());
+//        model.addAttribute("records",recordService.findAll());
+//        model.addAttribute("transactions",transactionService.listAllTransactions());
+//        model.addAttribute("devices",deviceService.findAll());
+
+        model.addAttribute("user",new UserDto());
+
+
+        return "/record/assignee-search";
+
+    }
+
+    @PostMapping("/assignee-search")
+    public String updateAssigneeSearchResults( @ModelAttribute("user") UserDto user,Model model) {
+
+        model.addAttribute("records", recordService.listAllRecordsOfUser(userService.findByUserName(user.getUser_name())));
+
+
+        return "/record/search-results-assignee";
+
+    }
 }

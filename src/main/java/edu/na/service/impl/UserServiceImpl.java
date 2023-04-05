@@ -6,6 +6,7 @@ import edu.na.entity.Record;
 import edu.na.repository.UserRepository;
 import edu.na.service.UserService;
 import edu.na.util.MapperUtil;
+import org.hibernate.engine.query.spi.ReturnMetadata;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,8 +49,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto findByUserName(String userName) {
-        userRepository.findByUserName(userName);
-        return null;
+
+        return mapperUtil.convert(userRepository.findByUserName(userName),new UserDto());
     }
 
 

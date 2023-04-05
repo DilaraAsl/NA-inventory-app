@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface DeviceRepository extends JpaRepository<Device,Long> {
-//    @Query(value = "select id from devices order by desc limit 1",nativeQuery = true)
-//    Long getLatestRecordedDeviceId();
+@Query(value = "select d from devices d where d.serialNo=?1",nativeQuery = true)
+    Device findDeviceBySerialNo(String serialNo);
 }
