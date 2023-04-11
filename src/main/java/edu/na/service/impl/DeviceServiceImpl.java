@@ -98,7 +98,7 @@ public class DeviceServiceImpl implements DeviceService {
         UserDto userDto=userService.findById(userId);
         return recordService.listAllRecordsOfUser(userDto).stream()
                 .map(RecordDto::getDevice)
-                .filter(DeviceDto::isCheckMeOut)
+                .filter(deviceDto -> !deviceDto.isCheckMeOut())
                 .collect(Collectors.toList());
 
     }

@@ -91,20 +91,23 @@
                                                 });
                                             });
                                         </script>
+<!--Transaction change which is working -->
 <!--                                        <script th:inline="javascript">-->
 <!--                                            function onTransactionChange() {-->
 <!--                                                var selectedTransactionId = $('#trans').val();-->
 <!--                                                $('#deviceL').empty();-->
+<!--                                                $('#deviceL').append($('<option></option>').val('').html('Select'));-->
 <!--                                                if (selectedTransactionId) {-->
 <!--                                                    $.ajax({-->
 <!--                                                        type: 'GET',-->
 <!--                                                        url: '/v1/devices/add?transactionId=' + selectedTransactionId,-->
 <!--                                                        success: function(data) {-->
 <!--                                                            $('#deviceL').empty();-->
+<!--                                                            $('#deviceL').append($('<option></option>').val('').html('Select'));-->
 <!--                                                            console.log(data)-->
 <!--                                                            var devices = data;-->
 <!--                                                            $.each(devices, function(index, device) {-->
-<!--                                                                $('#deviceL').append($('<option></option>').val(device.id).html(device.serialNumber));-->
+<!--                                                                $('#deviceL').append($('<option></option>').val(device.id).text(device.serialNumber));-->
 <!--                                                            });-->
 <!--                                                        },-->
 <!--                                                        error: function() {-->
@@ -114,32 +117,114 @@
 <!--                                                }-->
 <!--                                            }-->
 <!--                                        </script>-->
+<!-- new suggested script-->
                                         <script th:inline="javascript">
-                                            function onTransactionChange() {
-                                                var selectedTransactionId = $('#trans').val();
-                                                $('#deviceL').empty();
-                                                $('#deviceL').append($('<option></option>').val('').html('Select'));
-                                                if (selectedTransactionId) {
+                                            function loadDevicesForUser(selectedUserId) {
+                                                if (selectedUserId) {
                                                     $.ajax({
                                                         type: 'GET',
-                                                        url: '/v1/devices/add?transactionId=' + selectedTransactionId,
+                                                        url: '/v1/users/' + selectedUserId + '/devices',
                                                         success: function(data) {
                                                             $('#deviceL').empty();
                                                             $('#deviceL').append($('<option></option>').val('').html('Select'));
-                                                            console.log(data)
                                                             var devices = data;
                                                             $.each(devices, function(index, device) {
                                                                 $('#deviceL').append($('<option></option>').val(device.id).text(device.serialNumber));
                                                             });
                                                         },
                                                         error: function() {
-                                                            console.log('Error getting devices for transaction');
+                                                            console.log('Error getting devices for user');
                                                         }
                                                     });
+                                                } else {
+                                                    $('#deviceL').empty();
+                                                    $('#deviceL').append($('<option></option>').val('').html('Select'));
+                                                }
+                                            }
+
+                                            $(document).ready(function() {
+                                                $('#username').on('change', function() {
+                                                    console.log('Username on change function called.')
+                                                    var selectedUserId = $(this).val();
+                                                    var assignees = [[${assignees}]];
+                                                    for(var i = 0; i < assignees.length; i++) {
+                                                        if(assignees[i].id == selectedUserId) {
+                                                            $('#officeNo').val(assignees[i].officeNo);
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    // Load devices assigned to this user only if the transaction is "Retrieved"
+                                                    var selectedTransactionDesc = $('#trans option:selected').text();
+                                                    if (selectedTransactionDesc === 'Retrieved') {
+                                                        loadDevicesForUser(selectedUserId);
+                                                    }
+                                                });
+                                            });
+
+                                            function onTransactionChange() {
+                                                var selectedTransactionId = $('#trans').val();
+                                                $('#deviceL').empty();
+                                                $('#deviceL').append($('<option></option>').val('').html('Select'));
+
+                                                // Check the selected transaction's description
+                                                var selectedTransactionDesc = $('#trans option:selected').text();
+                                                if (selectedTransactionDesc === 'Retrieved') {
+                                                    var selectedUserId = $('#user').val();
+                                                    console.log(selectedUserId);
+                                                    loadDevicesForUser(selectedUserId);
+                                                } else if (selectedTransactionDesc === 'Assigned') {
+                                                    if (selectedTransactionId) {
+                                                        $.ajax({
+                                                            type: 'GET',
+                                                            url: '/v1/devices/add?transactionId=' + selectedTransactionId,
+                                                            success: function(data) {
+                                                                console.log(data);
+                                                                $('#deviceL').empty();
+                                                                $('#deviceL').append($('<option></option>').val('').html('Select'));
+                                                                console.log(data)
+                                                                var devices = data;
+                                                                $.each(devices, function(index, device) {
+                                                                    $('#deviceL').append($('<option></option>').val(device.id).text(device.serialNumber));
+                                                                });
+                                                            },
+                                                            error: function() {
+                                                                console.log('Error getting devices for transaction');
+                                                            }
+                                                        });
+                                                    }
                                                 }
                                             }
                                         </script>
 
+                                        <!--                                        end of new script-->
+                                        <script th:inline="javascript">
+                                            $(document).ready(function() {
+                                                $('#user').on('change', function() {
+                                                    var selectedUserId = $(this).val();
+                                                    if (selectedUserId) {
+                                                        $.ajax({
+                                                            type: 'GET',
+                                                            url: '/v1/users/' + selectedUserId + '/devices',
+                                                            success: function(data) {
+                                                                $('#deviceL').empty();
+                                                                $('#deviceL').append($('<option></option>').val('').html('Select'));
+                                                                var devices = data;
+                                                                $.each(devices, function(index, device) {
+                                                                    $('#deviceL').append($('<option></option>').val(device.id).text(device.serialNumber));
+                                                                });
+                                                            },
+                                                            error: function() {
+                                                                console.log('Error getting devices for user');
+                                                            }
+                                                        });
+                                                    } else {
+                                                        $('#deviceL').empty();
+                                                        $('#deviceL').append($('<option></option>').val('').html('Select'));
+                                                    }
+                                                });
+                                            });
+                                        </script>
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
