@@ -5,8 +5,6 @@ import edu.na.service.DeviceService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-
 @Component
 public class DeviceDtoConverter implements Converter <String, DeviceDto>{
 private final DeviceService deviceService;

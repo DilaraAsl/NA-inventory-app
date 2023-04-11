@@ -1,4 +1,4 @@
-package edu.na.config;
+package edu.na.formatter;
 
 import edu.na.dto.TransactionDto;
 import edu.na.dto.TransactionDto;

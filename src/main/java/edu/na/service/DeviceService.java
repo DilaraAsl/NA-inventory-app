@@ -6,13 +6,16 @@ import edu.na.dto.DeviceDto;
 import java.util.List;
 
 public interface DeviceService {
-    public List<DeviceDto> findAll();
-    public DeviceDto save(DeviceDto deviceDto);
+    List<DeviceDto> findAll();
+    DeviceDto save(DeviceDto deviceDto);
 
-    public DeviceDto findDevice(Long id);
-    public DeviceDto delete(Long id);
+    DeviceDto findDevice(Long id);
+    DeviceDto delete(Long id);
 
-    public DeviceDto update(DeviceDto deviceDto);
+    DeviceDto update(DeviceDto deviceDto);
 
-    public DeviceDto findDeviceBySerialNo(String serialNo);
+    DeviceDto findDeviceBySerialNo(String serialNo);
+    List<DeviceDto> findDevicesToCheckOut();
+    List<DeviceDto> findDevicesToCheckIn();
+
 }

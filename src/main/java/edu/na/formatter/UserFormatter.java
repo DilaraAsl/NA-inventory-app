@@ -1,4 +1,4 @@
-package edu.na.config;
+package edu.na.formatter;
 
 import edu.na.dto.UserDto;
 import org.springframework.format.Formatter;

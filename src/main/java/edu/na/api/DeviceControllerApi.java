@@ -1,7 +1,10 @@
 package edu.na.api;
 
 import edu.na.dto.DeviceDto;
+import edu.na.dto.TransactionDto;
 import edu.na.service.DeviceService;
+import edu.na.service.TransactionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +18,11 @@ import java.util.List;
 @RequestMapping("/v1/devices")
 public class DeviceControllerApi {
     private final DeviceService deviceService;
+    private final TransactionService transactionService;
 
-    public DeviceControllerApi(DeviceService deviceService) {
+    public DeviceControllerApi(DeviceService deviceService, TransactionService transactionService) {
         this.deviceService = deviceService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping
@@ -45,6 +50,18 @@ public class DeviceControllerApi {
     @DeleteMapping("/{id}")
     public ResponseEntity<DeviceDto> deleteDevice(@PathVariable("id") Long id){
         return ResponseEntity.ok(deviceService.delete(id));
+    }
+    @GetMapping("/add")
+    public ResponseEntity<List<DeviceDto>> getDevicesForTransaction(@RequestParam("transactionId") Long transactionId) {
+        if (transactionId != null) {
+            TransactionDto transaction = transactionService.findById(transactionId);
+            if (transaction.getDescription().equals("Assigned")) {
+                return ResponseEntity.ok(deviceService.findDevicesToCheckIn());
+            }
+            else return ResponseEntity.ok(deviceService.findDevicesToCheckOut());
+        }
+        return ResponseEntity.badRequest().build();
+
     }
 
 }

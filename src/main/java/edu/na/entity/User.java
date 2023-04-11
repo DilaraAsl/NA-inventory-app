@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Where(clause = "is_deleted=false")
 @Validated
 
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     @Size(min = 2, message = "Name should have at least two characters")
     @Column(name = "f_name")
     private String first_name;
@@ -32,7 +32,7 @@ public class User extends BaseEntity{
     private String email;
     private String password;
     private String officeNo;
-    private boolean isDeleted;
-
-
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 }

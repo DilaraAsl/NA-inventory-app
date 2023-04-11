@@ -46,20 +46,28 @@
                                     <!-- ------------------------FORM START----------------------------- -->
                                     <form th:action="@{/records/add}" method="post" th:object="${record}">
                                         <div class="row">
+<!--                                            <div class="col-sm-6 col-md-6">-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <label>Transaction</label>-->
+<!--                                                    <select id="trans" class="form-control" th:field="*{transaction}">-->
+<!--                                                        <option th:if="${transactions.size() > 1}"-->
+<!--                                                                th:value="''" th:text="'Select'" selected></option>-->
+<!--                                                        <option th:each= "trans:${transactions}"-->
+<!--                                                                th:value="${trans.getId()}"-->
+<!--                                                                th:text="${trans.getDescription()}"></option>-->
+<!--                                                    </select>-->
+
+<!--                                                </div>-->
+<!--                                            </div>-->
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label>Transaction</label>
-                                                    <select id="trans" class="form-control" th:field="*{transaction}">
-                                                        <option th:if="${transactions.size() > 1}"
-                                                                th:value="''" th:text="'Select'" selected></option>
-                                                        <option th:each= "trans:${transactions}"
-                                                                th:value="${trans.getId()}"
-                                                                th:text="${trans.getDescription()}"></option>
+                                                    <select id="trans" class="form-control" th:field="*{transaction}" onchange="onTransactionChange()">
+                                                        <option th:if="${transactions.size() > 1}" th:value="''" th:text="'Select'" selected></option>
+                                                        <option th:each="trans: ${transactions}" th:value="${trans.id}" th:text="${trans.description}"></option>
                                                     </select>
-
                                                 </div>
                                             </div>
-
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
                                                     <label for="date" class="col-form-label">Date</label>
@@ -82,6 +90,29 @@
                                                     }
                                                 });
                                             });
+                                        </script>
+                                        <script th:inline="javascript">
+                                            function onTransactionChange() {
+                                                var selectedTransactionId = $('#trans').val();
+                                                $('#deviceL').empty();
+                                                if (selectedTransactionId) {
+                                                    $.ajax({
+                                                        type: 'GET',
+                                                        url: '/v1/devices/add?transactionId=' + selectedTransactionId,
+                                                        success: function(data) {
+                                                            $('#deviceL').empty();
+                                                            console.log(data)
+                                                            var devices = data;
+                                                            $.each(devices, function(index, device) {
+                                                                $('#deviceL').append($('<option></option>').val(device.id).html(device.serialNumber));
+                                                            });
+                                                        },
+                                                        error: function() {
+                                                            console.log('Error getting devices for transaction');
+                                                        }
+                                                    });
+                                                }
+                                            }
                                         </script>
 
                                         <div class="row">

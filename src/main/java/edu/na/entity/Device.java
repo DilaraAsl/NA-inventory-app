@@ -23,6 +23,6 @@ public class Device extends BaseEntity{
     Long price;
 
     int quantity;
-    boolean checkMeOut;
-    boolean isDeleted;
+    boolean checkMeOut;// by default it is set to false
+
 }

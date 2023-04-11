@@ -24,4 +24,5 @@ public class RecordDto {
     private UserDto user;
 
     private DeviceDto device;
+
 }

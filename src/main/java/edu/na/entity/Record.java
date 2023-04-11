@@ -14,12 +14,11 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "records")
 
-public class Record extends BaseEntity{
+public class Record extends BaseEntity {
 
 
-
- @OneToOne
-  private Transaction transaction;
+    @OneToOne
+    private Transaction transaction;
 
     @Column(name = "date")
     private LocalDate date;
@@ -32,5 +31,6 @@ public class Record extends BaseEntity{
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     private Device device;
+
     // Constructor, getters, and setters
 }

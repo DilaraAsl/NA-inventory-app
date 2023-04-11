@@ -1,4 +1,4 @@
-package edu.na.config;
+package edu.na.formatter;
 
 import edu.na.dto.DeviceDto;
 import org.springframework.format.Formatter;

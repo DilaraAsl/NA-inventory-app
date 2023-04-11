@@ -11,15 +11,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeviceDto {
-    Long id;
-    String make;
-    String model;
-    String serialNumber;
-    Long price;
+    private Long id;
+    private String make;
+    private String model;
+    private String serialNumber;
+    private Long price;
 
-    int quantity;
+    private int quantity;
 
-    boolean checkMeOut;
+    private boolean checkMeOut;
+
 
     public DeviceDto(String make, String model, String serialNumber) {
         this.make = make;
