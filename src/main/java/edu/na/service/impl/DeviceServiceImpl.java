@@ -2,11 +2,14 @@ package edu.na.service.impl;
 
 
 import edu.na.dto.DeviceDto;
+import edu.na.dto.RecordDto;
+import edu.na.dto.UserDto;
 import edu.na.entity.Device;
 import edu.na.exceptions.DeviceNotFoundException;
 import edu.na.repository.DeviceRepository;
 import edu.na.service.DeviceService;
 import edu.na.service.RecordService;
+import edu.na.service.UserService;
 import edu.na.util.MapperUtil;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,13 @@ import java.util.stream.Collectors;
 public class DeviceServiceImpl implements DeviceService {
     private final DeviceRepository deviceRepository;
     private final RecordService recordService;
+    private final UserService userService;
     private final MapperUtil mapperUtil;
 
-    public DeviceServiceImpl(DeviceRepository deviceRepository, RecordService recordService, MapperUtil mapperUtil) {
+    public DeviceServiceImpl(DeviceRepository deviceRepository, RecordService recordService, UserService userService, MapperUtil mapperUtil) {
         this.deviceRepository = deviceRepository;
         this.recordService = recordService;
+        this.userService = userService;
         this.mapperUtil = mapperUtil;
     }
 
@@ -38,7 +43,6 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public DeviceDto save(DeviceDto deviceDto) {
-        deviceDto.setCheckMeOut(true);
         deviceRepository.save(mapperUtil.convert(deviceDto, new Device()));
         return deviceDto;
     }
@@ -81,11 +85,21 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<DeviceDto> findDevicesToCheckOut() {
-        return findAll().stream().filter(DeviceDto::isCheckMeOut).collect(Collectors.toList());
+        return findAll().stream().filter(deviceDto -> !deviceDto.isCheckMeOut()).collect(Collectors.toList());
     }
 
     @Override
     public List<DeviceDto> findDevicesToCheckIn() {
-        return findAll().stream().filter(deviceDto -> !deviceDto.isCheckMeOut()).collect(Collectors.toList());
+        return findAll().stream().filter(deviceDto -> deviceDto.isCheckMeOut()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DeviceDto> findDevicesByUserId(Long userId) {
+        UserDto userDto=userService.findById(userId);
+        return recordService.listAllRecordsOfUser(userDto).stream()
+                .map(RecordDto::getDevice)
+                .filter(DeviceDto::isCheckMeOut)
+                .collect(Collectors.toList());
+
     }
 }

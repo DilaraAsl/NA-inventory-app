@@ -91,20 +91,45 @@
                                                 });
                                             });
                                         </script>
+<!--                                        <script th:inline="javascript">-->
+<!--                                            function onTransactionChange() {-->
+<!--                                                var selectedTransactionId = $('#trans').val();-->
+<!--                                                $('#deviceL').empty();-->
+<!--                                                if (selectedTransactionId) {-->
+<!--                                                    $.ajax({-->
+<!--                                                        type: 'GET',-->
+<!--                                                        url: '/v1/devices/add?transactionId=' + selectedTransactionId,-->
+<!--                                                        success: function(data) {-->
+<!--                                                            $('#deviceL').empty();-->
+<!--                                                            console.log(data)-->
+<!--                                                            var devices = data;-->
+<!--                                                            $.each(devices, function(index, device) {-->
+<!--                                                                $('#deviceL').append($('<option></option>').val(device.id).html(device.serialNumber));-->
+<!--                                                            });-->
+<!--                                                        },-->
+<!--                                                        error: function() {-->
+<!--                                                            console.log('Error getting devices for transaction');-->
+<!--                                                        }-->
+<!--                                                    });-->
+<!--                                                }-->
+<!--                                            }-->
+<!--                                        </script>-->
                                         <script th:inline="javascript">
                                             function onTransactionChange() {
                                                 var selectedTransactionId = $('#trans').val();
                                                 $('#deviceL').empty();
+                                                $('#deviceL').append($('<option></option>').val('').html('Select'));
                                                 if (selectedTransactionId) {
                                                     $.ajax({
                                                         type: 'GET',
                                                         url: '/v1/devices/add?transactionId=' + selectedTransactionId,
                                                         success: function(data) {
                                                             $('#deviceL').empty();
+                                                            $('#deviceL').append($('<option></option>').val('').html('Select'));
                                                             console.log(data)
                                                             var devices = data;
                                                             $.each(devices, function(index, device) {
-                                                                $('#deviceL').append($('<option></option>').val(device.id).html(device.serialNumber));
+                                                                $('#deviceL').append($('<option></option>').val(device.id).text(device.serialNumber));
                                                             });
                                                         },
                                                         error: function() {

@@ -63,5 +63,19 @@ public class DeviceControllerApi {
         return ResponseEntity.badRequest().build();
 
     }
+//@GetMapping("/add")
+//public ResponseEntity<List<DeviceDto>> getDevicesForTransaction(@RequestParam("transactionId") Long transactionId, @RequestParam(name = "userId", required = false) Long userId) {
+//    if (transactionId != null) {
+//        TransactionDto transaction = transactionService.findById(transactionId);
+//        if (transaction.getDescription().equals("Assigned")) {
+//            return ResponseEntity.ok(deviceService.findDevicesToCheckIn());
+//        } else if (transaction.getDescription().equals("Retrieved") && userId != null) {
+//            return ResponseEntity.ok(deviceService.findDevicesByUserId(userId));
+//        } else {
+//            return ResponseEntity.ok(deviceService.findDevicesToCheckOut());
+//        }
+//    }
+//    return ResponseEntity.badRequest().build();
+//}
 
 }

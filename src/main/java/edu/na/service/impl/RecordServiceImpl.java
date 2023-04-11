@@ -39,11 +39,11 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public RecordDto save(RecordDto recordDto) {
         DeviceDto deviceDto = deviceService.findDevice(recordDto.getDevice().getId());
-        if (recordDto.getTransaction().getId() == 1 && recordDto.getDevice().isCheckMeOut())
+        if (recordDto.getTransaction().getId() == 1 && deviceDto.isCheckMeOut())
             deviceDto.setCheckMeOut(false);
-        else if (recordDto.getTransaction().getId() == 2 && !recordDto.getDevice().isCheckMeOut())
+        else if (recordDto.getTransaction().getId() == 2 && !deviceDto.isCheckMeOut())
             deviceDto.setCheckMeOut(true);
-        deviceService.update(deviceDto);
+        deviceService.save(deviceDto);
         recordRepository.save(mapperUtil.convert(recordDto, new Record()));
         return recordDto;
     }

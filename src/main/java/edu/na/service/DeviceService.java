@@ -18,4 +18,5 @@ public interface DeviceService {
     List<DeviceDto> findDevicesToCheckOut();
     List<DeviceDto> findDevicesToCheckIn();
 
+    List<DeviceDto> findDevicesByUserId(Long userId);
 }
