@@ -32,29 +32,40 @@
                 <div class="panel-body">
 
                   <!-- ------------------------FORM START----------------------------- -->
-                  <form th:action="@{/records/assignee-search}" method="post" th:object="${user}">
+<!--                  <form th:action="@{/records/assignee-search}" method="post" th:object="${user}">-->
 
-                    <div class="row">
+<!--                    <div class="row">-->
 
-                      <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <label for="userName" class="col-form-label">Enter Device Serial No:</label>
-                          <input id="userName" type="text" placeholder="username" th:field="*{user_name}" class="form-control">
-                        </div>
-                      </div>
+<!--                      <div class="col-sm-6 col-md-6">-->
+<!--                        <div class="form-group">-->
+<!--                          <label for="userName" class="col-form-label">Enter Device Serial No:</label>-->
+<!--                          <input id="userName" type="text" placeholder="username" th:field="*{user_name}" class="form-control">-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+
+
+<!--                    <div class="row">-->
+<!--                      <div class="col-sm-6 col-md-6 col-lg-12">-->
+<!--                        <div class="float-right">-->
+<!--                          <button type="submit" class="btn btn-success">Search</button>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                  </form>-->
+                  <form th:action="@{/records/assignee-search}" method="post">
+                    <div class="form-group">
+                      <label for="username">Assignee User Name</label>
+                      <select id="username" class="form-control" name="user_name">
+                        <option value="" selected>Select</option>
+                        <option th:each="assignee : ${assignees}" th:value="${assignee.user_name}" th:text="${assignee.user_name}"></option>
+                      </select>
                     </div>
-
-
-
-                    <div class="row">
-                      <div class="col-sm-6 col-md-6 col-lg-12">
-                        <div class="float-right">
-                          <button type="submit" class="btn btn-success">Search</button>
-                        </div>
-                      </div>
-                    </div>
-
+                    <button type="submit" class="btn btn-primary">Search</button>
                   </form>
+
                   <!-- ------------------------FORM END----------------------------- -->
 
                 </div>

@@ -30,6 +30,12 @@ public class UserDto {
     private String email;
     @NotBlank
     private String password;
+
+//    public UserDto(Long id, String user_name) {
+//        this.id = id;
+//        this.user_name = user_name;
+//    }
+
     @NotBlank
     private String officeNo;
     @NotBlank

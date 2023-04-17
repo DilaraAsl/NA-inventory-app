@@ -91,7 +91,8 @@ public class RecordController {
 //        model.addAttribute("transactions",transactionService.listAllTransactions());
 //        model.addAttribute("devices",deviceService.findAll());
 
-        model.addAttribute("device",new DeviceDto());
+//        model.addAttribute("device",new DeviceDto());
+        model.addAttribute("devices",deviceService.findAll());
 
 
         return "/record/device-search";
@@ -99,9 +100,9 @@ public class RecordController {
     }
 
     @PostMapping("/device-search")
-    public String updateDeviceSearchResults( @ModelAttribute("device") DeviceDto device,Model model) {
+    public String updateDeviceSearchResults( @RequestParam("serialNumber") String serialNumber,Model model) {
 
-        model.addAttribute("records", recordService.listAllRecordsOfDevice(device.getSerialNumber()));
+        model.addAttribute("records", recordService.listAllRecordsOfDevice(serialNumber));
 
 
         return "/record/search-results-device";
@@ -110,26 +111,17 @@ public class RecordController {
     @GetMapping("/assignee-search")
     public String searchAssigneeRecord(Model model) {
 
-
-//        model.addAttribute("assignees",userService.findAll());
-//        model.addAttribute("records",recordService.findAll());
-//        model.addAttribute("transactions",transactionService.listAllTransactions());
-//        model.addAttribute("devices",deviceService.findAll());
-
-        model.addAttribute("user",new UserDto());
-
+        model.addAttribute("assignees",userService.findAll());
 
         return "/record/assignee-search";
 
     }
 
-    @PostMapping("/assignee-search")
-    public String updateAssigneeSearchResults( @ModelAttribute("user") UserDto user,Model model) {
-
-        model.addAttribute("records", recordService.listAllRecordsOfUser(userService.findByUserName(user.getUser_name())));
-
+@PostMapping("/assignee-search")
+public String updateAssigneeSearchResults(@RequestParam("user_name") String userName, Model model) {
+            model.addAttribute("records", recordService.listAllRecordsOfUser(userService.findByUserName(userName)));
 
         return "/record/search-results-assignee";
+}
 
-    }
 }

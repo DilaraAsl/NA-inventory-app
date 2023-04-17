@@ -32,28 +32,38 @@
                                 <div class="panel-body">
 
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form th:action="@{/records/device-search}" method="post" th:object="${device}">
+<!--                                    <form th:action="@{/records/device-search}" method="post" th:object="${device}">-->
 
-                                        <div class="row">
+<!--                                        <div class="row">-->
 
-                                            <div class="col-sm-6 col-md-6">
-                                                <div class="form-group">
-                                                    <label for="serialNo" class="col-form-label">Enter Device Serial No:</label>
-                                                    <input id="serialNo" type="text" placeholder="serial no" th:field="*{serialNumber}" class="form-control">
-                                                </div>
-                                            </div>
+<!--                                            <div class="col-sm-6 col-md-6">-->
+<!--                                                <div class="form-group">-->
+<!--                                                    <label for="serialNo" class="col-form-label">Enter Device Serial No:</label>-->
+<!--                                                    <input id="serialNo" type="text" placeholder="serial no" th:field="*{serialNumber}" class="form-control">-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+
+
+
+<!--                                        <div class="row">-->
+<!--                                            <div class="col-sm-6 col-md-6 col-lg-12">-->
+<!--                                                <div class="float-right">-->
+<!--                                                    <button type="submit" class="btn btn-success">Search</button>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+
+<!--                                    </form>-->
+                                    <form th:action="@{/records/device-search}" method="post">
+                                        <div class="form-group">
+                                            <label for="sno">Device Serial Number</label>
+                                            <select id="sno" class="form-control" name="serialNumber">
+                                                <option value="" selected>Select</option>
+                                                <option th:each="device : ${devices}" th:value="${device.serialNumber}" th:text="${device.serialNumber}"></option>
+                                            </select>
                                         </div>
-
-
-
-                                        <div class="row">
-                                            <div class="col-sm-6 col-md-6 col-lg-12">
-                                                <div class="float-right">
-                                                    <button type="submit" class="btn btn-success">Search</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                        <button type="submit" class="btn btn-primary">Search</button>
                                     </form>
                                     <!-- ------------------------FORM END----------------------------- -->
 
