@@ -4,6 +4,7 @@ import edu.na.dto.DeviceDto;
 import edu.na.dto.RecordDto;
 import edu.na.dto.UserDto;
 import edu.na.entity.Record;
+import edu.na.exceptions.RecordNotFoundException;
 import edu.na.repository.RecordRepository;
 import edu.na.service.DeviceService;
 import edu.na.service.RecordService;
@@ -65,7 +66,10 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public RecordDto delete(Long id) {
-        return null;
+        Record record=recordRepository.findById(id).orElseThrow(()->new RecordNotFoundException("Record with id:"+id+" Not Found"));
+        record.setIsDeleted(true);
+        recordRepository.save(record);
+        return mapperUtil.convert(record,new RecordDto());
     }
 
     @Override
