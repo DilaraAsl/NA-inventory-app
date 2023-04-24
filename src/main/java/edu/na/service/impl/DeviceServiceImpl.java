@@ -111,4 +111,14 @@ public class DeviceServiceImpl implements DeviceService {
 
         return data;
     }
+    @Override
+    public  Map<String,Map <String, Integer>> mapAssignedDevicesByMakeModelAndCount() {
+
+        // Group the devices by make and model
+        Map<String, Map<String, Integer>> data = findAll().stream()
+                .collect(Collectors.groupingBy(DeviceDto::getMake, Collectors.groupingBy(DeviceDto::getModel,
+                        Collectors.reducing(0, deviceDto -> deviceDto.isCheckMeOut() ? 0 : 1, Integer::sum))));
+
+        return data;
+    }
 }

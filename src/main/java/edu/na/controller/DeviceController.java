@@ -83,7 +83,12 @@ public class DeviceController {
     @GetMapping("/charts/bar-chart")
     public String showDeviceBarChart(Model model){
 
-        return "/charts/device-bar-chart";
+        return "/charts/device-bar-chart";}
+
+    @GetMapping("/charts/bar-chart/assigned")
+    public String showAssignedDeviceBarChart(Model model){
+
+        return "/charts/assigned-devices-bar-chart";
     }
 
 //    @GetMapping("/{id}")

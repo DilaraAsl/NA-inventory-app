@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 
@@ -27,9 +28,11 @@ public class DeviceDto {
     private String serialNumber;
 
     @Digits(integer = 10, fraction = 0, message = "Price must be a number.")
+    @Positive(message = "Quantity must be greater than zero.")
     private Long price;
 
     @Digits(integer = 10, fraction = 0, message = "Quantity must be a number.")
+    @Positive(message = "Quantity must be greater than zero.")
     private int quantity;
 
     private boolean checkMeOut=true;

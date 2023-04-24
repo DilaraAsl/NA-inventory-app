@@ -21,11 +21,11 @@
 </head>
 <body>
 <div class="container-fluid mt-5">
-<!--  <div th:replace="/fragments/header :: header"></div>-->
-<!--  <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>-->
+  <!--  <div th:replace="/fragments/header :: header"></div>-->
+  <!--  <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>-->
   <div class="row">
     <div class="col-12 text-center">
-      <h1>Devices In Stock</h1>
+      <h1>Devices Assigned</h1>
     </div>
   </div>
 
@@ -120,7 +120,7 @@
 <script>
   // Get the data from the server using AJAX or fetch
   console.log("Before fetch request");
-  const url = "/v1/devices/graph";
+  const url = "/v1/devices/graph/assigned";
   fetch(url)
           .then((response) => response.json())
           .then((data) => {
@@ -202,7 +202,7 @@
   }
 </style>
 <div class="center">
-<button class="btn btn-primary" onclick="goBack()" >Go Back</button>
+  <button class="btn btn-primary" onclick="goBack()" >Go Back</button>
 </div>
 <br><br><br><br><br><br>
 

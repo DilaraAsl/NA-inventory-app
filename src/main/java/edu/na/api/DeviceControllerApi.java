@@ -69,6 +69,10 @@ public class DeviceControllerApi {
     public Map<String, Map<String,Integer>> getDevicesByMakeAndModel(){
         return deviceService.mapDevicesByMakeModelAndCount();
     }
+    @GetMapping("/graph/assigned")
+    public Map<String, Map<String,Integer>> getRetrievedDevicesByMakeAndModel(){
+        return deviceService.mapAssignedDevicesByMakeModelAndCount();
+    }
 //@GetMapping("/add")
 //public ResponseEntity<List<DeviceDto>> getDevicesForTransaction(@RequestParam("transactionId") Long transactionId, @RequestParam(name = "userId", required = false) Long userId) {
 //    if (transactionId != null) {

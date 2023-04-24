@@ -30,7 +30,7 @@ public class User extends BaseEntity {
     private String last_name;
     @Column(unique = true, name = "user_name")
     private String user_name;
-//    @Email (message = "Please provide a valid email address")
+    @Email (message = "Please provide a valid email address")
     @Column(unique = true)
     private String email;
 

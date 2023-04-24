@@ -51,7 +51,7 @@ public class UserController {
         return "/user/update";
     }
     @PostMapping("/update/{id}")
-    String saveUpdatedUser(@Valid @ModelAttribute("user") UserDto userDto,@PathVariable Long id, BindingResult bindingResult){
+    String saveUpdatedUser(@Valid @ModelAttribute("user") UserDto userDto,BindingResult bindingResult, @PathVariable("id") Long id) {
         if (bindingResult.hasErrors()) {
             return "/user/update";
         }
