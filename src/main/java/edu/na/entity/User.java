@@ -22,15 +22,15 @@ import java.time.LocalDate;
 @Validated
 
 public class User extends BaseEntity {
-    @Size(min = 2, message = "Name should have at least two characters")
+//    @Size(min = 2, message = "Name should have at least two characters")
     @Column(name = "f_name")
     private String first_name;
-    @Size(min = 2, message = "Name should have at least two characters")
+//    @Size(min = 2, message = "Name should have at least two characters")
     @Column(name = "l_name")
     private String last_name;
     @Column(unique = true, name = "user_name")
     private String user_name;
-    @Email (message = "Please provide a valid email address")
+//    @Email (message = "Please provide a valid email address")
     @Column(unique = true)
     private String email;
 

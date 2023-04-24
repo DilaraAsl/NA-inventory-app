@@ -21,6 +21,8 @@
 </head>
 <body>
 <div class="container-fluid mt-5">
+<!--  <div th:replace="/fragments/header :: header"></div>-->
+<!--  <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>-->
   <div class="row">
     <div class="col-12 text-center">
       <h1>Device Inventory</h1>
@@ -187,8 +189,137 @@
           });
   console.log("After fetch request");
 </script>
-
-
+<br><br><br>
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
+<style>
+  .center {
+    display: flex;
+    justify-content: center;
+  }
+</style>
+<div class="center">
+<button class="btn btn-primary" onclick="goBack()" >Go Back</button>
+</div>
+<br><br><br><br><br><br>
 
 </body>
 </html>
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--  <title>Bar Chart Example</title>-->
+<!--  &lt;!&ndash; Load Bootstrap stylesheet &ndash;&gt;-->
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+
+<!--  &lt;!&ndash; Load Chart.js library &ndash;&gt;-->
+<!--  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+
+<!--  &lt;!&ndash; Custom styles for this template &ndash;&gt;-->
+<!--  <style>-->
+<!--    .chart-container {-->
+<!--      position: relative;-->
+<!--      margin: auto;-->
+<!--      height: 80vh;-->
+<!--      width: 80vw;-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<header> </header>-->
+<!--<div class="container-fluid mt-5">-->
+<!--  <div class="row">-->
+<!--    <div class="col-12 text-center">-->
+<!--      <h1>Device Inventory</h1>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div class="row">-->
+<!--    <div class="col-12">-->
+<!--      <div class="chart-container">-->
+<!--        <canvas id="myChart"></canvas>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Load jQuery and Popper.js libraries &ndash;&gt;-->
+<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>-->
+
+<!--&lt;!&ndash; Load Bootstrap JavaScript &ndash;&gt;-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"></script>-->
+
+<!--<script>-->
+<!--  const url = "/graph";-->
+<!--  fetch(url)-->
+<!--          .then((response) => response.json())-->
+<!--          .then((data) => {-->
+<!--            const makes = Object.keys(data);-->
+<!--            const models = [...new Set(Object.values(data).flatMap(Object.keys))];-->
+<!--            const datasets = [];-->
+<!--            let colorIndex = 0;-->
+<!--            for (const make of makes) {-->
+<!--              const makeData = [];-->
+<!--              for (const model of models) {-->
+<!--                const modelCount = data[make][model] || 0;-->
+<!--                makeData.push(modelCount);-->
+<!--              }-->
+<!--              const color = `#${((colorIndex + 1) * 111111).toString(16)}`;-->
+<!--              datasets.push({-->
+<!--                label: make,-->
+<!--                data: makeData,-->
+<!--                backgroundColor: color,-->
+<!--                stack: make,-->
+<!--              });-->
+<!--              colorIndex++;-->
+<!--            }-->
+<!--            const chartData = {-->
+<!--              labels: models,-->
+<!--              datasets: datasets,-->
+<!--            };-->
+<!--            const chartOptions = {-->
+<!--              responsive: true,-->
+<!--              maintainAspectRatio: false,-->
+<!--              plugins: {-->
+<!--                title: {-->
+<!--                  display: true,-->
+<!--                  text: "Device Inventory",-->
+<!--                },-->
+<!--              },-->
+<!--              scales: {-->
+<!--                x: {-->
+<!--                  stacked: true,-->
+<!--                  title: {-->
+<!--                    display: true,-->
+<!--                    text: "Device Models",-->
+<!--                  },-->
+<!--                },-->
+<!--                y: {-->
+<!--                  stacked: true,-->
+<!--                  title: {-->
+<!--                    display: true,-->
+<!--                    text: "Device Count",-->
+<!--                  },-->
+<!--                },-->
+<!--              },-->
+<!--            };-->
+
+<!--            const ctx = document.getElementById("myChart").getContext("2d");-->
+<!--            const myChart = new Chart(ctx, {-->
+<!--              type: "bar",-->
+<!--              data: chartData,-->
+<!--              options: chartOptions,-->
+<!--            });-->
+<!--          })-->
+<!--          .catch((error) => {-->
+<!--            console.error(error);-->
+<!--          });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->

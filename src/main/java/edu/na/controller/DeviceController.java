@@ -9,7 +9,10 @@ import edu.na.util.MapperUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -33,7 +36,10 @@ public class DeviceController {
     }
 
     @PostMapping("/add")
-    public String saveDevice(@ModelAttribute("device") DeviceDto deviceDto, Model model) {
+    public String saveDevice(@Valid  @ModelAttribute("device") DeviceDto deviceDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "/device/add";
+        }
         Device newDevice = mapperUtil.convert(deviceDto, new Device());
         newDevice.setCheckMeOut(true);
 
@@ -59,7 +65,10 @@ public class DeviceController {
     }
 
     @PostMapping("/update/{id}")
-    public String saveUpdatedDevice(@ModelAttribute("device") DeviceDto deviceDto, Model model) {
+    public String saveUpdatedDevice(@Valid @ModelAttribute("device") DeviceDto deviceDto,BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "/device/update";
+        }
         deviceService.update(deviceDto);
 
         return "redirect:/devices/list";
@@ -70,6 +79,11 @@ public class DeviceController {
     public String deleteDevice(@PathVariable("id")Long id, DeviceDto deviceDto){
         deviceService.delete(id);
         return "redirect:/devices/list";
+    }
+    @GetMapping("/charts/bar-chart")
+    public String showDeviceBarChart(Model model){
+
+        return "/charts/device-bar-chart";
     }
 
 //    @GetMapping("/{id}")
