@@ -31,9 +31,10 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<RecordDto> findAll() {
-        return recordRepository.findAll().stream()
+        return recordRepository.findAll().stream().sorted(Comparator.comparing(Record::getDate).reversed())
                 .map(record -> mapperUtil.convert(record, new RecordDto()))
                 .collect(Collectors.toList());
+
 
     }
 

@@ -13,9 +13,7 @@ import edu.na.service.UserService;
 import edu.na.util.MapperUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -101,5 +99,16 @@ public class DeviceServiceImpl implements DeviceService {
                 .filter(deviceDto -> !deviceDto.isCheckMeOut())
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public  Map<String,Map <String, Integer>> mapDevicesByMakeModelAndCount() {
+
+        // Group the devices by make and model
+        Map<String, Map<String, Integer>> data = findAll().stream()
+                .collect(Collectors.groupingBy(DeviceDto::getMake, Collectors.groupingBy(DeviceDto::getModel,
+                        Collectors.reducing(0, deviceDto -> deviceDto.isCheckMeOut() ? 1 : 0, Integer::sum))));
+
+        return data;
     }
 }

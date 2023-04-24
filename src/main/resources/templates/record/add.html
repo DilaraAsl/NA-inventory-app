@@ -154,9 +154,9 @@
                                                         }
                                                     }
 
-                                                    // Load devices assigned to this user only if the transaction is "Retrieved"
+                                                    // Load devices assigned to this user only if the transaction is "Retrieve"
                                                     var selectedTransactionDesc = $('#trans option:selected').text();
-                                                    if (selectedTransactionDesc === 'Retrieved') {
+                                                    if (selectedTransactionDesc === 'Retrieve') {
                                                         loadDevicesForUser(selectedUserId);
                                                     }
                                                 });
@@ -169,11 +169,11 @@
 
                                                 // Check the selected transaction's description
                                                 var selectedTransactionDesc = $('#trans option:selected').text();
-                                                if (selectedTransactionDesc === 'Retrieved') {
+                                                if (selectedTransactionDesc === 'Retrieve') {
                                                     var selectedUserId = $('#user').val();
                                                     console.log(selectedUserId);
                                                     loadDevicesForUser(selectedUserId);
-                                                } else if (selectedTransactionDesc === 'Assigned') {
+                                                } else if (selectedTransactionDesc === 'Assign') {
                                                     if (selectedTransactionId) {
                                                         $.ajax({
                                                             type: 'GET',

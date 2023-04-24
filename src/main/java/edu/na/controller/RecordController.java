@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/records")
@@ -35,7 +36,7 @@ public class RecordController {
         Long id=recordRepository.getLatestRecordedRecordId();
         RecordDto recordDto=new RecordDto();
         recordDto.setId(id);
-        recordDto.setDate(LocalDate.now());
+        recordDto.setDate(LocalDateTime.now());
         model.addAttribute("record",recordDto);
         model.addAttribute("assignees",userService.findAll());
         model.addAttribute("records",recordService.findAll());

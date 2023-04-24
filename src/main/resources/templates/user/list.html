@@ -41,33 +41,33 @@
             <div class="col-md-12">
               <section class="panel">
                 <header class="panel-heading">
-                  <h2 class="panel-title">Device List</h2>
+                  <h2 class="panel-title">Assignee List</h2>
                 </header>
                 <div class="panel-body">
                   <div class="table-responsive">
                     <table class="table table-striped">
                       <thead>
                       <tr>
-                        <th scope="col">Make</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Serial Number</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Office Number</th>
+<!--                        <th scope="col">Price</th>-->
+<!--                        <th scope="col">Action</th>-->
                       </tr>
                       </thead>
 
                       <tbody>
 
-                      <tr th:each="device: ${devices}">
-                        <td th:text="${device.make}"></td>
-                        <td th:text="${device.model}"></td>
-                        <td th:text="${device.serialNumber}"></td>
-                        <td th:text="${device.quantity}"></td>
-                        <td th:text="${device.price}"></td>
+                      <tr th:each="user: ${users}">
+                        <td th:text="${user.first_name}"></td>
+                        <td th:text="${user.last_name}"></td>
+                        <td th:text="${user.user_name}"></td>
+                        <td th:text="${user.officeNo}"></td>
+<!--                        <td th:text="${device.price}"></td>-->
                         <td class="actions">
-                          <a th:href="@{/devices/update/{id}(id=${device.getId()})}" class="btn btn-warning btn-sm">Update</a>
-                          <a th:href="@{/devices/delete/{id}(id=${device.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>
+                          <a th:href="@{/users/update/{id}(id=${user.getId()})}" class="btn btn-warning btn-sm">Update</a>
+                          <a th:href="@{/users/delete/{id}(id=${user.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>
                         </td>
                       </tr>
 
@@ -84,7 +84,7 @@
         <div class="row">
           <div class="col-sm-6 col-md-6 col-lg-12">
             <div class="float-right">
-              <a th:href="@{/devices/add}"><button type="submit" class="btn btn-success">Add Device</button></a>
+              <a th:href="@{/users/add}"><button type="submit" class="btn btn-success">Add User</button></a>
             </div>
           </div>
         </div>

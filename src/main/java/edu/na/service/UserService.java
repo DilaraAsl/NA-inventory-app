@@ -12,4 +12,5 @@ public interface UserService {
     public UserDto findById(Long id);
     public UserDto delete(Long id);
     public UserDto findByUserName(String userName);
+    public boolean isUserNameUnique(String userName);
 }

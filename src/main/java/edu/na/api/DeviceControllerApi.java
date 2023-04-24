@@ -10,9 +10,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/devices")
@@ -55,13 +57,17 @@ public class DeviceControllerApi {
     public ResponseEntity<List<DeviceDto>> getDevicesForTransaction(@RequestParam("transactionId") Long transactionId) {
         if (transactionId != null) {
             TransactionDto transaction = transactionService.findById(transactionId);
-            if (transaction.getDescription().equals("Assigned")) {
+            if (transaction.getDescription().equals("Assign")) {
                 return ResponseEntity.ok(deviceService.findDevicesToCheckIn());
             }
             else return ResponseEntity.ok(deviceService.findDevicesToCheckOut());
         }
         return ResponseEntity.badRequest().build();
 
+    }
+    @GetMapping("/graph")
+    public Map<String, Map<String,Integer>> getDevicesByMakeAndModel(){
+        return deviceService.mapDevicesByMakeModelAndCount();
     }
 //@GetMapping("/add")
 //public ResponseEntity<List<DeviceDto>> getDevicesForTransaction(@RequestParam("transactionId") Long transactionId, @RequestParam(name = "userId", required = false) Long userId) {

@@ -19,6 +19,9 @@ public class DeviceDto {
     private int quantity;
 
     private boolean checkMeOut=true;
+    public int getCheckMeOutInt(){
+        return isCheckMeOut()? 1:0;
+    }
     public void setId(Long id) {
         this.id = id;
     }

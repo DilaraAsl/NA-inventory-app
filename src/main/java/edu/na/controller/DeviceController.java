@@ -6,6 +6,7 @@ import edu.na.repository.DeviceRepository;
 import edu.na.service.DeviceService;
 import edu.na.util.MapperUtil;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -65,6 +66,7 @@ public class DeviceController {
 
     }
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public String deleteDevice(@PathVariable("id")Long id, DeviceDto deviceDto){
         deviceService.delete(id);
         return "redirect:/devices/list";

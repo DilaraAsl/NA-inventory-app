@@ -4,6 +4,7 @@ package edu.na.service;
 import edu.na.dto.DeviceDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DeviceService {
     List<DeviceDto> findAll();
@@ -19,4 +20,5 @@ public interface DeviceService {
     List<DeviceDto> findDevicesToCheckIn();
 
     List<DeviceDto> findDevicesByUserId(Long userId);
+    Map<String,Map<String,Integer>> mapDevicesByMakeModelAndCount();
 }

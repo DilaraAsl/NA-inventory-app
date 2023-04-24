@@ -7,6 +7,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ public class Record extends BaseEntity {
     private Transaction transaction;
 
     @Column(name = "date")
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(name = "notes", length = 50)
     private String notes;

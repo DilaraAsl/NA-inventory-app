@@ -14,12 +14,12 @@ VALUES ('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Alice', 'Jon
 
 INSERT INTO devices(insert_date_time, insert_user_id, is_deleted, last_update_date_time,
                     last_update_user_id,make, model, serial_number, price, quantity, check_me_out)
-VALUES('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Samsung', 'Galaxy S21', 123456789012345, 89900, 10, false),
-      ('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Apple', 'iPhone 12 Pro', 234567890123456, 109900, 5, false),
-      ('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Google', 'Pixel 5', 345678901234567, 79900, 20, false),
+VALUES('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Samsung', 'Galaxy S21', 123456789012345, 89900, 10, true),
+      ('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Apple', 'iPhone 12 Pro', 234567890123456, 109900, 5, true),
+      ('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Google', 'Pixel 5', 345678901234567, 79900, 20, true),
       ('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'OnePlus', '8T', 456789012345678, 59900, 15, true),
       ('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Motorola', 'Moto G Power', 567890123456789, 24900, 25, true);
 
 insert into transactions(insert_date_time, insert_user_id, is_deleted, last_update_date_time,
-                         last_update_user_id,description) values ('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1,'Assigned'),('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Retrieved');
+                         last_update_user_id,description) values ('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1,'Assign'),('2022-09-09 00:00:00', 1, false, '2022-09-09 00:00:00', 1, 'Retrieve');
 

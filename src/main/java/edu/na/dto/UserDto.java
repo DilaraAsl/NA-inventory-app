@@ -16,19 +16,20 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class UserDto {
     Long id;
-    @NotBlank (message = "First name is required field")
+    @NotBlank (message = "First name is required.")
     @Size(max = 50, min = 2, message = "First name must be between 2 and 50 characters long")
     private String first_name;
-    @NotBlank (message = "Last name is required field")
-    @Size(max = 50, min = 2, message = "First name must be between 2 and 50 characters long")
+    @NotBlank (message = "Last name is required.")
+    @Size(max = 50, min = 2, message = "Last name must be between 2 and 50 characters long")
     private String last_name;
-    @NotBlank(message = "Username is required")
-    @Email(message = "Email is required field" )
+    @NotBlank(message = "Username is required.")
+    @Email(message = "Email is required." )
     private String user_name;
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email is required field" )
+//    @NotBlank(message = "Email is required")
+//    @Email(message = "Email is required field" )
     private String email;
-    @NotBlank
+
+    // password is assigned only to admin and student worker
     private String password;
 
 //    public UserDto(Long id, String user_name) {
@@ -36,8 +37,8 @@ public class UserDto {
 //        this.user_name = user_name;
 //    }
 
-    @NotBlank
+    @NotBlank(message = "Office number is required")
     private String officeNo;
-    @NotBlank
+
     private RoleDto roleDto;
 }

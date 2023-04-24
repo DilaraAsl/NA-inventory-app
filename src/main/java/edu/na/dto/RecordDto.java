@@ -5,7 +5,9 @@ import edu.na.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.Format;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Getter
@@ -16,8 +18,8 @@ public class RecordDto {
 
     private Long id;
     private TransactionDto transaction;
-
-    private LocalDate date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime date;
 
     private String notes;
 
