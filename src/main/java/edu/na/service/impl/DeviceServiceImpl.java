@@ -38,6 +38,18 @@ public class DeviceServiceImpl implements DeviceService {
                 .collect(Collectors.toList());
 
     }
+//    public List<DeviceDto> listBySerialNo() {
+//        return findAll()
+//                .stream()
+//                .sorted(Comparator.comparingLong(deviceDto -> Long.parseLong(deviceDto.getSerialNumber())))
+//                .collect(Collectors.toList());
+//    }
+public List<DeviceDto> listBySerialNo() {
+    return findAll()
+            .stream()
+            .sorted(Comparator.comparing(DeviceDto::getSerialNumber))
+            .collect(Collectors.toList());
+}
 
     @Override
     public DeviceDto save(DeviceDto deviceDto) {

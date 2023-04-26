@@ -3,17 +3,21 @@ package edu.na.controller;
 import edu.na.dto.DeviceDto;
 import edu.na.dto.RecordDto;
 import edu.na.dto.UserDto;
+import edu.na.entity.User;
 import edu.na.repository.RecordRepository;
 import edu.na.service.DeviceService;
 import edu.na.service.RecordService;
 import edu.na.service.TransactionService;
 import edu.na.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/records")
@@ -55,6 +59,7 @@ public class RecordController {
 
 //        model.addAttribute("assignees",userService.findAll());
         model.addAttribute("records",recordService.findAll());
+//        model.addAttribute("updatedBy",recordRepository.findListOfUsersWhoUpdatedRecord());
 //        model.addAttribute("transactions",transactionService.listAllTransactions());
 //        model.addAttribute("devices",deviceService.findAll());
         return "/record/list";
@@ -83,6 +88,13 @@ public class RecordController {
         return "redirect:/records/list";
 
     }
+    @PreAuthorize("hasRole('Admin')")
+    @GetMapping("/delete/{id}")
+    public String deleteRecord(@PathVariable("id")Long id){
+        recordService.delete(id);
+        return "redirect:/records/list";
+    }
+
     @GetMapping("/device-search")
     public String searchDeviceRecord(Model model) {
 
@@ -93,7 +105,7 @@ public class RecordController {
 //        model.addAttribute("devices",deviceService.findAll());
 
 //        model.addAttribute("device",new DeviceDto());
-        model.addAttribute("devices",deviceService.findAll());
+        model.addAttribute("devices",deviceService.listBySerialNo());
 
 
         return "/record/device-search";

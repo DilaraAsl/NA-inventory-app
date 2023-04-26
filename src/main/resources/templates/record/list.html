@@ -67,6 +67,7 @@
                         <th scope="col">Serial Number</th>
                         <th scope="col">Note</th>
                         <th scope="col">Transaction</th>
+                        <th scope="col">Updated By</th>
                         <th scope="col">Action</th>
                       </tr>
                       </thead>
@@ -84,6 +85,7 @@
                         <td th:text="${record.device.getSerialNumber()}"></td>
                         <td th:text="${record.notes}"></td>
                         <td th:text="${record.transaction.getDescription()}"></td>
+                        <td th:text="${record.getUpdatedBy()}"></td>
                         <td class="actions">
                           <a th:href="@{/records/update/{id}(id=${record.getId()})}" class="btn btn-warning btn-sm">Update</a>
                           <a th:href="@{/records/delete/{id}(id=${record.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>

@@ -8,6 +8,7 @@ import edu.na.exceptions.RecordNotFoundException;
 import edu.na.repository.RecordRepository;
 import edu.na.service.DeviceService;
 import edu.na.service.RecordService;
+import edu.na.service.SecurityService;
 import edu.na.util.MapperUtil;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class RecordServiceImpl implements RecordService {
+    private final SecurityService securityService;
     private final RecordRepository recordRepository;
     private final DeviceService deviceService;
     private final MapperUtil mapperUtil;
 
-    public RecordServiceImpl(RecordRepository recordRepository, @Lazy DeviceService deviceService, MapperUtil mapperUtil) {
+    public RecordServiceImpl(@Lazy SecurityService securityService, RecordRepository recordRepository, @Lazy DeviceService deviceService, MapperUtil mapperUtil) {
+        this.securityService = securityService;
         this.recordRepository = recordRepository;
         this.deviceService = deviceService;
         this.mapperUtil = mapperUtil;
@@ -37,21 +40,26 @@ public class RecordServiceImpl implements RecordService {
 
 
     }
-
+// saveRecord should be used in update and delete methods to eliminate the boiler plate code
     @Override
     public RecordDto save(RecordDto recordDto) {
         DeviceDto deviceDto = deviceService.findDevice(recordDto.getDevice().getId());
         if (recordDto.getTransaction().getId() == 1 && deviceDto.isCheckMeOut())
-            deviceDto.setCheckMeOut(false);
-        else if (recordDto.getTransaction().getId() == 2 && !deviceDto.isCheckMeOut())
+        {  deviceDto.setCheckMeOut(false); recordDto.setTransactionComplete(false);}
+        else if (recordDto.getTransaction().getId() == 2 && !deviceDto.isCheckMeOut()) {
             deviceDto.setCheckMeOut(true);
+            //if transaction is complete , if it is true, the record can be deleted
+            recordDto.setTransactionComplete(true);
+        }
         deviceService.save(deviceDto);
+        recordDto.setUpdatedBy(securityService.getLoggedInUser().getUser_name());
         recordRepository.save(mapperUtil.convert(recordDto, new Record()));
         return recordDto;
     }
 
     @Override
     public RecordDto update(RecordDto recordDto) {
+        recordDto.setUpdatedBy(securityService.getLoggedInUser().getUser_name());
         Optional<Record> record = recordRepository.findById(recordDto.getId());
         Record newRecord = mapperUtil.convert(recordDto, new Record());
         newRecord.setId(record.get().getId());
@@ -67,10 +75,17 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public RecordDto delete(Long id) {
+
         Record record=recordRepository.findById(id).orElseThrow(()->new RecordNotFoundException("Record with id:"+id+" Not Found"));
+        // if the record shows the device is retrieved than the record can be deleted
+//        if(record.getTransaction().getDescription().equals("Retrieve"))
+
         record.setIsDeleted(true);
+        record.setUpdatedBy(securityService.getLoggedInUser().getUser_name());
         recordRepository.save(record);
-        return mapperUtil.convert(record,new RecordDto());
+        RecordDto recordDto= mapperUtil.convert(record,new RecordDto());
+        recordDto.setUpdatedBy(record.getUpdatedBy());
+        return recordDto;
     }
 
     @Override

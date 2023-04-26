@@ -29,7 +29,8 @@ public class DeviceControllerApi {
 
     @GetMapping
     public ResponseEntity<List<DeviceDto>> listDevices(){
-        return ResponseEntity.ok(deviceService.findAll());
+
+        return ResponseEntity.ok(deviceService.listBySerialNo());
     }
 
     @PostMapping()

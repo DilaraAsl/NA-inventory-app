@@ -1,14 +1,12 @@
 package edu.na.service.impl;
 
-import edu.na.dto.RecordDto;
 import edu.na.dto.UserDto;
-import edu.na.entity.Record;
 import edu.na.entity.User;
 import edu.na.exceptions.UserNotFoundException;
 import edu.na.repository.UserRepository;
+import edu.na.service.RecordService;
 import edu.na.service.UserService;
 import edu.na.util.MapperUtil;
-import org.hibernate.engine.query.spi.ReturnMetadata;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +15,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final RecordService recordService;
     private final MapperUtil mapperUtil;
 
-    public UserServiceImpl(UserRepository userRepository, MapperUtil mapperUtil) {
+    public UserServiceImpl(UserRepository userRepository, RecordService recordService, MapperUtil mapperUtil) {
         this.userRepository = userRepository;
+        this.recordService = recordService;
         this.mapperUtil = mapperUtil;
     }
 
@@ -51,6 +51,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto delete(Long id) {
         User user=userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User "+id+" does not exist."));
+        UserDto userDto=findById(id);
+        // if user has an item in her/his position then user cannot be deleted
+    
+
         user.setIsDeleted(true);
         userRepository.save(user);
         return mapperUtil.convert(user,new UserDto());

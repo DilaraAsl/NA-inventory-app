@@ -27,4 +27,7 @@ public class RecordDto {
 
     private DeviceDto device;
 
+    private String updatedBy;
+    private boolean isTransactionComplete=false;
+
 }

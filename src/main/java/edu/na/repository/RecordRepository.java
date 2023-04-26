@@ -2,6 +2,7 @@ package edu.na.repository;
 
 import edu.na.entity.Device;
 import edu.na.entity.Record;
+import edu.na.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,5 +23,9 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
 //      Record findRecordByDeviceId(Long id);
     @Query(value = "SELECT EXISTS(SELECT 1 FROM Records WHERE device_id = ?1)", nativeQuery = true)
     boolean deviceExistsInRecord(Long deviceId);
+@Query(value = "SELECT u.user_name from records r join users u on r.last_update_user_id=u.id where r.id=?1",nativeQuery = true)
+    List<String> findWhoUpdatedRecord(Long id);
 
+    @Query(value = "SELECT u.user_name from records r join users u on r.last_update_user_id=u.id",nativeQuery = true)
+    List<String> findListOfUsersWhoUpdatedRecord();
 }

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "records")
+@Where(clause = "is_deleted=false")
 
 public class Record extends BaseEntity {
 
@@ -32,6 +33,9 @@ public class Record extends BaseEntity {
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     private Device device;
+
+    private String updatedBy;
+    boolean isTransactionComplete=false;
 
     // Constructor, getters, and setters
 }
