@@ -51,6 +51,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">Last Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Role</th>
                         <th scope="col">Office Number</th>
 <!--                        <th scope="col">Price</th>-->
 <!--                        <th scope="col">Action</th>-->
@@ -63,6 +64,7 @@
                         <td th:text="${user.first_name}"></td>
                         <td th:text="${user.last_name}"></td>
                         <td th:text="${user.user_name}"></td>
+                        <td th:text="${@userServiceImpl.findRoleByUserName(user.user_name)}"></td>
                         <td th:text="${user.officeNo}"></td>
 <!--                        <td th:text="${device.price}"></td>-->
                         <td class="actions">

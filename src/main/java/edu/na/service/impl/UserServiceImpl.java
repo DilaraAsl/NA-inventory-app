@@ -1,10 +1,13 @@
 package edu.na.service.impl;
 
+import edu.na.dto.RoleDto;
 import edu.na.dto.UserDto;
+import edu.na.entity.Role;
 import edu.na.entity.User;
 import edu.na.exceptions.UserNotFoundException;
 import edu.na.repository.UserRepository;
 import edu.na.service.RecordService;
+import edu.na.service.SecurityService;
 import edu.na.service.UserService;
 import edu.na.util.MapperUtil;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RecordService recordService;
+
     private final MapperUtil mapperUtil;
 
     public UserServiceImpl(UserRepository userRepository, RecordService recordService, MapperUtil mapperUtil) {
@@ -73,6 +77,13 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = findByUserName(userName);
         if (userDto == null || userDto.getUser_name() == null) return true;
         return false;
+    }
+
+    @Override
+    public String findRoleByUserName(String userName) {
+        Role role=userRepository.retrieveRoleOfUser(userName);
+        return role !=null ? role.getDescription() : null;
+
     }
 
 

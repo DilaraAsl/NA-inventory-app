@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+
+<div class="dashboard-main-wrapper">
+
+    <div th:replace="/fragments/header :: header"></div>
+
+    <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
+
+    <div class="dashboard-wrapper">
+
+        <div class="dashboard-ecommerce">
+
+            <div class="container-fluid dashboard-content">
+
+                <div class="ecommerce-widget">
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-12">
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ------------------------TABLE START----------------------------- -->
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="col-md-12">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Assignee List</h2>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Last Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Role</th>
+                                                <th scope="col">Office Number</th>
+                                                <!--                        <th scope="col">Price</th>-->
+                                                <!--                        <th scope="col">Action</th>-->
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                            <tr th:each="user: ${users}">
+                                                <td th:text="${user.first_name}"></td>
+                                                <td th:text="${user.last_name}"></td>
+                                                <td th:text="${user.user_name}"></td>
+                                                <td th:text="${@userServiceImpl.findRoleByUserName(user.user_name)}"></td>
+                                                <td th:text="${user.officeNo}"></td>
+                                                <!--                        <td th:text="${device.price}"></td>-->
+                                                <td class="actions">
+                                                    <a th:href="@{/admin/user/update/{id}(id=${user.getId()})}" class="btn btn-warning btn-sm">Update</a>
+                                                    <!--                          Add user field isOnlyAdmin -->
+                                                    <!--                          <span th:if="${user.isOnlyAdmin || #authentication.principal.getUsername().equals(user.username)}"-->
+                                                    <!--                                class="d-inline-block"-->
+                                                    <!--                                tabindex="0" data-placement="right"-->
+                                                    <!--                                data-toggle="tooltip"-->
+                                                    <!--                                title="Can not be deleted! This user is only admin for this company or logged in admin.">-->
+                                                    <!--                                                                        <button-->
+                                                    <!--                                                                                class="btn btn-secondary mb-2 ml-2 mb-sm-0 mr-sm-2"-->
+                                                    <!--                                                                                style="pointer-events: none;"-->
+                                                    <!--                                                                                disabled> Delete-->
+                                                    <!--                                                                        </button>-->
+                                                    <!--                                                                    </span>-->
+                                                    <!--                          <a th:unless="${user.isOnlyAdmin || #authentication.principal.getUsername().equals(user.username)}"-->
+                                                    <!--                             th:href="@{/users/delete/{id}(id=${user.getId()})}" th:type="button"><button class="delete-row btn btn-secondary btn-sm">Delete </button>></a>-->
+                                                    <a th:href="@{/admin/user/delete/{id}(id=${user.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ------------------------TABLE END----------------------------- -->
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-12">
+                        <div class="float-right">
+                            <a th:href="@{/admin/user/add}"><button type="submit" class="btn btn-success">Add Assignee</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div th:replace="/fragments/footer :: footer"></div>
+
+</div>
+
+<div th:replace="/fragments/javascript :: js"></div>
+
+</body>
+
+</html>

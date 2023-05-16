@@ -1,16 +1,18 @@
 package edu.na.service;
 
 import edu.na.dto.RecordDto;
+import edu.na.dto.RoleDto;
 import edu.na.dto.UserDto;
 
 import java.util.List;
 
 public interface UserService {
-    public List<UserDto> findAll();
-    public UserDto save(UserDto userDto);
+    List<UserDto> findAll();
+    UserDto save(UserDto userDto);
+    UserDto findById(Long id);
+    UserDto delete(Long id);
+    UserDto findByUserName(String userName);
+    boolean isUserNameUnique(String userName);
+    String findRoleByUserName(String userName);
 
-    public UserDto findById(Long id);
-    public UserDto delete(Long id);
-    public UserDto findByUserName(String userName);
-    public boolean isUserNameUnique(String userName);
 }

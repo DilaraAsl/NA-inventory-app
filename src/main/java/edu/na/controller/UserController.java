@@ -2,6 +2,7 @@ package edu.na.controller;
 
 import edu.na.dto.RoleDto;
 import edu.na.dto.UserDto;
+import edu.na.service.RoleService;
 import edu.na.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +15,17 @@ import javax.validation.Valid;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final RoleService roleService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/add")
     String addNewUser(Model model) {
         model.addAttribute("user", new UserDto());
+        model.addAttribute("roles",roleService.listAllRoles());
 
         return "/user/add";
     }
@@ -37,6 +41,7 @@ public class UserController {
         }
         RoleDto role = new RoleDto();
         role.setId(3L);
+
         userDto.setRoleDto(role);
 //        username and email are the same
         userDto.setEmail(userDto.getUser_name());

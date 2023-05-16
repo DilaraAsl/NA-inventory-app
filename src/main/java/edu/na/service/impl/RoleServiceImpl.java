@@ -5,10 +5,11 @@ import edu.na.repository.RoleRepository;
 import edu.na.service.RoleService;
 import edu.na.service.SecurityService;
 import edu.na.util.MapperUtil;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
     private final MapperUtil mapperUtil;
