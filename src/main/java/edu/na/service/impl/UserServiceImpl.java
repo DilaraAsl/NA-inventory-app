@@ -86,5 +86,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public RoleDto findRoleIdByUserName(String userName) {
+        Role role=userRepository.retrieveRoleOfUser(userName);
+        return role !=null ? mapperUtil.convert(role,new RoleDto()) : null;
+    }
+
 
 }

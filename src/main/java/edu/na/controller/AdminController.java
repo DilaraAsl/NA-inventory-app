@@ -61,9 +61,9 @@ public class AdminController {
     @GetMapping("/update/{id}")
     public String updateUser(@PathVariable("id")Long id, Model model){
         UserDto userDto=userService.findById(id);
-        RoleDto roleDto=userDto.getRoleDto();
+        RoleDto roleDto=userService.findRoleIdByUserName(userDto.getUser_name());
+        userDto.setRoleDto(roleDto);
         model.addAttribute("user",userDto);
-        model.addAttribute("role",roleDto);
         model.addAttribute("roles",roleService.listAllRoles());
         return "/admins/update-user";
     }
@@ -73,6 +73,6 @@ public class AdminController {
             return "/admins/update-user";
         }
         userService.save(userDto);
-        return "redirect:/admin/users/list";
+        return "redirect:/admin/user/list";
     }
 }

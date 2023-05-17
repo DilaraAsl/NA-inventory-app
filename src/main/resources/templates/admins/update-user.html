@@ -90,14 +90,24 @@
                                             </div>
                                             <div class="col-sm-6 col-md-4">
                                                 <div class="form-group">
+<!--                                                    <label>Role</label>-->
+<!--                                                    <select id="roles" class="form-control" th:field="*{roleDto}">-->
+<!--                                                        <option th:if="${roles.size() > 1}" th:value="''" th:text="'Select'" selected></option>-->
+<!--                                                        <option th:each="role: ${roles}"-->
+<!--                                                                th:value="${{role.id}}"-->
+<!--                                                                th:text="${role.description}"-->
+<!--                                                                th:selected="${role.id}==user.role.id">-->
+<!--                                                        </option>-->
+<!--                                                    </select>-->
                                                     <label>Role</label>
-                                                    <select id="roles" class="form-control" th:field="*{roleDto}" onchange="onTransactionChange()">
-                                                        <option th:if="${roles.size() > 1}" th:value="''" th:text="'Select'" selected></option>
-                                                        <option th:each="role: ${roles}"
-                                                                th:value="${role.id}"
-                                                                th:text="${role.description}"
-                                                                th:selected="${role.getId()}==${user.getRoleDto().getId()}">
-                                                        ></option>
+                                                    <select id="trans" class="form-control" th:field="*{roleDto}">
+                                                        <option th:if="${roles.size()> 1}"
+                                                                th:value="''" th:text="'Select'" selected></option>
+                                                        <option th:each= "role:${roles}"
+                                                                th:value="${{role.getId()}}"
+                                                                th:text="${role.getDescription()}"
+                                                                th:selected="${role.id}==${user.getRoleDto().getId()}">
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
