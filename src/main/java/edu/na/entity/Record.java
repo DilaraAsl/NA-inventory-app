@@ -35,7 +35,7 @@ public class Record extends BaseEntity {
     private Device device;
 
     private String updatedBy;
-//    boolean isTransactionComplete=false;
+    boolean isTransactionComplete=false;
 
     // Constructor, getters, and setters
 }

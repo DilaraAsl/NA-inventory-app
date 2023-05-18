@@ -2,6 +2,7 @@ package edu.na.service;
 
 import edu.na.dto.RecordDto;
 import edu.na.dto.UserDto;
+import edu.na.entity.Record;
 
 import java.util.List;
 
@@ -18,5 +19,7 @@ public interface RecordService {
 
 
     boolean deviceExistInRecord(Long id);
+    Boolean isTransactionCompleteByUser(Long userId);
+
 
 }

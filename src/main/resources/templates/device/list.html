@@ -67,7 +67,24 @@
                         <td th:text="${device.price}"></td>
                         <td class="actions">
                           <a th:href="@{/devices/update/{id}(id=${device.getId()})}" class="btn btn-warning btn-sm">Update</a>
-                          <a th:href="@{/devices/delete/{id}(id=${device.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>
+<!--                          <a th:href="@{/devices/delete/{id}(id=${device.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>-->
+                          <span th:if="${@recordServiceImpl.deviceExistInRecord(device.getId())}"
+                                class="d-inline-block" tabindex="0"
+                                data-toggle="tooltip"
+                                data-placement="right"
+                                title="This device appears in records and cannot be deleted!">
+                                                                        <button
+                                                                                class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
+                                                                                style="pointer-events: none;" disabled>Delete
+                                                                        </button>
+                                                                    </span>
+                          <a th:unless="${@recordServiceImpl.deviceExistInRecord(device.getId())}"
+                             th:href="@{/devices/delete/{id}(id=${device.getId()})}"
+                             type="button">
+                            <button class="btn btn-danger mb-2 mb-sm-0 mr-sm-2">
+                              Delete
+                            </button>
+                          </a>
                         </td>
                       </tr>
 

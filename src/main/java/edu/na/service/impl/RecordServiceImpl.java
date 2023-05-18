@@ -13,6 +13,8 @@ import edu.na.util.MapperUtil;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import javax.xml.transform.Source;
+import java.math.BigInteger;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -34,21 +36,31 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<RecordDto> findAll() {
-        return recordRepository.findAll().stream().sorted(Comparator.comparing(Record::getDate).reversed())
+        return recordRepository.findAll().stream()
+                .sorted(Comparator.comparing(Record::getDate).reversed())
                 .map(record -> mapperUtil.convert(record, new RecordDto()))
                 .collect(Collectors.toList());
 
 
     }
-// saveRecord should be used in update and delete methods to eliminate the boiler plate code
+
+    // saveRecord should be used in update and delete methods to eliminate the boiler plate code
     @Override
     public RecordDto save(RecordDto recordDto) {
         DeviceDto deviceDto = deviceService.findDevice(recordDto.getDevice().getId());
-        if (recordDto.getTransaction().getId() == 1 && deviceDto.isCheckMeOut())
-        {  deviceDto.setCheckMeOut(false); recordDto.setTransactionComplete(false);}
-        else if (recordDto.getTransaction().getId() == 2 && !deviceDto.isCheckMeOut()) {
+        if (recordDto.getTransaction().getId() == 1 && deviceDto.isCheckMeOut()) {
+            deviceDto.setCheckMeOut(false);
+            recordDto.setTransactionComplete(false);
+        } else if (recordDto.getTransaction().getId() == 2 && !deviceDto.isCheckMeOut()) {
             deviceDto.setCheckMeOut(true);
             //if transaction is complete , if it is true, the record can be deleted
+            // if transaction is complete then the assignment record should show that the transaction is complete
+
+            System.out.println("User Id: " + recordDto.getUser().getId());
+            System.out.println("Device Id: " + recordDto.getDevice().getId());
+            Record assignmentRecord = recordRepository.findAssignedDeviceRecordByUserIdAndDeviceId(recordDto.getUser().getId(), recordDto.getDevice().getId());
+            assignmentRecord.setTransactionComplete(true);
+            recordRepository.save(assignmentRecord);
             recordDto.setTransactionComplete(true);
         }
         deviceService.save(deviceDto);
@@ -76,14 +88,14 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public RecordDto delete(Long id) {
 
-        Record record=recordRepository.findById(id).orElseThrow(()->new RecordNotFoundException("Record with id:"+id+" Not Found"));
+        Record record = recordRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record with id:" + id + " Not Found"));
         // if the record shows the device is retrieved than the record can be deleted
-//        if(record.getTransaction().getDescription().equals("Retrieve"))
-
-        record.setIsDeleted(true);
-        record.setUpdatedBy(securityService.getLoggedInUser().getUser_name());
-        recordRepository.save(record);
-        RecordDto recordDto= mapperUtil.convert(record,new RecordDto());
+        if (record.isTransactionComplete()) {
+            record.setIsDeleted(true);
+            record.setUpdatedBy(securityService.getLoggedInUser().getUser_name());
+            recordRepository.save(record);
+        }
+        RecordDto recordDto = mapperUtil.convert(record, new RecordDto());
         recordDto.setUpdatedBy(record.getUpdatedBy());
         return recordDto;
     }
@@ -111,4 +123,13 @@ public class RecordServiceImpl implements RecordService {
         return recordRepository.deviceExistsInRecord(id);
 
     }
+
+    @Override
+    public Boolean isTransactionCompleteByUser(Long userId) {
+        // postgresql does not accept long type, but BigInteger
+        BigInteger userIdBigInteger = BigInteger.valueOf(userId);
+        return recordRepository.isTransactionCompleteByUserId(userIdBigInteger);
+
+    }
+
 }

@@ -2,10 +2,13 @@ package edu.na.repository;
 
 import edu.na.entity.Device;
 import edu.na.entity.Record;
+import edu.na.entity.Transaction;
 import edu.na.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public interface RecordRepository extends JpaRepository<Record, Long> {
@@ -28,4 +31,11 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
 
     @Query(value = "SELECT u.user_name from records r join users u on r.last_update_user_id=u.id",nativeQuery = true)
     List<String> findListOfUsersWhoUpdatedRecord();
+
+    @Query(value = "select rec.is_transaction_complete from Records rec where rec.assignee_id=?1 order by rec.is_transaction_complete asc limit 1",nativeQuery = true)
+    Boolean isTransactionCompleteByUserId(BigInteger id);
+//@Query(value = "select rec.isTransactionComplete from Record rec join User u on u.id=rec.user.id where u.user_name=?1 order by rec.isTransactionComplete asc limit 1")
+//Boolean isTransactionCompleteByUserId(String username);
+    @Query(value = "select r from Record r where r.user.id=?1 and r.device.id=?2 and r.transaction.id=1")
+    Record findAssignedDeviceRecordByUserIdAndDeviceId(Long userId,Long deviceId);
 }

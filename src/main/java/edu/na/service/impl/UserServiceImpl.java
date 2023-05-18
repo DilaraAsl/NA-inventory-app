@@ -12,6 +12,7 @@ import edu.na.service.UserService;
 import edu.na.util.MapperUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> findAll() {
 
         return userRepository.findAll().stream()
+                .sorted(Comparator.comparing(User::getFirst_name))
                 .map(user -> mapperUtil.convert(user, new UserDto()))
                 .collect(Collectors.toList());
     }
@@ -55,12 +57,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto delete(Long id) {
         User user=userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User "+id+" does not exist."));
-        UserDto userDto=findById(id);
-        // if user has an item in her/his position then user cannot be deleted
-    
+//        UserDto userDto=findById(id);
 
+        // if user has an item in her/his position then user cannot be deleted
+//        if transcation is not complete then the user has items user cannot be deleted
+    
+        if(recordService.isTransactionCompleteByUser(id)){
         user.setIsDeleted(true);
-        userRepository.save(user);
+        userRepository.save(user);}
         return mapperUtil.convert(user,new UserDto());
     }
 

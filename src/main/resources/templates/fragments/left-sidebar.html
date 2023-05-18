@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 
 <body>
 
@@ -21,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav flex-column">
                         <li class="nav-divider"></li>
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('Admin')">
                             <a class="nav-link"
                                href="#"
                                data-toggle="collapse"
@@ -32,18 +34,18 @@
                                 User
                                 <span class="badge badge-success">6</span>
                             </a>
-                            <div id="submenu-1" class="collapse submenu" style="">
+                            <div id="submenu-1" class="collapse submenu" style="" >
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin')">
                                         <a class="nav-link" th:href="@{/admin/user}">Add User</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin')">
                                         <a class="nav-link" th:href="@{/admin/user/list}">User List</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                             <a class="nav-link"
                                href="#"
                                data-toggle="collapse"
@@ -56,16 +58,16 @@
                             </a>
                             <div id="submenu-2" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                                         <a class="nav-link" th:href="@{/users/add}">Add Assignee</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                                         <a class="nav-link" th:href="@{/users/list}">Assignee List</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                             <a class="nav-link"
                                href="#"
                                data-toggle="collapse"
@@ -78,16 +80,16 @@
                             </a>
                             <div id="submenu-3" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                                         <a class="nav-link" th:href="@{/devices/add}">Add Device</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                                         <a class="nav-link" th:href="@{/devices/list}">Device List</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                             <a class="nav-link"
                                href="#"
                                data-toggle="collapse"
@@ -100,11 +102,11 @@
                             </a>
                             <div id="submenu-4" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                                         <a class="nav-link" th:href="@{/records/add}">Add Record
                                             <span class="badge badge-secondary">New</span></a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                                         <a class="nav-link" th:href="@{/records/list}">List Records</a>
                                     </li>
                                     <li class="nav-item">
@@ -116,7 +118,7 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                             <a class="nav-link"
                                href="#"
                                data-toggle="collapse"
@@ -128,10 +130,10 @@
                             </a>
                             <div id="submenu-5" class="collapse submenu" style="">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                                         <a class="nav-link" th:href="@{/devices/charts/bar-chart}">Devices in stock </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
                                         <a class="nav-link" th:href="@{/devices/charts/bar-chart/assigned}">Devices assigned </a>
                                     </li>
                                 </ul>
