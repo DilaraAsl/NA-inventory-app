@@ -75,4 +75,9 @@ public class AdminController {
         userService.save(userDto);
         return "redirect:/admin/user/list";
     }
+    @GetMapping("/delete/{id}")
+    String deleteUser(@PathVariable("id")Long id){
+        userService.delete(id);
+        return "redirect:/admin/user/list";
+    }
 }

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+
+<div class="dashboard-main-wrapper">
+
+    <div th:replace="/fragments/header :: header"></div>
+
+    <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
+
+    <div class="dashboard-wrapper">
+
+        <div class="dashboard-ecommerce">
+
+            <div class="container-fluid dashboard-content">
+
+                <div class="ecommerce-widget">
+
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-12">
+
+                            <section class="panel panel-transparent">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Search Device</h2>
+                                </header>
+
+                                <div class="panel-body">
+
+                                    <form th:action="@{/devices/device-search}" method="post">
+                                        <div class="form-group">
+                                            <label for="sno">Device Serial Number</label>
+                                            <select id="sno" class="form-control" name="serialNumber">
+                                                <option value="" selected>Select</option>
+                                                <option th:each="device : ${devices}" th:value="${device.serialNumber}"
+                                                        th:text="${device.serialNumber}"></option>
+                                            </select>
+                                        </div>
+                                        <button type="submit"
+                                                class="btn btn-primary d-inline-block mb-2 mb-sm-0 mr-sm-2">Search
+                                        </button>
+                                    </form>
+                                    <br><br><br><br>
+                                    <!-- ------------------------FORM END----------------------------- -->
+
+                                </div>
+
+                            </section>
+
+                        </div>
+                    </div>
+                        <!-- ------------------------TABLE START----------------------------- -->
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="col-md-12">
+                                    <section class="panel">
+                                        <header class="panel-heading">
+                                            <h3 class="panel-title">Device Search Result</h3>
+                                        </header>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">Make</th>
+                                                        <th scope="col">Model</th>
+                                                        <th scope="col">Serial Number</th>
+                                                        <th scope="col">Quantity</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:if="${foundDevice != null}">
+                                                        <td th:text="${foundDevice.make}"></td>
+                                                        <td th:text="${foundDevice.model}"></td>
+                                                        <td th:text="${foundDevice.serialNumber}"></td>
+                                                        <td th:text="${foundDevice.quantity}"></td>
+                                                        <td th:text="${foundDevice.price}"></td>
+                                                        <td class="actions">
+                                                            <a th:href="@{/devices/update/{id}(id=${foundDevice.getId()})}"
+                                                               class="btn btn-warning d-inline-block mb-2 mb-sm-0 mr-sm-2">Update</a>
+                                                            <span th:if="${@recordServiceImpl.deviceExistInRecord(foundDevice.getId())}"
+                                                                  class="d-inline-block" tabindex="0"
+                                                                  data-toggle="tooltip"
+                                                                  data-placement="right"
+                                                                  title="This device appears in records and cannot be deleted!"><button
+                                                                    class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
+                                                                    style="pointer-events: none;" disabled>Delete</button>
+                                                                        </span>
+                                                            <a th:unless="${@recordServiceImpl.deviceExistInRecord(foundDevice.getId())}"
+                                                               th:href="@{/devices/delete/{id}(id=${foundDevice.getId()})}">
+                                                                <button class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"
+                                                                        style="outline: none; text-decoration: none; width: fit-content;">
+                                                                    Delete
+                                                                </button>
+                                                            </a>
+                                                            <a th:href="@{/devices/commission/{id}(id=${foundDevice.getId()})}"
+                                                               class="btn btn-primary d-inline-block mb-2 mb-sm-0 mr-sm-2">Decommission</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr th:unless="${foundDevice != null}">
+                                                        <td colspan="6">No device found.</td>
+                                                    </tr>
+                                                    </tbody>
+                                                    <!-- Table End... -->
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ------------------------TABLE END----------------------------- -->
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div th:replace="/fragments/footer :: footer"></div>
+
+</div>
+
+<div th:replace="/fragments/javascript :: js"></div>
+
+</body>
+
+</html>

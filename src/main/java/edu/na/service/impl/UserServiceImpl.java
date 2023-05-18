@@ -61,8 +61,8 @@ public class UserServiceImpl implements UserService {
 
         // if user has an item in her/his position then user cannot be deleted
 //        if transcation is not complete then the user has items user cannot be deleted
-    
-        if(recordService.isTransactionCompleteByUser(id)){
+    // if the user has no records, if the record is null
+        if(recordService.isTransactionCompleteByUser(user.getId()) == null || recordService.isTransactionCompleteByUser(user.getId())){
         user.setIsDeleted(true);
         userRepository.save(user);}
         return mapperUtil.convert(user,new UserDto());

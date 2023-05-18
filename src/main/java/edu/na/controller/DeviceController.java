@@ -80,6 +80,12 @@ public class DeviceController {
         deviceService.delete(id);
         return "redirect:/devices/list";
     }
+    @GetMapping("/commission/{id}")
+    @PreAuthorize("hasRole('Admin')")
+    public String commissionDevice(@PathVariable("id")Long id, DeviceDto deviceDto){
+        deviceService.commissionDevice(id);
+        return "redirect:/devices/list";
+    }
     @GetMapping("/charts/bar-chart")
     public String showDeviceBarChart(Model model){
 
@@ -89,6 +95,25 @@ public class DeviceController {
     public String showAssignedDeviceBarChart(Model model){
 
         return "/charts/assigned-devices-bar-chart";
+    }
+    @GetMapping("/device-search")
+    public String searchDevice(Model model) {
+
+        model.addAttribute("devices",deviceService.listBySerialNo());
+
+
+        return "/device/search";
+
+    }
+
+    @PostMapping("/device-search")
+    public String deviceSearchResults( @RequestParam("serialNumber") String serialNumber,Model model) {
+        model.addAttribute("devices",deviceService.listBySerialNo());
+        model.addAttribute("foundDevice",deviceService.findDeviceBySerialNo(serialNumber) );
+
+
+        return "/device/search";
+
     }
 
 //    @GetMapping("/{id}")

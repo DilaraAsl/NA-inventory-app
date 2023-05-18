@@ -35,6 +35,7 @@ public class DeviceDto {
     @Positive(message = "Quantity must be greater than zero.")
     private int quantity;
 
+
     private boolean checkMeOut=true;
     public int getCheckMeOutInt(){
         return isCheckMeOut()? 1:0;

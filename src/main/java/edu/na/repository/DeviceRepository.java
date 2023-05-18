@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface DeviceRepository extends JpaRepository<Device,Long> {
-@Query(value = "select d from devices d where d.serialNo=?1",nativeQuery = true)
+@Query(value = "select d from Device d where d.serialNumber=?1")
     Device findDeviceBySerialNo(String serialNo);
 }

@@ -52,6 +52,20 @@ public List<DeviceDto> listBySerialNo() {
 }
 
     @Override
+    public DeviceDto commissionDevice(Long id) {
+        Device device = deviceRepository.findById(id)
+                .orElseThrow(() -> new DeviceNotFoundException("Device not found"));
+        // if the id exists return the dto back without deleting
+        if (!recordService.deviceExistInRecord(id)) {
+            device.setIsDeleted(true);
+            device.setCheckMeOut(false);
+            device.setCommissioned(true);
+            deviceRepository.save(device);
+        }
+        return findDevice(id);
+    }
+
+    @Override
     public DeviceDto save(DeviceDto deviceDto) {
         deviceRepository.save(mapperUtil.convert(deviceDto, new Device()));
         return deviceDto;

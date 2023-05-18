@@ -23,4 +23,5 @@ public interface DeviceService {
     Map<String,Map<String,Integer>> mapDevicesByMakeModelAndCount();
     Map<String,Map <String, Integer>> mapAssignedDevicesByMakeModelAndCount();
     List<DeviceDto> listBySerialNo();
+    DeviceDto commissionDevice(Long id);
 }

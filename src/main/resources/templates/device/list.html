@@ -8,110 +8,113 @@
 
 <div class="dashboard-main-wrapper">
 
-  <div th:replace="/fragments/header :: header"></div>
+    <div th:replace="/fragments/header :: header"></div>
 
-  <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
+    <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
 
-  <div class="dashboard-wrapper">
+    <div class="dashboard-wrapper">
 
-    <div class="dashboard-ecommerce">
+        <div class="dashboard-ecommerce">
 
-      <div class="container-fluid dashboard-content">
+            <div class="container-fluid dashboard-content">
 
-        <div class="ecommerce-widget">
+                <div class="ecommerce-widget">
 
-          <div class="row">
+                    <div class="row">
 
-            <div class="col-lg-6 col-md-12">
-
-
-
-            </div>
-
-          </div>
-
-        </div>
+                        <div class="col-lg-6 col-md-12">
 
 
+                        </div>
 
-        <!-- ------------------------TABLE START----------------------------- -->
+                    </div>
 
-        <div class="row">
-          <div class="col-lg-12 col-md-12">
-            <div class="col-md-12">
-              <section class="panel">
-                <header class="panel-heading">
-                  <h2 class="panel-title">Device List</h2>
-                </header>
-                <div class="panel-body">
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                      <tr>
-                        <th scope="col">Make</th>
-                        <th scope="col">Model</th>
-                        <th scope="col">Serial Number</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                      </thead>
+                </div>
 
-                      <tbody>
 
-                      <tr th:each="device: ${devices}">
-                        <td th:text="${device.make}"></td>
-                        <td th:text="${device.model}"></td>
-                        <td th:text="${device.serialNumber}"></td>
-                        <td th:text="${device.quantity}"></td>
-                        <td th:text="${device.price}"></td>
-                        <td class="actions">
-                          <a th:href="@{/devices/update/{id}(id=${device.getId()})}" class="btn btn-warning btn-sm">Update</a>
-<!--                          <a th:href="@{/devices/delete/{id}(id=${device.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>-->
-                          <span th:if="${@recordServiceImpl.deviceExistInRecord(device.getId())}"
-                                class="d-inline-block" tabindex="0"
-                                data-toggle="tooltip"
-                                data-placement="right"
-                                title="This device appears in records and cannot be deleted!">
+                <!-- ------------------------TABLE START----------------------------- -->
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="col-md-12">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Device List</h2>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Make</th>
+                                                <th scope="col">Model</th>
+                                                <th scope="col">Serial Number</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                            <tr th:each="device: ${devices}">
+                                                <td th:text="${device.make}"></td>
+                                                <td th:text="${device.model}"></td>
+                                                <td th:text="${device.serialNumber}"></td>
+                                                <td th:text="${device.quantity}"></td>
+                                                <td th:text="${device.price}"></td>
+                                                <td class="actions">
+                                                    <a th:href="@{/devices/update/{id}(id=${device.getId()})}"
+                                                       class="btn btn-warning d-inline-block mb-2 mb-sm-0 mr-sm-2">Update</a>
+                                                    <!--                          <a th:href="@{/devices/delete/{id}(id=${device.getId()})}" class="delete-row btn btn-secondary btn-sm">Delete</a>-->
+                                                    <span th:if="${@recordServiceImpl.deviceExistInRecord(device.getId())}"
+                                                          class="d-inline-block" tabindex="0"
+                                                          data-toggle="tooltip"
+                                                          data-placement="right"
+                                                          title="This device appears in records and cannot be deleted!">
                                                                         <button
                                                                                 class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
                                                                                 style="pointer-events: none;" disabled>Delete
                                                                         </button>
                                                                     </span>
-                          <a th:unless="${@recordServiceImpl.deviceExistInRecord(device.getId())}"
-                             th:href="@{/devices/delete/{id}(id=${device.getId()})}"
-                             type="button">
-                            <button class="btn btn-danger mb-2 mb-sm-0 mr-sm-2">
-                              Delete
-                            </button>
-                          </a>
-                        </td>
-                      </tr>
+                                                    <a th:unless="${@recordServiceImpl.deviceExistInRecord(device.getId())}"
+                                                       th:href="@{/devices/delete/{id}(id=${device.getId()})}">
+                                                        <button class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"
+                                                                style=" outline: none; text-decoration: none; width: fit-content;">
+                                                            Delete
+                                                        </button>
+                                                    </a>
+                                                    <a th:href="@{/devices/commission/{id}(id=${device.getId()})}"
+                                                       class="btn btn-primary  d-inline-block mb-2 mb-sm-0 mr-sm-2">Decommission</a>
+                                                </td>
+                                            </tr>
 
-                      </tbody>
-                    </table>
-                  </div>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
                 </div>
-              </section>
-            </div>
-          </div>
-        </div>
 
-        <!-- ------------------------TABLE END----------------------------- -->
-        <div class="row">
-          <div class="col-sm-6 col-md-6 col-lg-12">
-            <div class="float-right">
-              <a th:href="@{/devices/add}"><button type="submit" class="btn btn-success">Add Device</button></a>
+                <!-- ------------------------TABLE END----------------------------- -->
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-12">
+                        <div class="float-right">
+                            <a th:href="@{/devices/add}">
+                                <button type="submit" class="btn btn-success  mb-2 mb-sm-0 mr-sm-2">Add Device</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+
         </div>
-      </div>
 
     </div>
 
-  </div>
-
-  <div th:replace="/fragments/footer :: footer"></div>
+    <div th:replace="/fragments/footer :: footer"></div>
 
 </div>
 
