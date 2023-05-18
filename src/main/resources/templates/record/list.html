@@ -5,14 +5,14 @@
       lang="en">
 
 <head th:replace="/fragments/head :: head">
-  <!-- Tempus Dominus Bootstrap 4 CSS -->
-  <link rel="stylesheet" href="/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Tempus Dominus Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css">
 
-  <!-- Moment.js -->
-  <script src="/webjars/momentjs/2.29.1/moment.min.js"></script>
+    <!-- Moment.js -->
+    <script src="/webjars/momentjs/2.29.1/moment.min.js"></script>
 
-  <!-- Tempus Dominus Bootstrap 4 JavaScript -->
-  <script src="/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Tempus Dominus Bootstrap 4 JavaScript -->
+    <script src="/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
 </head>
 
 
@@ -20,113 +20,145 @@
 
 <div class="dashboard-main-wrapper">
 
-  <div th:replace="/fragments/header :: header"></div>
+    <div th:replace="/fragments/header :: header"></div>
 
-  <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
+    <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
 
-  <div class="dashboard-wrapper">
+    <div class="dashboard-wrapper">
 
-    <div class="dashboard-ecommerce">
+        <div class="dashboard-ecommerce">
 
-      <div class="container-fluid dashboard-content">
+            <div class="container-fluid dashboard-content">
 
-        <div class="ecommerce-widget">
+                <div class="ecommerce-widget">
 
-          <div class="row">
+                    <div class="row">
 
-            <div class="col-lg-6 col-md-12">
-
-
-            </div>
-
-          </div>
-
-        </div>
+                        <div class="col-lg-6 col-md-12">
 
 
+                        </div>
 
-        <!-- ------------------------TABLE START----------------------------- -->
+                    </div>
 
-        <div class="row">
-          <div class="col-lg-12 col-md-12">
-            <div class="col-md-12">
-              <section class="panel">
-                <header class="panel-heading">
-                  <h2 class="panel-title">List of Records</h2>
-                </header>
-                <div class="panel-body">
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                      <tr>
-                        <!--                                                <th scope="col">Transaction</th>-->
-                        <th scope="col">Date</th>
-                        <th scope="col">Assignee Name</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Office No</th>
-                        <th scope="col">Device Make</th>
-                        <th scope="col">Device Model</th>
-                        <th scope="col">Serial Number</th>
-                        <th scope="col">Note</th>
-                        <th scope="col">Transaction</th>
-                        <th scope="col">Updated By</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                      </thead>
-
-                      <tbody>
-
-                      <tr th:each="record: ${records}">
-                        <!--                                                <td th:text="${record.transaction}"></td>-->
-                        <td th:text="${record.date}"></td>
-                        <td th:text="${record.getUser().getFirst_name()+' '+record.getUser().getLast_name()}"></td>
-                        <td th:text="${record.getUser().getUser_name()}"></td>
-                        <td th:text="${record.getUser().getOfficeNo()}"></td>
-                        <td th:text="${record.device.getMake()}"></td>
-                        <td th:text="${record.device.getModel()}"></td>
-                        <td th:text="${record.device.getSerialNumber()}"></td>
-                        <td th:text="${record.notes}"></td>
-                        <td th:text="${record.transaction.getDescription()}"></td>
-                        <td th:text="${record.getUpdatedBy()}"></td>
-                        <td class="actions">
-                          <a th:href="@{/records/update/{id}(id=${record.getId()})}" class="btn btn-warning d-inline-block mb-2 mb-sm-0 mr-sm-2">Update</a>
-                          <a sec:authorize="hasAnyAuthority('Admin')"
-                             th:href="@{/records/delete/{id}(id=${record.getId()})}" class="delete-row btn btn-secondary d-inline-block mb-2 mb-sm-0 mr-sm-2">Delete</a>
-                        </td>
-                      </tr>
-
-                      </tbody>
-                    </table>
-                  </div>
                 </div>
-              </section>
-            </div>
-          </div>
-        </div>
 
-        <!-- ------------------------TABLE END----------------------------- -->
-<!--        <div class="row">-->
-<!--          <div class="col-sm-6 col-md-6 col-lg-12">-->
-<!--            <div class="float-right">-->
-<!--              <button type="submit" class="btn btn-success">Add New Record</button>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-        <div class="row">
-          <div class="col-sm-6 col-md-6 col-lg-12">
-            <div class="float-right">
-              <a th:href="@{/records/add}"><button type="submit" class="btn btn-success">Add Record</button></a>
-            </div>
-          </div>
-        </div>
 
-      </div>
+                <!-- ------------------------TABLE START----------------------------- -->
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="col-md-12">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">List of Records</h2>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <!--                                                <th scope="col">Transaction</th>-->
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Assignee Name</th>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">Office No</th>
+                                                <th scope="col">Device Make</th>
+                                                <th scope="col">Device Model</th>
+                                                <th scope="col">Serial Number</th>
+                                                <th scope="col">Note</th>
+                                                <th scope="col">Transaction</th>
+                                                <th scope="col">Updated By</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+
+                                            <tr th:each="record: ${records}">
+                                                <!--                                                <td th:text="${record.transaction}"></td>-->
+                                                <td th:text="${record.date}"></td>
+                                                <td th:text="${record.getUser().getFirst_name()+' '+record.getUser().getLast_name()}"></td>
+                                                <td th:text="${record.getUser().getUser_name()}"></td>
+                                                <td th:text="${record.getUser().getOfficeNo()}"></td>
+                                                <td th:text="${record.device.getMake()}"></td>
+                                                <td th:text="${record.device.getModel()}"></td>
+                                                <td th:text="${record.device.getSerialNumber()}"></td>
+                                                <td th:text="${record.notes}"></td>
+                                                <td th:text="${record.transaction.getDescription()}"></td>
+                                                <td th:text="${record.getUpdatedBy()}"></td>
+                                                <!--                        <td class="actions">-->
+                                                <!--                          <a th:href="@{/records/update/{id}(id=${record.getId()})}" class="btn btn-warning d-inline-block mb-2 mb-sm-0 mr-sm-2">Update</a>-->
+                                                <!--&lt;!&ndash;                          <a sec:authorize="hasAnyAuthority('Admin')"&ndash;&gt;-->
+                                                <!--&lt;!&ndash;                             th:href="@{/records/delete/{id}(id=${record.getId()})}" class="delete-row btn btn-secondary d-inline-block mb-2 mb-sm-0 mr-sm-2">Delete</a>&ndash;&gt;-->
+                                                <!--                          <span th:if="${record.isTransactionComplete()==false}"-->
+                                                <!--                                class="d-inline-block" tabindex="0"-->
+                                                <!--                                data-toggle="tooltip"-->
+                                                <!--                                data-placement="right"-->
+                                                <!--                                title="This record is open cannot be deleted!">-->
+                                                <!--                                                                        <button-->
+                                                <!--                                                                                class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"-->
+                                                <!--                                                                                style="pointer-events: none;" disabled>Delete-->
+                                                <!--                                                                        </button>-->
+                                                <!--                                                                    </span>-->
+                                                <!--                          <a sec:authorize="hasAnyAuthority('Admin')" th:unless="${record.isTransactionComplete()==true}"-->
+                                                <!--                             th:href="@{/records/delete/{id}(id=${record.getId()})}">-->
+                                                <!--                            <button class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"-->
+                                                <!--                                    style=" outline: none; text-decoration: none; width: fit-content;">-->
+                                                <!--                              Delete-->
+                                                <!--                            </button></a>-->
+                                                <!--                        </td>-->
+                                                <td class="actions">
+                                                    <a th:href="@{/records/update/{id}(id=${record.getId()})}"
+                                                       class="btn btn-warning d-inline-block mb-2 mb-sm-0 mr-sm-2">Update</a>
+                                                    <a th:if="${record.isTransactionComplete()}"
+                                                       th:href="@{/records/delete/{id}(id=${record.getId()})}">
+                                                        <button sec:authorize="hasAnyAuthority('Admin')"
+                                                                class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"
+                                                                style="outline: none; text-decoration: none; width: fit-content;">
+                                                            Delete
+                                                        </button>
+                                                    </a>
+
+                                                    <span th:unless="${record.isTransactionComplete()}"
+                                                          class="d-inline-block" tabindex="0"
+                                                          data-toggle="tooltip" data-placement="right"
+                                                          title="This record is open and cannot be deleted!">
+                                                            <button class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
+                                                            style="pointer-events: none;" disabled>Delete</button>
+                                                    </span>
+
+                                                </td>
+
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ------------------------TABLE END----------------------------- -->
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-12">
+                        <div class="float-right">
+                            <a th:href="@{/records/add}">
+                                <button type="submit" class="btn btn-success">Add Record</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 
-  </div>
-
-  <div th:replace="/fragments/footer :: footer"></div>
+    <div th:replace="/fragments/footer :: footer"></div>
 
 </div>
 
