@@ -77,10 +77,18 @@
                                                                                 style="pointer-events: none;" disabled>Delete
                                                                         </button>
                                                                     </span>
+<!--                                                    <a th:unless="${@recordServiceImpl.deviceExistInRecord(device.getId())}"-->
+<!--                                                       th:href="@{/devices/delete/{id}(id=${device.getId()})}">-->
+<!--                                                        <button class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"-->
+<!--                                                                style=" outline: none; text-decoration: none; width: fit-content;">-->
+<!--                                                            Delete-->
+<!--                                                        </button>-->
+<!--                                                    </a>-->
                                                     <a th:unless="${@recordServiceImpl.deviceExistInRecord(device.getId())}"
-                                                       th:href="@{/devices/delete/{id}(id=${device.getId()})}">
+                                                       th:href="@{/devices/delete/{id}(id=${device.getId()})}"
+                                                       onclick="return confirm('Are you sure you want to delete?')">
                                                         <button class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"
-                                                                style=" outline: none; text-decoration: none; width: fit-content;">
+                                                                style="outline: none; text-decoration: none; width: fit-content;">
                                                             Delete
                                                         </button>
                                                     </a>
