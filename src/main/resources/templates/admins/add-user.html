@@ -229,26 +229,45 @@
 
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
+<!--                                                <div class="form-group">-->
+<!--                                                    <div class="col-form-label">-->
+<!--                                                        <label>Role</label>-->
+<!--                                                        &lt;!&ndash;                                                    <select id="roles" class="form-control" th:field="*{roleDto}" onchange="onTransactionChange()">&ndash;&gt;-->
+<!--                                                        <select id="role" name="role" class="custom-select"-->
+<!--                                                                th:with="role=*{roleDto}">-->
+<!--                                                            <option th:if="${roles.size() > 1}" th:value="''"-->
+<!--                                                                    th:text="'Select'" selected></option>-->
+<!--                                                            <option th:each="role: ${roles}" th:value="${role.id}"-->
+<!--                                                                    th:text="${role.description}"></option>-->
+<!--                                                        </select>-->
+<!--                                                        <div th:if="${#fields.hasErrors('roleDto')}">-->
+<!--                                                            <ul>-->
+<!--                                                                <li class="validation"-->
+<!--                                                                    th:each="err : ${#fields.errors('roleDto')}"-->
+<!--                                                                    th:text="${err}"></li>-->
+<!--                                                            </ul>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+
+<!--                                                </div>-->
                                                 <div class="form-group">
-                                                    <div class="col-form-label">
+                                                    <div class="controls">
                                                         <label>Role</label>
-                                                        <!--                                                    <select id="roles" class="form-control" th:field="*{roleDto}" onchange="onTransactionChange()">-->
-                                                        <select id="role" name="role" class="custom-select"
-                                                                th:with="role=*{roleDto}">
-                                                            <option th:if="${roles.size() > 1}" th:value="''"
-                                                                    th:text="'Select'" selected></option>
-                                                            <option th:each="role: ${roles}" th:value="${role.id}"
+                                                        <select id="vendor" class="form-control" th:field="*{roleDto}">
+                                                            <option th:if="${roles.size() > 1}"
+                                                                    th:value="''" th:text="'Select'" selected></option>
+                                                            <option th:each= "role:${roles}"
+                                                                    th:value="${role.id}"
                                                                     th:text="${role.description}"></option>
                                                         </select>
                                                         <div th:if="${#fields.hasErrors('roleDto')}">
                                                             <ul>
                                                                 <li class="validation"
                                                                     th:each="err : ${#fields.errors('roleDto')}"
-                                                                    th:text="${err}"></li>
+                                                                    th:text="${err}" style="color:red"></li>
                                                             </ul>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-md-6">

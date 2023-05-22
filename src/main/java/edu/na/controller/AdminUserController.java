@@ -2,6 +2,7 @@ package edu.na.controller;
 
 import edu.na.dto.RoleDto;
 import edu.na.dto.UserDto;
+import edu.na.entity.Role;
 import edu.na.service.RoleService;
 import edu.na.service.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,16 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Id;
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin/user")
-public class AdminController {
+public class AdminUserController {
     private final UserService userService;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
-    public AdminController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
+    public AdminUserController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
@@ -27,14 +29,16 @@ public class AdminController {
 
     @GetMapping
     public String addNewUser(Model model){
-
-        model.addAttribute("user",new UserDto());
-        model.addAttribute("role",new RoleDto());
+        RoleDto roleDto = new RoleDto();
+        UserDto userDto=new UserDto();
+        userDto.setRoleDto(roleDto);
+        model.addAttribute("user",userDto);
         model.addAttribute("roles",roleService.listAllRoles());
         return "/admins/add-user";
     }
     @PostMapping
-    String saveNewUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult,@RequestParam("role") Long id) {
+    String saveNewUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult,Model model) {
+        model.addAttribute("roles",roleService.listAllRoles());
         boolean isUserNameUnique = userService.isUserNameUnique(userDto.getUser_name());
         if (!isUserNameUnique) {
             bindingResult.rejectValue("user_name", " ", "A user with this email already exists! Please enter another email ");
@@ -42,9 +46,15 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "/admins/add-user";
         }
-//        RoleDto role = new RoleDto();
-//        role.setId(3L);
-        RoleDto roleDto=roleService.findById(id);
+
+
+        if (userDto.getRoleDto().equals(null)) {
+            // Handle the case when the role with the given ID is not found
+            bindingResult.rejectValue("roleDto", " ", "Invalid role.");
+            return "/admins/add-user";
+        }
+        RoleDto roleDto=roleService.findById(userDto.getRoleDto().getId());
+
         userDto.setRoleDto(roleDto);
 //        username and email are the same
         userDto.setEmail(userDto.getUser_name());
@@ -52,6 +62,7 @@ public class AdminController {
         userService.save(userDto);
         return "redirect:/admin/user/list";
     }
+
 
     @GetMapping("/list")
     public String userList(Model model){
@@ -68,7 +79,7 @@ public class AdminController {
         return "/admins/update-user";
     }
     @PostMapping("/update/{id}")
-    public String saveUpdatedUser(@ModelAttribute("user") UserDto userDto, BindingResult bindingResult,@PathVariable("id") Long id){
+    public String saveUpdatedUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult,@PathVariable("id") Long id){
         if (bindingResult.hasErrors()) {
             return "/admins/update-user";
         }
@@ -80,4 +91,5 @@ public class AdminController {
         userService.delete(id);
         return "redirect:/admin/user/list";
     }
+
 }

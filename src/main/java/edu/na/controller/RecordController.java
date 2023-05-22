@@ -9,11 +9,14 @@ import edu.na.service.DeviceService;
 import edu.na.service.RecordService;
 import edu.na.service.TransactionService;
 import edu.na.service.UserService;
+import org.springframework.boot.Banner;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,6 +42,8 @@ public class RecordController {
     public String addNewRecord(Model model){
         Long id=recordRepository.getLatestRecordedRecordId();
         RecordDto recordDto=new RecordDto();
+//        UserDto userDto=new UserDto();
+//        recordDto.setUser(userDto);
         recordDto.setId(id);
         recordDto.setDate(LocalDateTime.now());
         model.addAttribute("record",recordDto);
@@ -50,7 +55,19 @@ public class RecordController {
     }
 
     @PostMapping("/add")
-    public String createNewRecord(@ModelAttribute("record") RecordDto recordDto){
+    public String createNewRecord(@Valid  @ModelAttribute("record") RecordDto recordDto, BindingResult bindingResult,Model model){
+        model.addAttribute("assignees",userService.findAll());
+        model.addAttribute("records",recordService.findAll());
+        model.addAttribute("transactions",transactionService.listAllTransactions());
+        model.addAttribute("devices",deviceService.findAll());
+        if (bindingResult.hasErrors()) {
+            return "/record/add";
+        }
+        if (recordDto.getUser().getUser_name() == null || recordDto.getUser().getId()==null) {
+            bindingResult.rejectValue("user", " ", "Invalid user");
+            return "/record/add";
+        }
+
         recordService.save(recordDto);
         return "redirect:/records/list";
     }

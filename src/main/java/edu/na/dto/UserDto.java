@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -40,8 +41,8 @@ public class UserDto {
 //        this.user_name = user_name;
 //    }
 
-    @NotBlank(message = "Office number is required")
+//    @NotBlank(message = "Office number is required")
     private String officeNo;
-
+    @NotNull(message="Role is required")
     private RoleDto roleDto;
 }
