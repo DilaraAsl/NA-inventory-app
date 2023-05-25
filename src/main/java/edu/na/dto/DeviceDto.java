@@ -12,7 +12,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 
-@Getter
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeviceDto {
@@ -34,42 +34,84 @@ public class DeviceDto {
     @Digits(integer = 10, fraction = 0, message = "Quantity must be a number.")
     @Positive(message = "Quantity must be greater than zero.")
     private int quantity;
-
-
     private boolean checkMeOut=true;
+    boolean isDecommissioned;
+    Boolean isDeleted;
     public int getCheckMeOutInt(){
         return isCheckMeOut()? 1:0;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public void setCheckMeOut(boolean checkMeOut) {
         this.checkMeOut = checkMeOut;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean isCheckMeOut() {
+        return checkMeOut;
+    }
+
+    public boolean isDecommissioned() {
+        return isDecommissioned;
+    }
+
+    public void setDecommissioned(boolean decommissioned) {
+        isDecommissioned = decommissioned;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
 
     public DeviceDto(String make, String model, String serialNumber) {
         this.make = make;

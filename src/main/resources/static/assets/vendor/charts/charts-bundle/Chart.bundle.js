@@ -8448,7 +8448,7 @@ module.exports = function(Chart) {
 			 * @prop Chart#chart
 			 * @deprecated since version 2.6.0
 			 * @todo remove at version 3
-			 * @private
+			 * @public
 			 */
 			me.chart = me;
 			me.controller = me; // chart.chart.controller #inception

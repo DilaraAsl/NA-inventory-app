@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +74,14 @@ public class DeviceControllerApi {
     @GetMapping("/graph/assigned")
     public Map<String, Map<String,Integer>> getRetrievedDevicesByMakeAndModel(){
         return deviceService.mapAssignedDevicesByMakeModelAndCount();
+    }
+    @GetMapping("/dashboard/chart")
+    public Map<String,Integer> getChartDataForDevices(){
+        Map<String,Integer> data=new HashMap<>();
+        data.put("total",deviceService.getTotalCountOfAvailableDevicesToCheckOut()+deviceService.getTotalCountOfDevicesCheckedOut());
+        data.put("checkedOutTotal",deviceService.getTotalCountOfDevicesCheckedOut());
+        data.put("inStockTotal",deviceService.getTotalCountOfAvailableDevicesToCheckOut());
+        return data;
     }
 //@GetMapping("/add")
 //public ResponseEntity<List<DeviceDto>> getDevicesForTransaction(@RequestParam("transactionId") Long transactionId, @RequestParam(name = "userId", required = false) Long userId) {

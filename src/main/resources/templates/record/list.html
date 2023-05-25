@@ -65,12 +65,15 @@
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Assignee Name</th>
                                                 <th scope="col">Username</th>
-                                                <th scope="col">Office No</th>
+<!--                                                <th scope="col">Office No</th>-->
                                                 <th scope="col">Device Make</th>
                                                 <th scope="col">Device Model</th>
                                                 <th scope="col">Serial Number</th>
-                                                <th scope="col">Note</th>
+<!--                                                <th scope="col">Note</th>-->
                                                 <th scope="col">Transaction</th>
+                                                <th scope="col">Transaction Completed</th>
+                                                <th scope="col">Device Deleted</th>
+                                                <th scope="col">Device Decommissioned</th>
                                                 <th scope="col">Updated By</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -83,12 +86,15 @@
                                                 <td th:text="${record.date}"></td>
                                                 <td th:text="${record.getUser().getFirst_name()+' '+record.getUser().getLast_name()}"></td>
                                                 <td th:text="${record.getUser().getUser_name()}"></td>
-                                                <td th:text="${record.getUser().getOfficeNo()}"></td>
+<!--                                                <td th:text="${record.getUser().getOfficeNo()}"></td>-->
                                                 <td th:text="${record.device.getMake()}"></td>
                                                 <td th:text="${record.device.getModel()}"></td>
                                                 <td th:text="${record.device.getSerialNumber()}"></td>
-                                                <td th:text="${record.notes}"></td>
+<!--                                                <td th:text="${record.notes}"></td>-->
                                                 <td th:text="${record.transaction.getDescription()}"></td>
+                                                <td th:text="${record.isTransactionComplete()} ? 'Yes' : 'No'"></td>
+                                                <td th:text="${record.device.getDeleted()} ? 'Yes' : 'No'"></td>
+                                                <td th:text="${record.device.isDecommissioned()} ? 'Yes' : 'No'"></td>
                                                 <td th:text="${record.getUpdatedBy()}"></td>
                                                 <!--                        <td class="actions">-->
                                                 <!--                          <a th:href="@{/records/update/{id}(id=${record.getId()})}" class="btn btn-warning d-inline-block mb-2 mb-sm-0 mr-sm-2">Update</a>-->

@@ -8,8 +8,6 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
 @NoArgsConstructor
 
 @Entity
@@ -27,4 +25,59 @@ public class Device extends BaseEntity{
     boolean checkMeOut;// by default it is set to false
     boolean isDecommissioned=false;
 
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean isCheckMeOut() {
+        return checkMeOut;
+    }
+
+    public void setCheckMeOut(boolean checkMeOut) {
+        this.checkMeOut = checkMeOut;
+    }
+
+    public boolean isDecommissioned() {
+        return isDecommissioned;
+    }
+
+    public void setDecommissioned(boolean decommissioned) {
+        isDecommissioned = decommissioned;
+    }
 }

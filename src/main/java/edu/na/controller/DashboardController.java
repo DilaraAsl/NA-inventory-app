@@ -19,9 +19,9 @@ public class DashboardController {
     String showDashBoard(Model model){
         Integer inStockTotal=deviceService.getTotalCountOfAvailableDevicesToCheckOut();
         Integer checkedOutTotal=deviceService.getTotalCountOfDevicesCheckedOut();
-        model.addAttribute("InStock",inStockTotal);
-        model.addAttribute("CheckedOut",checkedOutTotal);
-        model.addAttribute("Total",inStockTotal+checkedOutTotal);
+        model.addAttribute("inStockTotal",inStockTotal);
+        model.addAttribute("checkedOutTotal",checkedOutTotal);
+        model.addAttribute("total",inStockTotal+checkedOutTotal);
         return "dashboard";
     }
 }
