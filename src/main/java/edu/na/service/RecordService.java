@@ -16,8 +16,9 @@ public interface RecordService {
     List<RecordDto> listAllRecordsOfDevice(String serialNo);
 
     List<RecordDto> listAllRecordsOfUser(UserDto userDto);
+    List<RecordDto> listOpenRecordsOfUser(UserDto userDto);
 
-
+    List<RecordDto> findAllRecordsThatAreOpenTransactions();
     boolean deviceExistInRecord(Long id);
     Boolean isTransactionCompleteByUser(Long userId);
 

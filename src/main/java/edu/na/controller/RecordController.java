@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -38,57 +39,61 @@ public class RecordController {
         this.transactionService = transactionService;
         this.deviceService = deviceService;
     }
+
     @GetMapping("/add")
-    public String addNewRecord(Model model){
-        Long id=recordRepository.getLatestRecordedRecordId();
-        RecordDto recordDto=new RecordDto();
-//        UserDto userDto=new UserDto();
-//        recordDto.setUser(userDto);
+    public String addNewRecord(Model model) {
+        Long id = recordRepository.getLatestRecordedRecordId();
+        RecordDto recordDto = new RecordDto();
+
         recordDto.setId(id);
         recordDto.setDate(LocalDateTime.now());
-        model.addAttribute("record",recordDto);
-        model.addAttribute("assignees",userService.findAll());
-        model.addAttribute("records",recordService.findAll());
-        model.addAttribute("transactions",transactionService.listAllTransactions());
-        model.addAttribute("devices",deviceService.findAll());
+        model.addAttribute("record", recordDto);
+        model.addAttribute("assignees", userService.userListOrderedByUserName());
+        model.addAttribute("records", recordService.findAll());
+        model.addAttribute("transactions", transactionService.listAllTransactions());
+        model.addAttribute("devices", deviceService.listUnDeletedUnCommissionedDevices());
         return "/record/add";
     }
 
     @PostMapping("/add")
-    public String createNewRecord(@Valid  @ModelAttribute("record") RecordDto recordDto, BindingResult bindingResult,Model model){
-        model.addAttribute("assignees",userService.findAll());
-        model.addAttribute("records",recordService.findAll());
-        model.addAttribute("transactions",transactionService.listAllTransactions());
-        model.addAttribute("devices",deviceService.findAll());
-        if (bindingResult.hasErrors()) {
-            return "/record/add";
+    public String createNewRecord(@Valid @ModelAttribute("record") RecordDto recordDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        if(recordDto.getUser().equals(null)){
+            redirectAttributes.addFlashAttribute("errorMessage","Please make all selections correctly!");
+            return "redirect:/records/add";
         }
-        if (recordDto.getUser().getUser_name() == null || recordDto.getUser().getId()==null) {
-            bindingResult.rejectValue("user", " ", "Invalid user");
-            return "/record/add";
+        if (bindingResult.hasErrors()) {
+//            redirectAttributes.addFlashAttribute("errorMessage","Please make all selections correctly!");
+            return "redirect:/records/add";
         }
 
         recordService.save(recordDto);
-        return "redirect:/records/list";
-    }
-    @GetMapping("/list")
-    public String ListRecords(Model model){
+        redirectAttributes.addFlashAttribute("successMessage", "Record saved successfully!!!");
 
-//        model.addAttribute("assignees",userService.findAll());
-        model.addAttribute("records",recordService.findAll());
-//        model.addAttribute("updatedBy",recordRepository.findListOfUsersWhoUpdatedRecord());
-//        model.addAttribute("transactions",transactionService.listAllTransactions());
-//        model.addAttribute("devices",deviceService.findAll());
+        return "redirect:/records/add";
+    }
+
+    @GetMapping("/list")
+    public String ListRecords(Model model) {
+
+        model.addAttribute("records", recordService.findAll());
+
         return "/record/list";
+    }
+    @GetMapping("/list/open-transactions")
+    public String ListOpenRecords(Model model) {
+
+        model.addAttribute("records", recordService.findAllRecordsThatAreOpenTransactions());
+
+        return "/record/openTransaction-list";
     }
     @GetMapping("/update/{id}")
     public String editRecord(@PathVariable("id") Long id, Model model) {
-          RecordDto recordDto = recordService.findById(id);
+        RecordDto recordDto = recordService.findById(id);
         model.addAttribute("newRecord", recordDto);
-        model.addAttribute("assignees",userService.findAll());
-        model.addAttribute("records",recordService.findAll());
-        model.addAttribute("transactions",transactionService.listAllTransactions());
-        model.addAttribute("devices",deviceService.findAll());
+        model.addAttribute("assignees", userService.userListOrderedByUserName());
+        model.addAttribute("records", recordService.findAll());
+        model.addAttribute("transactions", transactionService.listAllTransactions());
+        model.addAttribute("devices", deviceService.listUnDeletedUnCommissionedDevices());
 
 
         return "/record/update";
@@ -96,18 +101,20 @@ public class RecordController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateRecord( @ModelAttribute("newRecord") RecordDto record, Model model) {
+    public String updateRecord(@Valid @ModelAttribute("newRecord") RecordDto recordDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
-
-
-        recordService.update(record);
-
+        if (bindingResult.hasErrors()) {
+            return "redirect:/records/update/{id}";
+        }
+        recordService.update(recordDto);
+        redirectAttributes.addFlashAttribute("successMessage", "Record updated successfully!!!");
         return "redirect:/records/list";
 
     }
+
     @PreAuthorize("hasRole('Admin')")
     @GetMapping("/delete/{id}")
-    public String deleteRecord(@PathVariable("id")Long id){
+    public String deleteRecord(@PathVariable("id") Long id) {
         recordService.delete(id);
         return "redirect:/records/list";
     }
@@ -115,14 +122,7 @@ public class RecordController {
     @GetMapping("/device-search")
     public String searchDeviceRecord(Model model) {
 
-
-//        model.addAttribute("assignees",userService.findAll());
-//        model.addAttribute("records",recordService.findAll());
-//        model.addAttribute("transactions",transactionService.listAllTransactions());
-//        model.addAttribute("devices",deviceService.findAll());
-
-//        model.addAttribute("device",new DeviceDto());
-        model.addAttribute("devices",deviceService.listBySerialNo());
+        model.addAttribute("devices", deviceService.listUnDeletedUnCommissionedDevicesBySerialNo());
 
 
         return "/record/device-search";
@@ -130,7 +130,7 @@ public class RecordController {
     }
 
     @PostMapping("/device-search")
-    public String updateDeviceSearchResults( @RequestParam("serialNumber") String serialNumber,Model model) {
+    public String updateDeviceSearchResults(@RequestParam("serialNumber") String serialNumber, Model model) {
 
         model.addAttribute("records", recordService.listAllRecordsOfDevice(serialNumber));
 
@@ -138,20 +138,27 @@ public class RecordController {
         return "/record/search-results-device";
 
     }
+
     @GetMapping("/assignee-search")
     public String searchAssigneeRecord(Model model) {
 
-        model.addAttribute("assignees",userService.findAll());
+        model.addAttribute("assignees", userService.userListOrderedByUserName());
 
         return "/record/assignee-search";
 
     }
 
-@PostMapping("/assignee-search")
-public String updateAssigneeSearchResults(@RequestParam("user_name") String userName, Model model) {
-            model.addAttribute("records", recordService.listAllRecordsOfUser(userService.findByUserName(userName)));
+    @PostMapping("/assignee-search")
+    public String updateAssigneeSearchResults(@RequestParam("user_name") String userName, Model model) {
+        if (userName.isEmpty()) {
+            model.addAttribute("errorMessage", "Please select a username from the list!!!");
+            model.addAttribute("assignees", userService.findAll());
+            return "/record/assignee-search";
+        }
+
+        model.addAttribute("records", recordService.listAllRecordsOfUser(userService.findByUserName(userName)));
 
         return "/record/search-results-assignee";
-}
+    }
 
 }

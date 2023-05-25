@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface DeviceService {
-    List<DeviceDto> findAll();
+    List<DeviceDto> listUnDeletedUnCommissionedDevices();
     DeviceDto save(DeviceDto deviceDto);
 
     DeviceDto findDevice(Long id);
@@ -22,6 +22,9 @@ public interface DeviceService {
     List<DeviceDto> findDevicesByUserId(Long userId);
     Map<String,Map<String,Integer>> mapDevicesByMakeModelAndCount();
     Map<String,Map <String, Integer>> mapAssignedDevicesByMakeModelAndCount();
-    List<DeviceDto> listBySerialNo();
-    DeviceDto commissionDevice(Long id);
+    List<DeviceDto> listUnDeletedUnCommissionedDevicesBySerialNo();
+    DeviceDto decommissionDevice(Long id);
+    boolean deviceIsOpenToCheckOut(Long id);
+    Integer getTotalCountOfAvailableDevicesToCheckOut();
+    Integer getTotalCountOfDevicesCheckedOut();
 }

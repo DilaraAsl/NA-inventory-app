@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -36,7 +37,7 @@ public class DeviceController {
     }
 
     @PostMapping("/add")
-    public String saveDevice(@Valid  @ModelAttribute("device") DeviceDto deviceDto, BindingResult bindingResult, Model model) {
+    public String saveDevice(@Valid  @ModelAttribute("device") DeviceDto deviceDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "/device/add";
         }
@@ -45,14 +46,14 @@ public class DeviceController {
 
 
         deviceRepository.save(newDevice);
-
-        return "redirect:/devices/list";
+        redirectAttributes.addFlashAttribute("successMessage", "Device saved successfully!!!");
+        return "redirect:/devices/add";
 
     }
     @GetMapping("/list")
     public String listDevices(Model model) {
 //        model.addAttribute("device", new DeviceDto());
-        model.addAttribute("devices", deviceService.findAll());
+        model.addAttribute("devices", deviceService.listUnDeletedUnCommissionedDevices());
         return "/device/list";
     }
 
@@ -65,12 +66,12 @@ public class DeviceController {
     }
 
     @PostMapping("/update/{id}")
-    public String saveUpdatedDevice(@Valid @ModelAttribute("device") DeviceDto deviceDto,BindingResult bindingResult, Model model) {
+    public String saveUpdatedDevice(@Valid @ModelAttribute("device") DeviceDto deviceDto,BindingResult bindingResult, Model model,RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "/device/update";
         }
         deviceService.update(deviceDto);
-
+        redirectAttributes.addFlashAttribute("successMessage", "Device updated successfully!!!");
         return "redirect:/devices/list";
 
     }
@@ -82,8 +83,8 @@ public class DeviceController {
     }
     @GetMapping("/commission/{id}")
     @PreAuthorize("hasRole('Admin')")
-    public String commissionDevice(@PathVariable("id")Long id, DeviceDto deviceDto){
-        deviceService.commissionDevice(id);
+    public String decommissionDevice(@PathVariable("id")Long id, DeviceDto deviceDto){
+        deviceService.decommissionDevice(id);
         return "redirect:/devices/list";
     }
     @GetMapping("/charts/bar-chart")
@@ -99,7 +100,8 @@ public class DeviceController {
     @GetMapping("/device-search")
     public String searchDevice(Model model) {
 
-        model.addAttribute("devices",deviceService.listBySerialNo());
+        model.addAttribute("devices",deviceService.listUnDeletedUnCommissionedDevicesBySerialNo());
+
 
 
         return "/device/search";
@@ -108,7 +110,12 @@ public class DeviceController {
 
     @PostMapping("/device-search")
     public String deviceSearchResults( @RequestParam("serialNumber") String serialNumber,Model model) {
-        model.addAttribute("devices",deviceService.listBySerialNo());
+        if(serialNumber.isEmpty()){
+            model.addAttribute("errorMessage","Please select a device from the list!!");
+            model.addAttribute("devices",deviceService.listUnDeletedUnCommissionedDevicesBySerialNo());
+        return "/device/search";
+        }
+        model.addAttribute("devices",deviceService.listUnDeletedUnCommissionedDevicesBySerialNo());
         model.addAttribute("foundDevice",deviceService.findDeviceBySerialNo(serialNumber) );
 
 

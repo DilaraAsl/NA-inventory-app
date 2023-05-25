@@ -15,5 +15,6 @@ public interface UserService {
     boolean isUserNameUnique(String userName);
     String findRoleByUserName(String userName);
     RoleDto findRoleIdByUserName(String userName);
+    List<UserDto> userListOrderedByUserName();
 
 }

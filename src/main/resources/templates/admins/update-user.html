@@ -26,21 +26,24 @@
 
                             <section class="panel panel-transparent">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">Add Assignee</h2>
+                                    <h2 class="panel-title">Add User/Assignee</h2>
                                 </header>
 
                                 <div class="panel-body">
 
                                     <!-- ------------------------FORM START----------------------------- -->
-                                    <form th:action="@{/admin/user/update/{id}(id=${user.id})}"method="post" th:object="${user}">
+                                    <form th:action="@{/admin/user/update/{id}(id=${user.id})}" method="post"
+                                          th:object="${user}">
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label for="first_name" class="col-form-label">Name</label>
-                                                    <input id="first_name" type="text" placeholder="First Name" th:field="*{first_name}" class="form-control">
+                                                    <label for="first_name" class="col-form-label">Name (*)</label>
+                                                    <input id="first_name" type="text" placeholder="First Name"
+                                                           th:field="*{first_name}" class="form-control">
                                                     <div th:if="${#fields.hasErrors('first_name')}">
                                                         <ul>
-                                                            <li class="invalid-feedback" th:each="err : ${#fields.errors('first_name')}"
+                                                            <li class="invalid-feedback"
+                                                                th:each="err : ${#fields.errors('first_name')}"
                                                                 th:text="${err}" style="color:red"></li>
                                                         </ul>
                                                     </div>
@@ -49,11 +52,13 @@
 
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label for="l_name" class="col-form-label">Last Name</label>
-                                                    <input id="l_name" type="text" placeholder="Last Name" th:field="*{last_name}" class="form-control">
+                                                    <label for="l_name" class="col-form-label">Last Name (*)</label>
+                                                    <input id="l_name" type="text" placeholder="Last Name"
+                                                           th:field="*{last_name}" class="form-control">
                                                     <div th:if="${#fields.hasErrors('last_name')}">
                                                         <ul>
-                                                            <li class="invalid-feedback" th:each="err : ${#fields.errors('last_name')}"
+                                                            <li class="invalid-feedback"
+                                                                th:each="err : ${#fields.errors('last_name')}"
                                                                 th:text="${err}" style="color:red"></li>
                                                         </ul>
                                                     </div>
@@ -65,11 +70,14 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-md-4">
                                                 <div class="form-group">
-                                                    <label for="user_name" class="col-form-label">Email Address</label>
-                                                    <input id="user_name" type="text" placeholder="email address" th:field="*{user_name}" class="form-control">
+                                                    <label for="user_name" class="col-form-label">Email Address
+                                                        (*)</label>
+                                                    <input id="user_name" type="text" placeholder="email address"
+                                                           th:field="*{user_name}" class="form-control">
                                                     <div th:if="${#fields.hasErrors('user_name')}">
                                                         <ul>
-                                                            <li class="invalid-feedback" th:each="err : ${#fields.errors('user_name')}"
+                                                            <li class="invalid-feedback"
+                                                                th:each="err : ${#fields.errors('user_name')}"
                                                                 th:text="${err}" style="color:red"></li>
                                                         </ul>
                                                     </div>
@@ -79,10 +87,12 @@
                                             <div class="col-sm-6 col-md-4">
                                                 <div class="form-group">
                                                     <label for="office_no" class="col-form-label">Office Number</label>
-                                                    <input id="office_no" type="text" placeholder="office number" th:field="*{officeNo}" class="form-control">
+                                                    <input id="office_no" type="text" placeholder="office number"
+                                                           th:field="*{officeNo}" class="form-control">
                                                     <div th:if="${#fields.hasErrors('officeNo')}">
                                                         <ul>
-                                                            <li class="invalid-feedback" th:each="err : ${#fields.errors('officeNo')}"
+                                                            <li class="invalid-feedback"
+                                                                th:each="err : ${#fields.errors('officeNo')}"
                                                                 th:text="${err}" style="color:red"></li>
                                                         </ul>
                                                     </div>
@@ -90,20 +100,20 @@
                                             </div>
                                             <div class="col-sm-6 col-md-4">
                                                 <div class="form-group">
-<!--                                                    <label>Role</label>-->
-<!--                                                    <select id="roles" class="form-control" th:field="*{roleDto}">-->
-<!--                                                        <option th:if="${roles.size() > 1}" th:value="''" th:text="'Select'" selected></option>-->
-<!--                                                        <option th:each="role: ${roles}"-->
-<!--                                                                th:value="${{role.id}}"-->
-<!--                                                                th:text="${role.description}"-->
-<!--                                                                th:selected="${role.id}==user.role.id">-->
-<!--                                                        </option>-->
-<!--                                                    </select>-->
-                                                    <label>Role</label>
+                                                    <!--                                                    <label>Role</label>-->
+                                                    <!--                                                    <select id="roles" class="form-control" th:field="*{roleDto}">-->
+                                                    <!--                                                        <option th:if="${roles.size() > 1}" th:value="''" th:text="'Select'" selected></option>-->
+                                                    <!--                                                        <option th:each="role: ${roles}"-->
+                                                    <!--                                                                th:value="${{role.id}}"-->
+                                                    <!--                                                                th:text="${role.description}"-->
+                                                    <!--                                                                th:selected="${role.id}==user.role.id">-->
+                                                    <!--                                                        </option>-->
+                                                    <!--                                                    </select>-->
+                                                    <label>Role (*)</label>
                                                     <select id="trans" class="form-control" th:field="*{roleDto}">
                                                         <option th:if="${roles.size()> 1}"
                                                                 th:value="''" th:text="'Select'" selected></option>
-                                                        <option th:each= "role:${roles}"
+                                                        <option th:each="role:${roles}"
                                                                 th:value="${{role.getId()}}"
                                                                 th:text="${role.getDescription()}"
                                                                 th:selected="${role.id}==${user.getRoleDto().getId()}">
@@ -125,7 +135,8 @@
                                     </form>
                                     <!-- ------------------------FORM END----------------------------- -->
 
-
+                                    <p><br>
+                                    <h5 style="color: red;">(*) Required field, cannot be empty</h5></p>
                                 </div>
 
                             </section>
@@ -135,7 +146,6 @@
                     </div>
 
                 </div>
-
 
 
             </div>

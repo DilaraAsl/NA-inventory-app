@@ -37,7 +37,14 @@ public class UserServiceImpl implements UserService {
                 .map(user -> mapperUtil.convert(user, new UserDto()))
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<UserDto> userListOrderedByUserName() {
 
+        return userRepository.findAll().stream()
+                .sorted(Comparator.comparing(User::getUser_name))
+                .map(user -> mapperUtil.convert(user, new UserDto()))
+                .collect(Collectors.toList());
+    }
     @Override
     public UserDto save(UserDto userDto) {
 

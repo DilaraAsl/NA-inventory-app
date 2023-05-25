@@ -21,6 +21,8 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
 
     @Query(value = "select r from Record r join User u on r.user.id=u.id where u.user_name=?1")
     List<Record> retrieveUserRecords(String user_name);
+    @Query(value = "select r from Record r join User u on r.user.id=u.id where u.user_name=?1 and r.isTransactionComplete=false")
+    List<Record> retrieveIncompleteTransactionUserRecords(String user_name);
 
     //      @Query(value = "select r from Record r join Device d on r.device.id=d.id where d.id=?1")
 //      Record findRecordByDeviceId(Long id);
@@ -36,6 +38,13 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
     Boolean isTransactionCompleteByUserId(BigInteger id);
 //@Query(value = "select rec.isTransactionComplete from Record rec join User u on u.id=rec.user.id where u.user_name=?1 order by rec.isTransactionComplete asc limit 1")
 //Boolean isTransactionCompleteByUserId(String username);
-    @Query(value = "select r from Record r where r.user.id=?1 and r.device.id=?2 and r.transaction.id=1")
-    Record findAssignedDeviceRecordByUserIdAndDeviceId(Long userId,Long deviceId);
+    @Query(value = "select * from records r where r.assignee_id=?1 and r.device_id=?2 and r.transaction_id=1 order by r.last_update_date_time desc limit 1;",nativeQuery = true)
+   Record findAssignedDeviceRecordByUserIdAndDeviceId(BigInteger userId,BigInteger deviceId);
+
+//    @Query(value = "select r from Record r where r.user.id=?1 and r.device.id=?2 and r.transaction.id=1")
+//    Record findAssignedDeviceRecordByUserIdAndDeviceId(Long userId,Long deviceId);
+
+    @Query(value = "select r from Record r  where r.isTransactionComplete=false")
+    List<Record> retrieveOpenTransactions();
+
 }

@@ -30,7 +30,9 @@
                     </div>
 
                 </div>
-
+                <div th:if="${successMessage}" class="success-message">
+                    <p><h3 th:text="${successMessage}" style="color: green;"></h3></p>
+                </div>
 
                 <!-- ------------------------TABLE START----------------------------- -->
 
@@ -39,7 +41,7 @@
                         <div class="col-md-12">
                             <section class="panel">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">Assignee List</h2>
+                                    <h2 class="panel-title">User/Assignee List</h2>
                                 </header>
                                 <div class="panel-body">
                                     <div class="table-responsive">

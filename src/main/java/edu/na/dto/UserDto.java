@@ -20,14 +20,14 @@ public class UserDto {
     Long id;
     @NotBlank (message = "First name is required.")
     @Size(max = 50, min = 2, message = "First name must be between 2 and 50 characters long")
-    @Pattern(regexp = "^[A-Za-z]+$", message = "First name must contain only letters.")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "First name must contain only letters.No spaces allowed.")
     private String first_name;
     @NotBlank (message = "Last name is required.")
     @Size(max = 50, min = 2, message = "Last name must be between 2 and 50 characters long")
-    @Pattern(regexp = "^[A-Za-z]+$", message = "Last name must contain only letters.")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "Last name must contain only letters. No spaces allowed")
     private String last_name;
     @NotBlank(message = "Username is required.")
-    @Email(message = "Email is required." )
+    @Email(message = "Email is required" )
     private String user_name;
 //    @NotBlank(message = "Email is required")
 //    @Email(message = "Email is required field" )

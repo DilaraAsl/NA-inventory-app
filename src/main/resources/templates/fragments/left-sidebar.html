@@ -110,7 +110,10 @@
                                             <span class="badge badge-secondary">New</span></a>
                                     </li>
                                     <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
-                                        <a class="nav-link" th:href="@{/records/list}">List Records</a>
+                                        <a class="nav-link" th:href="@{/records/list}">List of All Records</a>
+                                    </li>
+                                    <li class="nav-item" sec:authorize="hasAnyAuthority('Admin','StudentWorker')">
+                                        <a class="nav-link" th:href="@{/records/list/open-transactions}">List of Open Transactions</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" th:href="@{/records/device-search}">Search Device Records</a>

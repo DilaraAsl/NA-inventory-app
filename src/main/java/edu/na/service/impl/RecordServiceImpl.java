@@ -44,6 +44,16 @@ public class RecordServiceImpl implements RecordService {
 
     }
 
+    @Override
+    public List<RecordDto> findAllRecordsThatAreOpenTransactions() {
+        return recordRepository.retrieveOpenTransactions().stream()
+                .sorted(Comparator.comparing(Record::getDate).reversed())
+                .map(record -> mapperUtil.convert(record, new RecordDto()))
+                .collect(Collectors.toList());
+
+
+    }
+
     // saveRecord should be used in update and delete methods to eliminate the boiler plate code
     @Override
     public RecordDto save(RecordDto recordDto) {
@@ -55,10 +65,11 @@ public class RecordServiceImpl implements RecordService {
             deviceDto.setCheckMeOut(true);
             //if transaction is complete , if it is true, the record can be deleted
             // if transaction is complete then the assignment record should show that the transaction is complete
-
-            System.out.println("User Id: " + recordDto.getUser().getId());
-            System.out.println("Device Id: " + recordDto.getDevice().getId());
-            Record assignmentRecord = recordRepository.findAssignedDeviceRecordByUserIdAndDeviceId(recordDto.getUser().getId(), recordDto.getDevice().getId());
+            BigInteger userId = BigInteger.valueOf(recordDto.getUser().getId());
+            BigInteger deviceId = BigInteger.valueOf(recordDto.getDevice().getId());
+            System.out.println("User Id: " + userId);
+            System.out.println("Device Id: " + deviceId);
+            Record assignmentRecord = recordRepository.findAssignedDeviceRecordByUserIdAndDeviceId(userId, deviceId);
             assignmentRecord.setTransactionComplete(true);
             recordRepository.save(assignmentRecord);
             recordDto.setTransactionComplete(true);
@@ -111,8 +122,15 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<RecordDto> listAllRecordsOfUser(UserDto userDto) {
-
         return recordRepository.retrieveUserRecords(userDto.getUser_name()).stream()
+                .sorted(Comparator.comparing(Record::getDate).reversed())
+                .map(record -> mapperUtil.convert(record, new RecordDto()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecordDto> listOpenRecordsOfUser(UserDto userDto) {
+        return recordRepository.retrieveIncompleteTransactionUserRecords(userDto.getUser_name()).stream()
                 .sorted(Comparator.comparing(Record::getDate).reversed())
                 .map(record -> mapperUtil.convert(record, new RecordDto()))
                 .collect(Collectors.toList());

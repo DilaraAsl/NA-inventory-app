@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 
 <head th:replace="/fragments/head :: head"></head>
 
@@ -30,7 +32,10 @@
                     </div>
 
                 </div>
-
+                <div th:if="${successMessage}" class="success-message">
+                    <p>
+                    <h3 th:text="${successMessage}" style="color: green;"></h3></p>
+                </div>
 
                 <!-- ------------------------TABLE START----------------------------- -->
 
@@ -72,27 +77,57 @@
                                                           data-toggle="tooltip"
                                                           data-placement="right"
                                                           title="This device appears in records and cannot be deleted!">
-                                                                        <button
+                                                                        <button sec:authorize="hasAnyAuthority('Admin')"
                                                                                 class="btn btn-danger mb-2 mb-sm-0 mr-sm-2"
                                                                                 style="pointer-events: none;" disabled>Delete
                                                                         </button>
                                                                     </span>
-<!--                                                    <a th:unless="${@recordServiceImpl.deviceExistInRecord(device.getId())}"-->
-<!--                                                       th:href="@{/devices/delete/{id}(id=${device.getId()})}">-->
-<!--                                                        <button class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"-->
-<!--                                                                style=" outline: none; text-decoration: none; width: fit-content;">-->
-<!--                                                            Delete-->
-<!--                                                        </button>-->
-<!--                                                    </a>-->
+                                                    <!--                                                    <a th:unless="${@recordServiceImpl.deviceExistInRecord(device.getId())}"-->
+                                                    <!--                                                       th:href="@{/devices/delete/{id}(id=${device.getId()})}">-->
+                                                    <!--                                                        <button class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"-->
+                                                    <!--                                                                style=" outline: none; text-decoration: none; width: fit-content;">-->
+                                                    <!--                                                            Delete-->
+                                                    <!--                                                        </button>-->
+                                                    <!--                                                    </a>-->
                                                     <a th:unless="${@recordServiceImpl.deviceExistInRecord(device.getId())}"
-                                                       th:href="@{/devices/delete/{id}(id=${device.getId()})}" onclick="return confirm('Are you sure you want to delete this device?')">
-                                                        <button class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"
+                                                       th:href="@{/devices/delete/{id}(id=${device.getId()})}"
+                                                       onclick="return confirm('Are you sure you want to delete this device?')">
+                                                        <button sec:authorize="hasAnyAuthority('Admin')"
+                                                                class="btn btn-danger d-inline-block mb-2 mb-sm-0 mr-sm-2"
                                                                 style="outline: none; text-decoration: none; width: fit-content;">
                                                             Delete
                                                         </button>
                                                     </a>
-                                                    <a th:href="@{/devices/commission/{id}(id=${device.getId()})}"
-                                                       class="btn btn-primary  d-inline-block mb-2 mb-sm-0 mr-sm-2">Decommission</a>
+
+                                                    <a th:if="${@deviceServiceImpl.deviceIsOpenToCheckOut(device.getId())}"
+                                                       th:href="@{/devices/commission/{id}(id=${device.getId()})}"
+                                                       onclick="return confirm('Are you sure you want to decommission this device?')">
+                                                        <button sec:authorize="hasAnyAuthority('Admin')"
+                                                                class="btn btn-primary  d-inline-block mb-2 mb-sm-0 mr-sm-2"
+                                                                style="outline: none; text-decoration: none; width: fit-content;">
+                                                            Decommission
+                                                        </button>
+                                                    </a>
+                                                    <span th:unless="${@deviceServiceImpl.deviceIsOpenToCheckOut(device.getId())}"
+                                                          class="d-inline-block" tabindex="0"
+                                                          data-toggle="tooltip"
+                                                          data-placement="right"
+                                                          title="This device is checked out, it cannot be decommissioned!!">
+                                                                         <button sec:authorize="hasAnyAuthority('Admin')"
+                                                                                 class="btn btn-primary  d-inline-block mb-2 mb-sm-0 mr-sm-2"
+                                                                                 style="outline: none; text-decoration: none; width: fit-content;">
+                                                            Decommission
+                                                        </button>
+                                                                    </span>
+
+
+                                                    <!--                                                    <a th:href="@{/devices/commission/{id}(id=${device.getId()})} "-->
+                                                    <!--                                                       onclick="return confirm('Are you sure you want to decommission this device?')">-->
+                                                    <!--                                                        <button sec:authorize="hasAnyAuthority('Admin')" class="btn btn-primary  d-inline-block mb-2 mb-sm-0 mr-sm-2"-->
+                                                    <!--                                                                style="outline: none; text-decoration: none; width: fit-content;">-->
+                                                    <!--                                                            Decommission-->
+                                                    <!--                                                        </button>-->
+                                                    </a>
                                                 </td>
                                             </tr>
 

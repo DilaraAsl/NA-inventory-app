@@ -30,7 +30,7 @@ public class DeviceControllerApi {
     @GetMapping
     public ResponseEntity<List<DeviceDto>> listDevices(){
 
-        return ResponseEntity.ok(deviceService.listBySerialNo());
+        return ResponseEntity.ok(deviceService.listUnDeletedUnCommissionedDevicesBySerialNo());
     }
 
     @PostMapping()

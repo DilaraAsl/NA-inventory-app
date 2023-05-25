@@ -36,7 +36,7 @@
 
                             <section class="panel panel-transparent">
                                 <header class="panel-heading">
-                                    <h2 class="panel-title">Add Record</h2>
+                                    <h2 class="panel-title">Update Record</h2>
                                     <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
 
                                 </header>
@@ -48,7 +48,7 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label>Transaction</label>
+                                                    <label>Transaction (*)</label>
                                                     <select id="trans" class="form-control" th:field="*{transaction}">
                                                         <option th:if="${transactions.size()> 1}"
                                                                 th:value="''" th:text="'Select'" selected></option>
@@ -89,7 +89,7 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label>Assignee User Name</label>
+                                                    <label>Assignee User Name (*)</label>
                                                     <select id="username" class="form-control" th:field="*{user}">
                                                         <option th:if="${assignees.size> 1}" th:value="''" th:text="'Select'" selected></option>
                                                         <option th:each="assignee : ${assignees}"
@@ -111,7 +111,7 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-md-4">
                                                 <div class="form-group">
-                                                    <label>Device Serial No</label>
+                                                    <label>Device Serial No (*)</label>
                                                     <select id="deviceL" class="form-control" th:field="*{device}">
                                                         <option th:if="${devices.size()> 1}" th:value="''"
                                                                 th:text="'Select'" selected></option>
@@ -183,7 +183,8 @@
 
                                     </form>
                                     <!-- ------------------------FORM END----------------------------- -->
-
+                                    <p><br>
+                                    <h5 style="color: red;">(*) Required field, cannot be empty</h5></p>
                                 </div>
 
                             </section>

@@ -38,7 +38,7 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label for="deviceM" class="col-form-label">Add Device</label>
+                                                    <label for="deviceM" class="col-form-label">Device Make (*)</label>
                                                     <input id="deviceM" type="text" placeholder="device make"
                                                            th:field="*{make}" class="form-control">
                                                     <div class="invalid-feedback"
@@ -53,7 +53,7 @@
 
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label for="model" class="col-form-label">Device Model</label>
+                                                    <label for="model" class="col-form-label">Device Model (*)</label>
                                                     <input id="model" type="text" placeholder="device model"
                                                            th:field="*{model}" class="form-control">
                                                     <div class="invalid-feedback"
@@ -70,7 +70,7 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label for="serialNo" class="col-form-label">Serial Number</label>
+                                                    <label for="serialNo" class="col-form-label">Serial Number (*)</label>
                                                     <input id="serialNo" type="text" placeholder="serial number"
                                                            th:field="*{serialNumber}" class="form-control">
                                                     <div class="invalid-feedback"
@@ -102,7 +102,7 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
-                                                    <label for="quantity" class="col-form-label">Quantity</label>
+                                                    <label for="quantity" class="col-form-label">Quantity (*)</label>
                                                     <input id="quantity" type="number" placeholder="quantity"
                                                            th:field="*{quantity}" class="form-control">
                                                     <div class="invalid-feedback"
@@ -114,57 +114,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <!--                                            <div class="col-sm-6 col-md-6">-->
-                                            <!--                                                <div class="form-group">-->
-                                            <!--                                                    <label for="repassword" class="col-form-label">Confirm Password</label>-->
-                                            <!--                                                    <input id="repassword" type="password" placeholder="confirm your password" th:field="*{confirmPassWord}" class="form-control">-->
-                                            <!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassWord')}">-->
-                                            <!--                                                        <ul>-->
-                                            <!--                                                            <li th:each="err : ${#fields.errors('confirmPassWord')}"-->
-                                            <!--                                                                th:text="${err}"></li>-->
-                                            <!--                                                        </ul>-->
-                                            <!--                                                    </div>-->
-                                            <!--                                                </div>-->
-                                            <!--                                            </div>-->
                                         </div>
-
-                                        <!--                                        <div class="row">-->
-                                        <!--                                            <div class="col-sm-6 col-md-6">-->
-                                        <!--                                                <div class="form-group">-->
-                                        <!--                                                    <label>Gender</label><br>-->
-                                        <!--                                                    <label class="custom-control custom-radio custom-control-inline">-->
-                                        <!--                                                        <input type="radio" name="radio-inline" th:value="MALE" th:field="*{gender}" class="custom-control-input"><span class="custom-control-label">Male</span>-->
-                                        <!--                                                    </label>-->
-                                        <!--                                                    <label class="custom-control custom-radio custom-control-inline">-->
-                                        <!--                                                        <input type="radio" name="radio-inline" th:value="FEMALE" th:field="*{gender}" class="custom-control-input"><span class="custom-control-label">Female</span>-->
-                                        <!--                                                    </label>-->
-                                        <!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('gender')}">-->
-                                        <!--                                                        <ul>-->
-                                        <!--                                                            <li th:each="err : ${#fields.errors('gender')}"-->
-                                        <!--                                                                th:text="${err}"></li>-->
-                                        <!--                                                        </ul>-->
-                                        <!--                                                    </div>-->
-                                        <!--                                                </div>-->
-                                        <!--                                            </div>-->
-
-                                        <!--                                            <div class="col-sm-6 col-md-6">-->
-                                        <!--                                                <div class="form-group">-->
-                                        <!--                                                    <label>Choose a Role</label>-->
-                                        <!--                                                    <select th:field="*{role}" name="role" class="custom-select">-->
-                                        <!--                                                        <option th:value="''" th:text="Select"></option>-->
-                                        <!--                                                        <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.description}"></option>-->
-                                        <!--                                                    </select>-->
-                                        <!--                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('role')}">-->
-                                        <!--                                                        <ul>-->
-                                        <!--                                                            <li th:each="err : ${#fields.errors('role')}"-->
-                                        <!--                                                                th:text="${err}"></li>-->
-                                        <!--                                                        </ul>-->
-                                        <!--                                                    </div>-->
-                                        <!--                                                </div>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6 col-lg-12">
                                                 <div class="float-right">
@@ -175,7 +125,8 @@
 
                                     </form>
                                     <!-- ------------------------FORM END----------------------------- -->
-
+                                    <p><br>
+                                    <h5 style="color: red;">(*) Required field, cannot be empty</h5></p>
                                 </div>
 
                             </section>

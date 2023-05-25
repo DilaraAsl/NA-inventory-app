@@ -31,35 +31,37 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public List<DeviceDto> findAll() {
-        return deviceRepository.findAll().stream()
+    public List<DeviceDto> listUnDeletedUnCommissionedDevices() {
+        return deviceRepository.listUndeletedUnCommissionedDevices().stream()
                 .sorted(Comparator.comparing(Device::getMake))
                 .map(device -> mapperUtil.convert(device, new DeviceDto()))
                 .collect(Collectors.toList());
 
     }
-//    public List<DeviceDto> listBySerialNo() {
+
+//        public List<DeviceDto> listBySerialNo() {
 //        return findAll()
 //                .stream()
 //                .sorted(Comparator.comparingLong(deviceDto -> Long.parseLong(deviceDto.getSerialNumber())))
 //                .collect(Collectors.toList());
 //    }
-public List<DeviceDto> listBySerialNo() {
-    return findAll()
-            .stream()
-            .sorted(Comparator.comparing(DeviceDto::getSerialNumber))
-            .collect(Collectors.toList());
-}
+    @Override
+    public List<DeviceDto> listUnDeletedUnCommissionedDevicesBySerialNo() {
+        return listUnDeletedUnCommissionedDevices()
+                .stream()
+                .sorted(Comparator.comparing(DeviceDto::getSerialNumber))
+                .collect(Collectors.toList());
+    }
 
     @Override
-    public DeviceDto commissionDevice(Long id) {
+    public DeviceDto decommissionDevice(Long id) {
         Device device = deviceRepository.findById(id)
                 .orElseThrow(() -> new DeviceNotFoundException("Device not found"));
-        // if the id exists return the dto back without deleting
-        if (!recordService.deviceExistInRecord(id)) {
+        // if the device can be checked out which means the transaction is closed , it can be decommissioned
+        if (device.isCheckMeOut()) {
             device.setIsDeleted(true);
             device.setCheckMeOut(false);
-            device.setCommissioned(true);
+            device.setDecommissioned(true);
             deviceRepository.save(device);
         }
         return findDevice(id);
@@ -109,18 +111,18 @@ public List<DeviceDto> listBySerialNo() {
 
     @Override
     public List<DeviceDto> findDevicesToCheckOut() {
-        return findAll().stream().filter(deviceDto -> !deviceDto.isCheckMeOut()).collect(Collectors.toList());
+        return listUnDeletedUnCommissionedDevices().stream().filter(deviceDto -> !deviceDto.isCheckMeOut()).collect(Collectors.toList());
     }
 
     @Override
     public List<DeviceDto> findDevicesToCheckIn() {
-        return findAll().stream().filter(deviceDto -> deviceDto.isCheckMeOut()).collect(Collectors.toList());
+        return listUnDeletedUnCommissionedDevices().stream().filter(deviceDto -> deviceDto.isCheckMeOut()).collect(Collectors.toList());
     }
 
     @Override
     public List<DeviceDto> findDevicesByUserId(Long userId) {
-        UserDto userDto=userService.findById(userId);
-        return recordService.listAllRecordsOfUser(userDto).stream()
+        UserDto userDto = userService.findById(userId);
+        return recordService.listOpenRecordsOfUser(userDto).stream()
                 .map(RecordDto::getDevice)
                 .filter(deviceDto -> !deviceDto.isCheckMeOut())
                 .collect(Collectors.toList());
@@ -128,23 +130,38 @@ public List<DeviceDto> listBySerialNo() {
     }
 
     @Override
-    public  Map<String,Map <String, Integer>> mapDevicesByMakeModelAndCount() {
+    public Map<String, Map<String, Integer>> mapDevicesByMakeModelAndCount() {
 
         // Group the devices by make and model
-        Map<String, Map<String, Integer>> data = findAll().stream()
+        Map<String, Map<String, Integer>> data = listUnDeletedUnCommissionedDevices().stream()
                 .collect(Collectors.groupingBy(DeviceDto::getMake, Collectors.groupingBy(DeviceDto::getModel,
                         Collectors.reducing(0, deviceDto -> deviceDto.isCheckMeOut() ? 1 : 0, Integer::sum))));
 
         return data;
     }
+
     @Override
-    public  Map<String,Map <String, Integer>> mapAssignedDevicesByMakeModelAndCount() {
+    public Map<String, Map<String, Integer>> mapAssignedDevicesByMakeModelAndCount() {
 
         // Group the devices by make and model
-        Map<String, Map<String, Integer>> data = findAll().stream()
+        Map<String, Map<String, Integer>> data = listUnDeletedUnCommissionedDevices().stream()
                 .collect(Collectors.groupingBy(DeviceDto::getMake, Collectors.groupingBy(DeviceDto::getModel,
                         Collectors.reducing(0, deviceDto -> deviceDto.isCheckMeOut() ? 0 : 1, Integer::sum))));
 
         return data;
+    }
+    public boolean deviceIsOpenToCheckOut(Long id){
+        Device device=deviceRepository.findById(id).orElseThrow(()->new DeviceNotFoundException("Device does not exist!"));
+        return device.isCheckMeOut();
+    }
+    @Override
+    public Integer getTotalCountOfAvailableDevicesToCheckOut(){
+        return deviceRepository.retrieveTotalNoOfDevicesAvailableToCheckOut();
+
+    }
+    @Override
+    public Integer getTotalCountOfDevicesCheckedOut(){
+        return deviceRepository.retrieveTotalNoOfDevicesCheckedOut();
+
     }
 }

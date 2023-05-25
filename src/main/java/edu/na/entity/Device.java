@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Entity
 @Table (name="devices")
 //@Where(clause = "is_deleted=false")
-@Where(clause = "is_deleted=false and is_commissioned=false")
+//@Where(clause = "is_deleted=false and is_commissioned=false")
 public class Device extends BaseEntity{
 
     String make;
@@ -25,6 +25,6 @@ public class Device extends BaseEntity{
 
     int quantity;
     boolean checkMeOut;// by default it is set to false
-    boolean isCommissioned=false;
+    boolean isDecommissioned=false;
 
 }

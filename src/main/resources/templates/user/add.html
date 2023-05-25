@@ -8,124 +8,243 @@
 
 <div class="dashboard-main-wrapper">
 
-  <div th:replace="/fragments/header :: header"></div>
+    <div th:replace="/fragments/header :: header"></div>
 
-  <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
+    <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
 
-  <div class="dashboard-wrapper">
+    <div class="dashboard-wrapper">
 
-    <div class="dashboard-ecommerce">
+        <div class="dashboard-ecommerce">
 
-      <div class="container-fluid dashboard-content">
+            <div class="container-fluid dashboard-content">
 
-        <div class="ecommerce-widget">
-
-          <div class="row">
-
-            <div class="col-lg-6 col-md-12">
-
-              <section class="panel panel-transparent">
-                <header class="panel-heading">
-                  <h2 class="panel-title">Add Assignee</h2>
-                </header>
-
-                <div class="panel-body">
-
-                  <!-- ------------------------FORM START----------------------------- -->
-                  <form th:action="@{/users/add}" method="post" th:object="${user}">
-                    <div class="row">
-                      <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <label for="first_name" class="col-form-label">Name</label>
-                          <input id="first_name" type="text" placeholder="First Name" th:field="*{first_name}" class="form-control">
-                          <div th:if="${#fields.hasErrors('first_name')}">
-                            <ul>
-                              <li class="invalid-feedback" th:each="err : ${#fields.errors('first_name')}"
-                                  th:text="${err}" style="color:red"></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <label for="l_name" class="col-form-label">Last Name</label>
-                          <input id="l_name" type="text" placeholder="Last Name" th:field="*{last_name}" class="form-control">
-                          <div th:if="${#fields.hasErrors('last_name')}">
-                            <ul>
-                              <li class="invalid-feedback" th:each="err : ${#fields.errors('last_name')}"
-                                  th:text="${err}" style="color:red"></li>
-                            </ul>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
+                <div class="ecommerce-widget">
 
                     <div class="row">
-                      <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <label for="user_name" class="col-form-label">Email Address (user_name)</label>
-                          <input id="user_name" type="text" placeholder="email address" th:field="*{user_name}" class="form-control">
-                          <div th:if="${#fields.hasErrors('user_name')}">
-                            <ul>
-                              <li class="invalid-feedback" th:each="err : ${#fields.errors('user_name')}"
-                                  th:text="${err}" style="color:red"></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
 
-                      <div class="col-sm-6 col-md-6">
-                        <div class="form-group">
-                          <label for="office_no" class="col-form-label">Office Number</label>
-                          <input id="office_no" type="text" placeholder="office number" th:field="*{officeNo}" class="form-control">
-                          <div th:if="${#fields.hasErrors('officeNo')}">
-                            <ul>
-                              <li class="invalid-feedback" th:each="err : ${#fields.errors('officeNo')}"
-                                  th:text="${err}" style="color:red"></li>
-                            </ul>
-                          </div>
+                        <div class="col-lg-6 col-md-12">
+
+                            <section class="panel panel-transparent">
+                                <header class="panel-heading">
+                                    <h2 class="panel-title">Add Assignee</h2>
+                                </header>
+
+                                <div class="panel-body">
+
+                                    <!-- ------------------------FORM START----------------------------- -->
+                                    <form id="addAssignee" th:action="@{/users/add}" method="post" th:object="${user}">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="first_name" class="col-form-label">First Name
+                                                        (*)</label>
+                                                    <input id="first_name" type="text" placeholder="First Name"
+                                                           th:field="*{first_name}" class="form-control">
+                                                    <div th:if="${#fields.hasErrors('first_name')}">
+                                                        <ul>
+                                                            <li class="invalid-feedback"
+                                                                th:each="err : ${#fields.errors('first_name')}"
+                                                                th:text="${err}" style="color:red"></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="l_name" class="col-form-label">Last Name (*)</label>
+                                                    <input id="l_name" type="text" placeholder="Last Name"
+                                                           th:field="*{last_name}" class="form-control">
+                                                    <div th:if="${#fields.hasErrors('last_name')}">
+                                                        <ul>
+                                                            <li class="invalid-feedback"
+                                                                th:each="err : ${#fields.errors('last_name')}"
+                                                                th:text="${err}" style="color:red"></li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="user_name" class="col-form-label">Email Address
+                                                        (*)</label>
+                                                    <input id="user_name" type="text" placeholder="email address"
+                                                           th:field="*{user_name}" class="form-control">
+<!--                                                    <div th:if="${#fields.hasErrors('user_name')}">-->
+<!--                                                        <ul>-->
+<!--                                                            <li class="invalid-feedback"-->
+<!--                                                                th:each="err : ${#fields.errors('user_name')}"-->
+<!--                                                                th:text="${err}" style="color:red"></li>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+                                                    <div th:if="${#fields.hasErrors('user_name')}">
+                                                        <ul>
+                                                            <li class="invalid-feedback" th:each="err : ${#fields.errors('user_name')}" th:text="${err}" style="color:red"></li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="office_no" class="col-form-label">Office Number</label>
+                                                    <input id="office_no" type="text" placeholder="office number"
+                                                           th:field="*{officeNo}" class="form-control">
+                                                    <div th:if="${#fields.hasErrors('officeNo')}">
+                                                        <ul>
+                                                            <li class="invalid-feedback"
+                                                                th:each="err : ${#fields.errors('officeNo')}"
+                                                                th:text="${err}" style="color:red"></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+<!--                                            role  field visible -->
+<!--                                            <div class="col-sm-6 col-md-4">-->
+<!--                                                <div class="form-group">-->
+<!--                                                        <label for="role" class="col-form-label">Role</label>-->
+<!--                                                        <input id="role" class="form-control" type="text"-->
+<!--                                                               readonly="readonly" th:value="*{roleDto.description}"/>-->
+<!--                                                        <input type="hidden" th:field="*{roleDto.id}"/>-->
+<!--                                                        <div th:if="${#fields.hasErrors('roleDto')}">-->
+<!--                                                            <ul>-->
+<!--                                                                <li class="validation"-->
+<!--                                                                    th:each="err : ${#fields.errors('roleDto')}"-->
+<!--                                                                    th:text="${err}" style="color:red"></li>-->
+<!--                                                            </ul>-->
+<!--                                                        </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            Role field invisible to user but needed for validation-->
+                                            <div class="col-sm-6 col-md-4">
+                                                <div class="form-group">
+                                                    <div class="controls">
+                                                        <label for="role" class="col-form-label"></label>
+                                                        <input id="role" class="form-control" type="hidden" th:field="*{roleDto}" />
+                                                        <div th:if="${#fields.hasErrors('roleDto')}">
+                                                            <ul>
+                                                                <li class="validation" th:each="err : ${#fields.errors('roleDto')}" th:text="${err}" style="color:red"></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6 col-lg-12">
+                                                <div class="float-right">
+                                                    <button type="submit" class="btn btn-success">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                    <!-- ------------------------FORM END----------------------------- -->
+                                    <div th:if="${successMessage}" class="success-message">
+                                        <p><h3 th:text="${successMessage}" style="color: green;"></h3></p>
+                                    </div>
+                                    <p><br>
+                                    <h5 style="color: red;">(*) Required field, cannot be empty</h5></p>
+                                    <!-- Add a <div> element to display success message -->
+<!--                                    <div id="successMessage" style="display: none; color: green;">-->
+<!--                                        Save Successful! Your data has been saved successfully!-->
+<!--                                    </div>-->
+
+
+
+
+
+
+                                </div>
+
+                            </section>
+
                         </div>
-                      </div>
+
                     </div>
-
-
-
-                    <div class="row">
-                      <div class="col-sm-6 col-md-6 col-lg-12">
-                        <div class="float-right">
-                          <button type="submit" class="btn btn-success">Save</button>
-                        </div>
-                      </div>
-                    </div>
-
-                  </form>
-                  <!-- ------------------------FORM END----------------------------- -->
 
                 </div>
 
-              </section>
 
             </div>
 
-          </div>
-
         </div>
-
-
-
-      </div>
 
     </div>
 
-  </div>
-
-  <div th:replace="/fragments/footer :: footer"></div>
+    <div th:replace="/fragments/footer :: footer"></div>
 
 </div>
 
 <div th:replace="/fragments/javascript :: js"></div>
+<!--<script>-->
+<!--    document.getElementById('addAssignee').addEventListener('submit', function (event) {-->
+<!--        event.preventDefault(); // Prevent the default form submission-->
+
+<!--        // Perform your save operation here-->
+<!--        // ...-->
+
+<!--        // Make an asynchronous request to the server-->
+<!--        fetch('/users/add', {-->
+<!--            method: 'POST',-->
+<!--            body: new FormData(document.getElementById('addAssignee'))-->
+<!--        })-->
+<!--            .then(response => {-->
+<!--                // Check if the response is successful-->
+<!--                if (response.ok) {-->
+<!--                    // Show the success pop-up message using a JavaScript alert-->
+<!--                    alert('Save Successful! Your data has been saved successfully!');-->
+<!--                } else {-->
+<!--                    // Show an error message-->
+<!--                    alert('Error occurred. Please complete this action later.');-->
+<!--                }-->
+<!--            })-->
+<!--            .catch(error => {-->
+<!--                // Show an error message if there was a problem with the request-->
+<!--                alert('An error occurred while processing your request. Please try again later.');-->
+<!--                console.error(error);-->
+<!--            });-->
+<!--    });-->
+<!--</script>-->
+<!--<script>-->
+<!--    document.getElementById('addAssignee').addEventListener('submit', function (event) {-->
+<!--        event.preventDefault(); // Prevent the default form submission-->
+
+<!--        // Perform your save operation here-->
+<!--        // ...-->
+
+<!--        // Make an asynchronous request to the server-->
+<!--        fetch('/users/add', {-->
+<!--            method: 'POST',-->
+<!--            body: new FormData(document.getElementById('addAssignee'))-->
+<!--        })-->
+<!--            .then(response => {-->
+<!--                // Check if the response is successful-->
+<!--                if (response.ok) {-->
+<!--                    // Show the success pop-up message using a JavaScript alert-->
+<!--                    alert('Save Successful! Your data has been saved successfully!');-->
+
+<!--                    // Reset the form fields-->
+<!--                    document.getElementById('addAssignee').reset();-->
+<!--                } else {-->
+<!--                    // Show an error message-->
+<!--                    alert('Error occurred. Please complete this action later.');-->
+<!--                }-->
+<!--            })-->
+<!--            .catch(error => {-->
+<!--                // Show an error message if there was a problem with the request-->
+<!--                alert('An error occurred while processing your request. Please try again later.');-->
+<!--                console.error(error);-->
+<!--            });-->
+<!--    });-->
+<!--</script>-->
 
 </body>
 

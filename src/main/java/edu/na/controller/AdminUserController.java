@@ -5,11 +5,13 @@ import edu.na.dto.UserDto;
 import edu.na.entity.Role;
 import edu.na.service.RoleService;
 import edu.na.service.UserService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.Id;
 import javax.validation.Valid;
@@ -37,22 +39,24 @@ public class AdminUserController {
         return "/admins/add-user";
     }
     @PostMapping
-    String saveNewUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult,Model model) {
+    String saveNewUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("roles",roleService.listAllRoles());
         boolean isUserNameUnique = userService.isUserNameUnique(userDto.getUser_name());
+
         if (!isUserNameUnique) {
             bindingResult.rejectValue("user_name", " ", "A user with this email already exists! Please enter another email ");
+            return "/admins/add-user";
         }
         if (bindingResult.hasErrors()) {
             return "/admins/add-user";
         }
-
 
         if (userDto.getRoleDto().equals(null)) {
             // Handle the case when the role with the given ID is not found
             bindingResult.rejectValue("roleDto", " ", "Invalid role.");
             return "/admins/add-user";
         }
+        try{
         RoleDto roleDto=roleService.findById(userDto.getRoleDto().getId());
 
         userDto.setRoleDto(roleDto);
@@ -60,7 +64,13 @@ public class AdminUserController {
         userDto.setEmail(userDto.getUser_name());
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userService.save(userDto);
-        return "redirect:/admin/user/list";
+            redirectAttributes.addFlashAttribute("successMessage", "User saved successfully!!!");
+        return "redirect:/admin/user";
+        }
+        catch (DataIntegrityViolationException e) {
+            bindingResult.rejectValue("user_name", "", "A user  with these credentials already exists!");
+            return "/admins/add-user";
+        }
     }
 
 
@@ -79,11 +89,13 @@ public class AdminUserController {
         return "/admins/update-user";
     }
     @PostMapping("/update/{id}")
-    public String saveUpdatedUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult,@PathVariable("id") Long id){
+    public String saveUpdatedUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult,@PathVariable("id") Long id, Model model,RedirectAttributes redirectAttributes){
+        model.addAttribute("roles",roleService.listAllRoles());
         if (bindingResult.hasErrors()) {
-            return "/admins/update-user";
+            return "redirect:/admins/update/{id}";
         }
         userService.save(userDto);
+        redirectAttributes.addFlashAttribute("successMessage", "User updated successfully!!!");
         return "redirect:/admin/user/list";
     }
     @GetMapping("/delete/{id}")
