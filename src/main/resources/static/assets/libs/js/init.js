@@ -37,7 +37,7 @@ function goBack() {
 
   if (previousURL.includes('/device-search') || previousURL.includes('/assignee-search')) {
     // If the previous URL is device search or assignee search, go back to the home page
-    window.location.href = '/welcome'; // Replace with the desired home page URL
+    window.location.href = '/dashboard'; // Replace with the desired home page URL
   } else {
     // Otherwise, go back one step in history or redirect to default device search page
     if (window.history.length > 1) {
