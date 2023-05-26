@@ -16,7 +16,7 @@ services:
 #      - webnet
   na-app:
     build: .
-    container_name: nauapp
+    container_name: nau_inventory_app
     ports:
       - "8080:8080"
     networks:
