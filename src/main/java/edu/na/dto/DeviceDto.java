@@ -35,8 +35,18 @@ public class DeviceDto {
     @Positive(message = "Quantity must be greater than zero.")
     private int quantity;
     private boolean checkMeOut=true;
-    boolean isDecommissioned;
-    Boolean isDeleted;
+    private boolean isDecommissioned;
+    private Boolean isDeleted;
+    private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public int getCheckMeOutInt(){
         return isCheckMeOut()? 1:0;
     }

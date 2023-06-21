@@ -53,6 +53,7 @@
                                             <tr>
                                                 <th scope="col">Make</th>
                                                 <th scope="col">Model</th>
+                                                <th scope="col">Category</th>
                                                 <th scope="col">Serial Number</th>
                                                 <th scope="col">Quantity</th>
                                                 <th scope="col">Price</th>
@@ -65,6 +66,7 @@
                                             <tr th:each="device: ${devices}">
                                                 <td th:text="${device.make}"></td>
                                                 <td th:text="${device.model}"></td>
+                                                <td th:text="${device.category}"></td>
                                                 <td th:text="${device.serialNumber}"></td>
                                                 <td th:text="${device.quantity}"></td>
                                                 <td th:text="${device.price}"></td>

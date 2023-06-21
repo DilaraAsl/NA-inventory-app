@@ -16,14 +16,23 @@ import javax.persistence.*;
 //@Where(clause = "is_deleted=false and is_commissioned=false")
 public class Device extends BaseEntity{
 
-    String make;
-    String model;
-    String serialNumber;
-    Long price;
+    private String make;
+    private String model;
+    private  String serialNumber;
+    private  Long price;
 
-    int quantity;
-    boolean checkMeOut;// by default it is set to false
-    boolean isDecommissioned=false;
+    private int quantity;
+    private boolean checkMeOut;// by default it is set to false
+    private  boolean isDecommissioned=false;
+    private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public String getMake() {
         return make;

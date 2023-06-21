@@ -22,6 +22,7 @@ public class DashboardController {
         model.addAttribute("inStockTotal",inStockTotal);
         model.addAttribute("checkedOutTotal",checkedOutTotal);
         model.addAttribute("total",inStockTotal+checkedOutTotal);
+        model.addAttribute("deviceCategoryCountMap",deviceService.getDeviceCategoryAndCount());
         return "dashboard";
     }
 }

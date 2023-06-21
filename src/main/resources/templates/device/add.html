@@ -64,6 +64,15 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
                                                 <div class="form-group">
+                                                    <label>Category (*)</label>
+                                                    <select id="category" class="form-control" th:field="*{category}">
+                                                        <option th:if="${categoryList.size() > 1}" th:value="''" th:text="'Select'" selected></option>
+                                                        <option th:each="dcategory : ${categoryList}" th:value="${dcategory}" th:text="${dcategory}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
                                                     <label for="serialNo" class="col-form-label">Serial Number (*)</label>
                                                     <input id="serialNo" type="text" placeholder="serial number" th:field="*{serialNumber}" class="form-control">
                                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('serialNumber')}">
@@ -73,21 +82,7 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <div class="col-sm-6 col-md-6">
-                                                <div class="form-group">
-                                                    <label for="price" class="col-form-label">Price</label>
-                                                    <input id="price" type="number" placeholder="device price" th:field="*{price}" class="form-control">
-                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
-                                                        <ul>
-                                                            <li th:each="err : ${#fields.errors('price')}"
-                                                                th:text="${err}"></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            </div>  </div>
 
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
@@ -102,7 +97,20 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="price" class="col-form-label">Price</label>
+                                                    <input id="price" type="number" placeholder="device price" th:field="*{price}" class="form-control">
+                                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
+                                                        <ul>
+                                                            <li th:each="err : ${#fields.errors('price')}"
+                                                                th:text="${err}"></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6 col-lg-12">
                                                 <div class="float-right">

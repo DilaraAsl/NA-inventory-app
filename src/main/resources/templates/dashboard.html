@@ -1,248 +1,26 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
-
-<!--<head>-->
-<!--    <title>Dashboard</title>-->
-<!--    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" />-->
-<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
-<!--    <style>-->
-<!--        #chartContainer {-->
-<!--            max-width: 400px;-->
-<!--            margin: 0 auto;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-
-<!--<body>-->
-<!--<div class="dashboard-main-wrapper">-->
-<!--    &lt;!&ndash; Your remaining HTML code here &ndash;&gt;-->
-<!--    <div class="dashboard-wrapper">-->
-<!--        <div class="dashboard-ecommerce">-->
-<!--            <div class="container-fluid dashboard-content mt-1 pt-1">-->
-<!--                <div class="ecommerce-widget">-->
-<!--                    <div class="row d-flex mt-1">-->
-<!--                        <div class="col-md-12">-->
-<!--                            <div class="card progress-card">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h4 class="card-title title">Device Chart</h4>-->
-<!--                                    <canvas id="chartContainer"></canvas>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<script th:inline="javascript">-->
-<!--    document.addEventListener("DOMContentLoaded", function() {-->
-<!--        fetch('/v1/devices/dashboard/chart')-->
-<!--            .then(response => response.json())-->
-<!--            .then(data => {-->
-<!--                let inStockTotal = data.inStockTotal;-->
-<!--                let checkedOutTotal = data.checkedOutTotal;-->
-
-<!--                let chartContainer = document.getElementById('chartContainer');-->
-<!--                new Chart(chartContainer, {-->
-<!--                    type: 'pie',-->
-<!--                    data: {-->
-<!--                        labels: ['In Stock', 'Checked Out'],-->
-<!--                        datasets: [{-->
-<!--                            label: 'Device Count',-->
-<!--                            data: [inStockTotal, checkedOutTotal],-->
-<!--                            backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)'],-->
-<!--                            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],-->
-<!--                            borderWidth: 1-->
-<!--                        }]-->
-<!--                    },-->
-<!--                    options: {-->
-<!--                        responsive: true,-->
-<!--                        legend: {-->
-<!--                            position: 'bottom',-->
-<!--                        }-->
-<!--                    }-->
-<!--                });-->
-<!--            })-->
-<!--            .catch(error => {-->
-<!--                console.error('Error:', error);-->
-<!--            });-->
-<!--    });-->
-<!--</script>-->
-<!--</body>-->
-
-<!--</html>-->
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
-
-<!--<head th:replace="/fragments/head :: head">-->
-<!--    <title>Dashboard</title>-->
-<!--    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" />-->
-<!--    <style>-->
-<!--        #chartContainer {-->
-<!--            max-width: 400px;-->
-<!--            margin: 0 auto;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-
-<!--<body>-->
-<!--<div class="dashboard-main-wrapper">-->
-<!--    <div th:replace="/fragments/header :: header"></div>-->
-<!--    <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>-->
-<!--    &lt;!&ndash; Your remaining HTML code here &ndash;&gt;-->
-<!--    <div class="dashboard-wrapper">-->
-<!--        <div class="dashboard-ecommerce">-->
-<!--            <div class="container-fluid dashboard-content mt-1 pt-1">-->
-<!--                <div class="ecommerce-widget">-->
-<!--                    <div class="row d-flex mt-1">-->
-<!--                        <div class="col-md-12">-->
-<!--                            <div class="card progress-card">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h4 class="card-title title">Device Chart</h4>-->
-<!--                                    <canvas id="chartContainer"></canvas>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<script th:inline="javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
-<!--<script th:inline="javascript">-->
-<!--    document.addEventListener("DOMContentLoaded", function() {-->
-<!--        fetch('/v1/devices/dashboard/chart')-->
-<!--            .then(response => response.json())-->
-<!--            .then(data => {-->
-<!--                let inStockTotal = data.inStockTotal;-->
-<!--                let checkedOutTotal = data.checkedOutTotal;-->
-
-<!--                let chartContainer = document.getElementById('chartContainer');-->
-<!--                new Chart(chartContainer, {-->
-<!--                    type: 'pie',-->
-<!--                    data: {-->
-<!--                        labels: ['In Stock', 'Checked Out'],-->
-<!--                        datasets: [{-->
-<!--                            label: 'Device Count',-->
-<!--                            data: [inStockTotal, checkedOutTotal],-->
-<!--                            backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)'],-->
-<!--                            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],-->
-<!--                            borderWidth: 1-->
-<!--                        }]-->
-<!--                    },-->
-<!--                    options: {-->
-<!--                        responsive: true,-->
-<!--                        legend: {-->
-<!--                            position: 'bottom',-->
-<!--                        }-->
-<!--                    }-->
-<!--                });-->
-<!--            })-->
-<!--            .catch(error => {-->
-<!--                console.error('Error:', error);-->
-<!--            });-->
-<!--    });-->
-<!--</script>-->
-<!--</body>-->
-
-<!--</html>-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head th:replace="/fragments/head :: head">
     <title>Dashboard</title>
     <!-- Include necessary CSS files -->
-    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}"/>
     <style>
         .chart-container {
             max-width: 200px; /* Adjust the width as per your preference */
             margin: 0 auto;
         }
+
         .card {
             width: 200px; /* Adjust the width as per your preference */
             height: 150px; /* Adjust the height as per your preference */
         }
     </style>
 </head>
-
-<!--<body>-->
-<!--<div class="dashboard-main-wrapper">-->
-<!--    <div th:replace="/fragments/header :: header"></div>-->
-<!--    <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>-->
-
-<!--    &lt;!&ndash; Your remaining HTML code here &ndash;&gt;-->
-
-<!--    <div class="dashboard-wrapper">-->
-<!--        <div class="dashboard-ecommerce">-->
-<!--            <div class="container-fluid dashboard-content mt-1 pt-1">-->
-<!--                <div class="ecommerce-widget">-->
-<!--                    <div class="row d-flex mt-1">-->
-<!--                        <div class="col-md-12">-->
-<!--                            <div class="card progress-card">-->
-<!--                                <div class="card-body">-->
-<!--                                    <h4 class="card-title title">Device Chart</h4>-->
-<!--                                    <canvas id="chartContainer"></canvas>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div th:replace="/fragments/footer :: footer"></div>-->
-<!--    <div th:replace="/fragments/javascript :: js"></div>-->
-
-<!--    &lt;!&ndash; Include necessary JavaScript files &ndash;&gt;-->
-<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
-<!--    <script th:inline="javascript">-->
-<!--        document.addEventListener("DOMContentLoaded", function() {-->
-<!--            fetch('/v1/devices/dashboard/chart')-->
-<!--                .then(response => response.json())-->
-<!--                .then(data => {-->
-<!--                    let inStockTotal = data.inStockTotal;-->
-<!--                    let checkedOutTotal = data.checkedOutTotal;-->
-
-<!--                    let chartContainer = document.getElementById('chartContainer');-->
-<!--                    new Chart(chartContainer, {-->
-<!--                        type: 'pie',-->
-<!--                        data: {-->
-<!--                            labels: ['In Stock', 'Checked Out'],-->
-<!--                            datasets: [{-->
-<!--                                label: 'Device Count',-->
-<!--                                data: [inStockTotal, checkedOutTotal],-->
-<!--                                backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)'],-->
-<!--                                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],-->
-<!--                                borderWidth: 1-->
-<!--                            }]-->
-<!--                        },-->
-<!--                        options: {-->
-<!--                            responsive: true,-->
-<!--                            legend: {-->
-<!--                                position: 'bottom',-->
-<!--                            }-->
-<!--                        }-->
-<!--                    });-->
-<!--                })-->
-<!--                .catch(error => {-->
-<!--                    console.error('Error:', error);-->
-<!--                });-->
-<!--        });-->
-<!--    </script>-->
-
-<!--</div>-->
-<!--</body>-->
 <body>
 <div class="dashboard-main-wrapper">
     <div th:replace="/fragments/header :: header"></div>
     <div th:replace="/fragments/left-sidebar :: left-sidebar"></div>
-
-    <!-- Your remaining HTML code here -->
 
     <div class="dashboard-wrapper">
         <div class="dashboard-ecommerce">
@@ -257,60 +35,143 @@
                                 <div class="card-body">
                                     <center><h3 class="card-title title">Device Chart</h3></center>
                                     <div class="chart-container">
-                                        <canvas id="chartContainer"></canvas>
+                                        <canvas id="pieChart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="card progress-card">
+                                <div class="card-body">
+                                    <center>
+                                        <h3 class="card-title title">Devices In Stock</h3>
+                                    </center>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>
+                                                    <a href="#" onclick="sortTable('deviceMakeTableBody', 0); return false;">
+                                                        Device Category
+                                                        <span id="deviceMakeSortIcon" class="sort-icon"></span>
+                                                    </a>
+                                                </th>
+                                                <th>
+                                                    <a href="#" onclick="sortTable('deviceMakeTableBody', 1); return false;">
+                                                        Total # Stock
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="deviceMakeTableBody">
+                                            <!-- Table rows will be dynamically added here -->
+                                            <tr th:each="entry : ${deviceCategoryCountMap}">
+                                                <td th:text="${entry.key}"></td>
+                                                <td th:text="${entry.value}"></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            const sortState = {};
+
+                            function sortTable(tableBodyId, columnIndex) {
+                                const tableBody = document.getElementById(tableBodyId);
+                                const rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+                                const sortIcon = document.getElementById(`deviceMakeSortIcon`);
+
+                                // Reset sort icons
+                                sortIcon.innerHTML = '';
+
+                                if (!sortState[columnIndex] || sortState[columnIndex] === 'desc') {
+                                    sortState[columnIndex] = 'asc';
+                                    sortIcon.innerHTML = '&#9650;'; // Up arrow
+                                } else {
+                                    sortState[columnIndex] = 'desc';
+                                    sortIcon.innerHTML = '&#9660;'; // Down arrow
+                                }
+
+                                rows.sort((a, b) => {
+                                    const cellA = a.getElementsByTagName('td')[columnIndex].textContent.trim();
+                                    const cellB = b.getElementsByTagName('td')[columnIndex].textContent.trim();
+                                    return cellA.localeCompare(cellB);
+                                });
+
+                                if (sortState[columnIndex] === 'desc') {
+                                    rows.reverse();
+                                }
+
+                                for (let i = 0; i < rows.length; i++) {
+                                    tableBody.appendChild(rows[i]);
+                                }
+                            }
+
+                            // Execute initial sorting when the page loads
+                            window.addEventListener('load', function () {
+                                sortTable('deviceMakeTableBody', 0);
+                            });
+                        </script>
+
+                        <style>
+                            .sort-icon {
+                                margin-left: 5px;
+                                font-size: 10px;
+                            }
+                        </style>
+
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div th:replace="/fragments/footer :: footer"></div>
-        <div th:replace="/fragments/javascript :: js"></div>
+            <div th:replace="/fragments/footer :: footer"></div>
+            <div th:replace="/fragments/javascript :: js"></div>
 
-        <!-- Include necessary JavaScript files -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script th:inline="javascript">
-            document.addEventListener("DOMContentLoaded", function () {
-                fetch('/v1/devices/dashboard/chart')
-                    .then(response => response.json())
-                    .then(data => {
-                        let inStockTotal = data.inStockTotal;
-                        let checkedOutTotal = data.checkedOutTotal;
+            <!-- Include necessary JavaScript files -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script th:inline="javascript">
+                document.addEventListener("DOMContentLoaded", function () {
+                    fetch('/v1/devices/dashboard/chart')
+                        .then(response => response.json())
+                        .then(data => {
+                            let inStockTotal = data.inStockTotal;
+                            let checkedOutTotal = data.checkedOutTotal;
 
-                        let chartContainer = document.getElementById('chartContainer');
-                        new Chart(chartContainer, {
-                            type: 'pie',
-                            data: {
-                                labels: ['Devices In Stock', 'Devices Checked Out'],
-                                datasets: [{
-                                    label: 'Device Count',
-                                    data: [inStockTotal, checkedOutTotal],
-                                    // backgroundColor: ['rgba(54, 162, 235, 0.5)', 'rgba(255, 99, 132, 0.5)'],
-                                    // borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
-                                    backgroundColor: ['rgba(1, 121, 111, 0.5)', 'rgba(255, 165, 0, 0.5)'],
-                                    borderColor: ['rgba(1, 121, 111, 1)', 'rgba(255, 165, 0, 1)'],
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                legend: {
-                                    position: 'bottom'
+                            let pieChartContainer = document.getElementById('pieChart');
+                            new Chart(pieChartContainer, {
+                                type: 'pie',
+                                data: {
+                                    labels: ['Devices In Stock', 'Devices Checked Out'],
+                                    datasets: [{
+                                        label: 'Device Count',
+                                        data: [inStockTotal, checkedOutTotal],
+                                        backgroundColor: ['rgba(1, 121, 111, 0.5)', 'rgba(255, 165, 0, 0.5)'],
+                                        borderColor: ['rgba(1, 121, 111, 1)', 'rgba(255, 165, 0, 1)'],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    legend: {
+                                        position: 'bottom'
+                                    }
                                 }
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            });
-        </script>
+                            });
 
+
+
+                        });
+                });
+            </script>
+
+        </div>
     </div>
 </div>
-</body>
 
+</body>
 </html>
+

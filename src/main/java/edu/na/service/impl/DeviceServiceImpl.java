@@ -22,6 +22,7 @@ public class DeviceServiceImpl implements DeviceService {
     private final RecordService recordService;
     private final UserService userService;
     private final MapperUtil mapperUtil;
+    private final List<String> categoryList=new ArrayList<>(Arrays.asList("Laptop","Printer","Monitor","Phone","Speaker","All-in-one","Macbook"));
 
     public DeviceServiceImpl(DeviceRepository deviceRepository, RecordService recordService, UserService userService, MapperUtil mapperUtil) {
         this.deviceRepository = deviceRepository;
@@ -39,7 +40,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     }
 
-//        public List<DeviceDto> listBySerialNo() {
+    //        public List<DeviceDto> listBySerialNo() {
 //        return findAll()
 //                .stream()
 //                .sorted(Comparator.comparingLong(deviceDto -> Long.parseLong(deviceDto.getSerialNumber())))
@@ -150,18 +151,52 @@ public class DeviceServiceImpl implements DeviceService {
 
         return data;
     }
-    public boolean deviceIsOpenToCheckOut(Long id){
-        Device device=deviceRepository.findById(id).orElseThrow(()->new DeviceNotFoundException("Device does not exist!"));
+
+    public boolean deviceIsOpenToCheckOut(Long id) {
+        Device device = deviceRepository.findById(id).orElseThrow(() -> new DeviceNotFoundException("Device does not exist!"));
         return device.isCheckMeOut();
     }
+
     @Override
-    public Integer getTotalCountOfAvailableDevicesToCheckOut(){
+    public Integer getTotalCountOfAvailableDevicesToCheckOut() {
         return deviceRepository.retrieveTotalNoOfDevicesAvailableToCheckOut();
 
     }
+
     @Override
-    public Integer getTotalCountOfDevicesCheckedOut(){
+    public Integer getTotalCountOfDevicesCheckedOut() {
         return deviceRepository.retrieveTotalNoOfDevicesCheckedOut();
 
+    }
+
+//    @Override
+//    public Map<String, Integer> getDeviceModelAndCount() {
+//        List<Object[]> result = deviceRepository.retrieveTotalNoOfDeviceModelAvailableCheckedOut();
+//
+//        return result.stream()
+//                .collect(Collectors.toMap(
+//                        row -> (String) row[0] + " " + row[1],     // Make and Model name
+//                        row -> ((Number) row[2]).intValue(),  // Count
+//                        (existingValue, newValue) -> existingValue, // Handle duplicate keys
+//                        TreeMap::new // Use TreeMap for sorting
+//                ));
+//
+//    }
+@Override
+public Map<String, Integer> getDeviceCategoryAndCount() {
+    List<Object[]> result = deviceRepository.retrieveTotalNoOfDeviceCategoryAvailableToCheckOut();
+
+    return result.stream()
+            .collect(Collectors.toMap(
+                    row -> (String) row[0],     // Category
+                    row -> ((Number) row[1]).intValue(),  // Count
+                    (existingValue, newValue) -> existingValue, // Handle duplicate keys
+                    TreeMap::new // Use TreeMap for sorting
+            ));
+
+}
+    @Override
+    public List<String> getDeviceCategoryList() {
+        return categoryList;
     }
 }

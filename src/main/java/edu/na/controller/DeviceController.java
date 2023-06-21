@@ -32,6 +32,7 @@ public class DeviceController {
     @GetMapping("/add")
     public String addDevice(Model model) {
         model.addAttribute("device", new DeviceDto());
+        model.addAttribute("categoryList",deviceService.getDeviceCategoryList());
 //        model.addAttribute("devices", deviceService.findAll());
         return "/device/add";
     }
@@ -61,6 +62,7 @@ public class DeviceController {
     public String updateDevice(@PathVariable("id") Long id, Model model) {
 
         model.addAttribute("device", deviceService.findDevice(id)); // send the devicedto
+        model.addAttribute("categoryList",deviceService.getDeviceCategoryList());
 //        model.addAttribute("devices", deviceService.findAll());
         return "/device/update";
     }

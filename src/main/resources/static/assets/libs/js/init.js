@@ -50,4 +50,19 @@ function goBack() {
     }
   }
 }
+function sortTable(tableBodyId, columnIndex) {
+  let tableBody = document.getElementById(tableBodyId);
+  let rows = Array.from(tableBody.getElementsByTagName('tr'));
+
+  rows.sort(function(a, b) {
+    let aValue = a.getElementsByTagName('td')[columnIndex].textContent;
+    let bValue = b.getElementsByTagName('td')[columnIndex].textContent;
+    return aValue.localeCompare(bValue);
+  });
+
+  tableBody.innerHTML = '';
+  rows.forEach(function(row) {
+    tableBody.appendChild(row);
+  });
+}
 

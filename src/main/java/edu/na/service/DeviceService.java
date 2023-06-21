@@ -27,4 +27,6 @@ public interface DeviceService {
     boolean deviceIsOpenToCheckOut(Long id);
     Integer getTotalCountOfAvailableDevicesToCheckOut();
     Integer getTotalCountOfDevicesCheckedOut();
+    Map<String,Integer> getDeviceCategoryAndCount();
+    List<String> getDeviceCategoryList();
 }
